@@ -1,14 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join</title>
-</head>
+<html lang="de">
 
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="robots" content="noindex, nofollow">
+	    <meta name="description" content="This is a trainingswebside from Developers Akademie">
+        <link id="favicon" rel="shortcut icon" href="./assets/icons/logo_black.png" type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href="./styles.css">
+        <link rel="stylesheet" type="text/css" href="./styles/summary.css">
+        <script defer src="./js/summary.js" type="text/javascript"></script>
+        <script defer src="./script.js" type="text/javascript"></script>
+        <title>Summary</title>
+    </head>
 
-</body>
+    <body onload="initSummary()">
+
+        <header w3-include-html="./assets/templates/desktop_header.html">
+        </header>
+
+        <nav w3-include-html="./assets/templates/desktop_nav.html">
+        </nav>
+
+        <main>
+
+            <div class="main__container">
+                
+                <div class="summary__container">
+                  
+                    <div class="summary__header">
+                        <h2>Join 360</h2>
+                        <img src="./assets/icons/icons_summary/seperator_blue.png" alt="">
+                        <div class="summary__header-text">Key Metrics at a Glance</div>
+                    </div>
+
+
+                    <div class="summary__tiles__container">
+
+                        <div class="summary__tiles">
+
+                            <!-- two tiles  -->
+                            <div class="summary__first__section">
+                                <a href="#">
+                                    <div class="summary__two_tiles" onmouseover="changeIcon(this)" onmouseout="resetIcon(this)">
+                                        <img id="summary__toDo" src="./assets/icons/icons_summary/edit_dark.png" alt="edit">
+                                        <!-- <div class="edit_img"></div> -->
+                                        <div class="summary__tiles__text">
+                                            <div class="summary__tiles__number">1</div>
+                                            <div class="summary__text__top-and-bottom">To-do</div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <a href="#">
+                                    <div class="summary__two_tiles" onmouseover="changeIcon(this)" onmouseout="resetIcon(this)">
+                                        <img id="summary__done" src="./assets/icons/icons_summary/done_dark.png" alt="check">
+                                        <div class="summary__tiles__text">
+                                            <div class="summary__tiles__number">1</div>
+                                            <div class="summary__text__top-and-bottom">Done</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- one tile/s  -->
+                            <div>
+                                <a href="#">
+                                    <div class="summary__second__section">
+
+                                        <div>
+                                            <img src="./assets/icons/icons_summary/urgent.png" alt="urgent">
+                                        </div>
+
+                                        <div class="summary__tiles__text">
+                                            <div class="summary__tiles__number">1</div>
+                                            <div class="summary__text__middle">Urgent</div>
+                                        </div>
+
+                                        <img src="./assets/icons/icons_summary/seperator_grey.png" alt="seperator">
+
+                                        <div>
+                                            <div class="summary__deadline__date">October 16, 2022</div>
+                                            <div class="summary__deadline__text">Upcoming deadline</div>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- 3 tiles  -->
+                            <div class="summary__third__section">
+                                <a href="#">
+                                    <div class="summary__third__section-tiles">
+                                        <div class="summary__tiles__number">5</div>
+                                        <div class="summary__text__top-and-bottom">Tasks in<br>Board</div>
+                                </div>
+                                </a>
+
+                                <a href="#">
+                                    <div class="summary__third__section-tiles">
+                                        <div class="summary__tiles__number">2</div>
+                                        <div class="summary__text__top-and-bottom">Tasks in<br>Progress</div>
+                                    </div>
+                                </a>
+
+                                <a href="#">
+                                    <div class="summary__third__section-tiles">
+                                        <div class="summary__tiles__number">2</div>
+                                        <div class="summary__text__top-and-bottom summary__text__top-and-bottom-text_align">Awaiting<br>Feedback</div>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="summary__greeting__container">
+                    <div class="summary__greeting__formula">Good morning,</div>
+                    <div class="summary__greeting__name">Sofia Müller</div>
+                </div>
+
+            </div>
+
+        </main>
+
+        <footer>
+        </footer>
+
+    </body>
 
 </html>
