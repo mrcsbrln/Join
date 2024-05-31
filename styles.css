@@ -1,4 +1,62 @@
-/* -------- FONTS ------------ */
+/*-----------  ALLGEMEINES (Meik) ---------- */
+
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+}
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+html {
+  color-scheme: light;
+  font-size: 100%;
+  scroll-behavior: smooth;
+  display: inline-block;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100dvh;
+  width: 100%;
+  font-family: "inter", sans-serif;
+  overflow: visible;
+  direction: ltr;
+  background-color: #F6F7F8;
+}
+
+.d-none {
+  display: none !important;
+}
+
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+a:focus {
+  text-decoration: none;
+}
+
+
+a:link,
+a:visited,
+a:active,
+a:hover {
+  text-decoration: none;
+}
+
+
+
+/* -------- FONTS (Meik) ------------ */
 
 @font-face {
     font-family: "Inter";
