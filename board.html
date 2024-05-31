@@ -5,15 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join Board</title>
+    <link id="favicon" rel="shortcut icon" href="./assets/img/favicon/logo_black.png" type="image/x-icon">
     <link rel="stylesheet" href="styles/board.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/desktopHeader.css">
+    <link rel="stylesheet" href="styles/desktopNav.css">
+    <script src="js/board.js"></script>
+    <script src="js/desktopHeader.js"></script>
+    <script src="js/desktopNav.js"></script>
+    <script src="js/includeHtml.js"></script>
 </head>
 
-<body onload="init()">
+<body class="body" onload="init(), includeHTML()">
+    <div w3-include-html="./assets/templates/desktopHeader.html"></div>
+    <div w3-include-html="./assets/templates/desktopNav.html"></div>
 
-    <div class="side"></div>
-    <div class="top"></div>
     <section class="board boardFlex">
-        <header class="boardHeader boardFlex">
+        <div class="boardHeader boardFlex">
             <div class="containerTools boardFlex">
                 <div>
                     <h1>Board</h1>
@@ -27,7 +35,7 @@
                     <button class="addBtn">Add task +</button>
                 </div>
             </div>
-        </header>
+        </div>
         <div class="statuses boardFlex">
             <div class="statusItem">
                 <div class="statusHeader boardFlex">
@@ -74,7 +82,7 @@
         </div>
     </div>
 
-    <script src="js/board.js"></script>
+
 </body>
 
 </html>

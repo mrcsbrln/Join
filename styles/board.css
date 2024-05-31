@@ -1,38 +1,16 @@
 /* * {
     outline: 1px solid red;
 } */
-body {
+.body {
     background-color: #F6F7F8;
     margin: 0;
     padding: 0;
 }
 
-.top {
-    min-height: 96px;
-    background-color: rgba(0, 0, 255, 0.144);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-}
-
-.side {
-    min-height: 96px;
-    background-color: rgba(0, 0, 255, 0.11);
-    width: 232px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-}
-
-
 .board {
-
     flex-direction: column;
-    margin-top: 96px;
-    margin-left: 232px;
-    height: calc(100vh - 96px);
+    padding-top: 96px;
+    padding-left: 232px;
 
 }
 
