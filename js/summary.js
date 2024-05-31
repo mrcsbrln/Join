@@ -75,12 +75,12 @@ function changeIconImage(element, state) {
     const img = element.querySelector('img');
     const imgIdToSrcMap = {
       summary__toDo: {
-        highlight: './assets/icons/icons_summary/edit_light.png',
-        reset: './assets/icons/icons_summary/edit_dark.png'
+        highlight: './assets/img/icons_summary/edit_light.png',
+        reset: './assets/img/icons_summary/edit_dark.png'
       },
       summary__done: {
-        highlight: './assets/icons/icons_summary/done_light.png',
-        reset: './assets/icons/icons_summary/done_dark.png'
+        highlight: './assets/img/icons_summary/done_light.png',
+        reset: './assets/img/icons_summary/done_dark.png'
       }
     };
     const newSrc = imgIdToSrcMap[img.id]?.[state];
