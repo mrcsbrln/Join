@@ -9,9 +9,9 @@
  * 
  */
 function updateFavicon() {
-    favicon.href = './assets/icons/logo_white.png';
+    favicon.href = './assets/img/logo_white.png';
     const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    favicon.href = isDarkMode ? './assets/icons/logo_white.png' : './assets/icons/logo_black.png';
+    favicon.href = isDarkMode ? './assets/img/logo_white.png' : './assets/img/logo_black.png';
 }
 
 
@@ -22,7 +22,7 @@ function updateFavicon() {
  */
 document.addEventListener('DOMContentLoaded', () => {
     updateFavicon();
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
+    favicon.href = isDarkMode ? './assets/img/favicon/logo_white.png' : './assets/img/favicon/logo_black.png';
 });
 
 
