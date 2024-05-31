@@ -13,7 +13,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     width: 232px;
-    height: calc(100% - 128px);
+    height: 100vh;
     padding: 64px 0px 64px 0px;
     background-color: rgba(42, 54, 71, 1);
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
