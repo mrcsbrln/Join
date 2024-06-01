@@ -116,23 +116,6 @@ function checkBoxClicked() {
 
 
 
-
-function setCurrentUser(userData) {
-    const currentUser = {
-        name: userData.name,
-        email: userData.email,
-        id: userData.id,
-        color: userData.color,
-        initials: userData.initials,
-    };
-    saveCurrentUserToSessionStorage(currentUser);
-}
-
-
-
-
-
-
 /**
  * Logs in a guest user by setting the current user information in session storage
  * and redirects to the summary page.
@@ -153,6 +136,7 @@ async function loginAsGuest() {
         initials: 'G',
     };
     setCurrentUser(guestUser);
+    // saveCurrentUserToSessionStorage(guestUser);
     redirectToSummary();
 }
 
@@ -193,10 +177,14 @@ function redirectToSummary() {
 
 
 
-/* #################################    */
+/* ####################################################################################################################################    */
+/* ####################################################################################################################################    */
+/* ####################################################################################################################################    */
+/* ####################################################################################################################################    */
 
 
 
+/* ---------  LOAD DATA FROM FIREBASE --------- */
 
 const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
 
@@ -226,12 +214,12 @@ async function checkLoginValues(email, password) {
 
 
 
+/* ---------  LOGIN PROCEDURE --------- */
 
 function loginSubmit(event) {
     event.preventDefault();
     login();
 }
-
 
 
 async function login() {
@@ -240,16 +228,41 @@ async function login() {
     const matchingContact = await checkLoginValues(email, password);
     if (matchingContact) {
         setCurrentUser(matchingContact);
+        clearForm('email', 'password');
         const checkbox = document.getElementById('checkbox');
         if (checkIfCheckBoxIsClicked(checkbox)) {
-            // save to local storage
+            let currentUserString = sessionStorage.getItem('currentUser');
+            localStorage.setItem('currentUser', currentUserString);
         }
-
         redirectToSummary();
     } else {
         console.warn("Fehler bei der Anmeldung!");
     }
 }
+
+
+
+function setCurrentUser(userData) {
+    const currentUser = {
+        name: userData.name,
+        email: userData.email,
+        id: userData.id,
+        color: userData.color,
+        initials: userData.initials,
+    };
+    saveCurrentUserToSessionStorage(currentUser);
+}
+
+
+
+
+
+function clearForm(email, password) {
+    document.getElementById(`${email}`).value = '';
+    document.getElementById(`${password}`).value = '';
+}
+
+
 
 
 
