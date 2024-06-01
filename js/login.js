@@ -79,14 +79,18 @@ function changeOfDisplayNoneAfterAnimation() {
  * @returns {void} This function does not return a value.
  */
 function checkBoxClicked() {
-    const checked = document.getElementById('checkbox').dataset.checked;
-    if (checked !== 'false') {
-        document.getElementById('checkbox').src = './assets/img/icons_login/checkbox_unchecked.png';
-        document.getElementById('checkbox').dataset.checked = 'false';
-    } else {
-        document.getElementById('checkbox').src = './assets/img/icons_login/checkbox_checked.png';
-        document.getElementById('checkbox').dataset.checked = 'true';
-    }
+    const checkbox = document.getElementById('checkbox');
+    const isChecked = checkbox.dataset.checked !== 'false';
+    checkbox.src = isChecked 
+        ? './assets/img/icons_login/checkbox_unchecked.png' 
+        : './assets/img/icons_login/checkbox_checked.png';
+    checkbox.dataset.checked = isChecked ? 'false' : 'true';
 }
 
 
+
+
+
+function loginAsGuest() {
+
+}
