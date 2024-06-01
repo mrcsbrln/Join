@@ -88,9 +88,39 @@ function checkBoxClicked() {
 }
 
 
-
-
-
+/**
+ * Logs in a guest user by setting the current user information in session storage
+ * and redirects to the summary page.
+ *
+ * This function creates a guest user object with predefined credentials, stores
+ * this object in the session storage, and then calls the `redirectToSummary` function
+ * to navigate to the summary page.
+ *
+ * @function loginAsGuest
+ * @returns {void} This function does not return a value.
+ */
 function loginAsGuest() {
-
+    const currentUser = {
+        name: 'guest',
+        email: 'guest@join.de',
+        password: '1234',
+    };
+    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+    redirectToSummary();
 }
+
+
+/**
+ * Redirects the browser to the summary page.
+ * 
+ * This function changes the current location of the browser to 'summary.html', effectively
+ * navigating the user to the summary page.
+ *
+ * @function redirectToSummary
+ * @returns {void} This function does not return a value.
+ */
+function redirectToSummary() {
+    window.location.href = 'summary.html';
+}
+
+
