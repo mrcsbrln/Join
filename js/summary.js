@@ -8,7 +8,8 @@
  *
  */
 function initSummary() {
-    includeHTML();
+    // includeHTML();
+    includeHTML().then(highlightSummary);
     updateGreetingText();
 }
 
