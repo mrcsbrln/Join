@@ -74,6 +74,12 @@ a:hover {
 /*-----------  Spezifisches für LOGIN.HTML ---------- */
 /* body wurde oben bereits belegt, hier nur der Vollständigkeit halber wegen des Backgrounds! */
 
+
+:root {
+    --transTime: 125ms;
+}
+
+
 body {
     height: 100dvh;
     min-height: 100dvh;
@@ -155,24 +161,23 @@ body {
 }
 
 
-header {
+.header {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: calc(122px + 80px);
-
     display: flex;
     justify-content: space-between;
-    /* padding: 46px 48px 0px 48px; */
 }
 
 
-header img {
+.header img {
     position: absolute;
     top: 80px;
     left: 78px;
 }
+
 
 .login__footer {
     position: absolute;
@@ -231,8 +236,7 @@ header img {
 
 
 
-nav {
-    /* width: 279px; */
+.login__nav {
     height: 49px;
     display: flex;
     justify-content: space-between;
@@ -243,7 +247,7 @@ nav {
 }
 
 
-nav p {
+.login__nav p {
     width: 153px;
     font-weight: 400;
     font-size: 20px;
@@ -251,7 +255,7 @@ nav p {
 }
 
 
-nav div {
+.login__signUp {
     color: white;
     width: 91px;
     height: 49px;
@@ -261,6 +265,14 @@ nav div {
     padding: 15px;
     border-radius: 8px;
     background-color: #2A3647;
+    transition: color var(--transTime) ease-in-out, background-color var(--transTime) ease-in-out, box-shadow var(--transTime) ease-in-out;
+}
+
+
+.login__signUp:hover {
+    color: #FFFFFF;
+    background-color: #29abe2;
+    box-shadow: 0px 4px 4px 0px #00000033;
 }
 
 
@@ -328,7 +340,6 @@ nav div {
     display: flex;
     justify-content: center;
     align-items: center ;
-    color: #FFFFFF;
     font-size: 21px;
     font-weight: 700;
     line-height: 25.2px;
@@ -337,8 +348,17 @@ nav div {
     height: 48px;
     border: none;
     border-radius: 8px;
+    color: #FFFFFF;
     background: #2A3647;
     cursor: pointer;
+    transition: color var(--transTime) ease-in-out, background-color var(--transTime) ease-in-out, box-shadow var(--transTime) ease-in-out;
+}
+
+
+.btn__logIn:hover {
+    color: #FFFFFF;
+    background-color: #29abe2;
+    box-shadow: 0px 4px 4px 0px #00000033;
 }
 
 
@@ -357,7 +377,18 @@ nav div {
     font-size: 21px;
     line-height: 25.2px;
     cursor: pointer;
+    transition: color var(--transTime) ease-in-out, border-color var(--transTime) ease-in-out, box-shadow var(--transTime) ease-in-out;
 }
+
+
+.btn__guest:hover {
+    color: #29abe2;
+    border: 1px solid #29abe2;
+    box-shadow: 0px 4px 4px 0px #00000033;
+    border-color: #29abe2;
+}
+
+
 
 
 .check-box {
@@ -382,7 +413,7 @@ nav div {
     height: 19px;
     font-weight: 400;
     font-size: 16px;
-    line-height: 19.2px;
+    line-height: 21px;
     text-align: center;
     color: #000000;
 }
