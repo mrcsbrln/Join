@@ -6,7 +6,7 @@
  * - setting up the necessary event listeners.
  * 
 */
-function initLogin() {
+function initSignup() {
     // includeHTML();
 }
 
