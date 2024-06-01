@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ===============  Explizites JavaScript für die Seite =============== */
 
 
+
 /**
  * Initializes the application by setting up everything:
  * - animations
@@ -65,4 +66,27 @@ function changeOfDisplayNoneAfterAnimation() {
         }, 2000);
     }
 }
+
+
+/**
+ * Toggles the checkbox state and updates its appearance.
+ * 
+ * This function checks the current state of a checkbox element (based on its `data-checked` attribute),
+ * and toggles its state between checked and unchecked. It also updates the `src` attribute of the
+ * checkbox image to reflect the new state.
+ *
+ * @function checkBoxClicked
+ * @returns {void} This function does not return a value.
+ */
+function checkBoxClicked() {
+    const checked = document.getElementById('checkbox').dataset.checked;
+    if (checked !== 'false') {
+        document.getElementById('checkbox').src = './assets/img/icons_login/checkbox_unchecked.png';
+        document.getElementById('checkbox').dataset.checked = 'false';
+    } else {
+        document.getElementById('checkbox').src = './assets/img/icons_login/checkbox_checked.png';
+        document.getElementById('checkbox').dataset.checked = 'true';
+    }
+}
+
 
