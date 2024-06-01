@@ -173,6 +173,7 @@ let tasks = [
     },
 ];
 
+let draggedItemId = "";
 
 function init() {
     renderCards();
@@ -197,62 +198,70 @@ function closeDialogBtn() {
 }
 
 
-function renderCards() {
-    tasks.forEach((task, index) => {
-        document.getElementById(`cardContainer${task.status}`).innerHTML += renderCardHtml(index);
+function renderCards(filteredTasks = null) {
+    const statuses = ["toDo", "inProgress", "awaitingFeedback", "done"];
+    statuses.forEach(status => {
+        const container = document.getElementById(`cardContainer${status}`);
+        container.innerHTML = ''; // Clear existing cards in container
+
+        const tasksToRender = filteredTasks ? filteredTasks.filter(task => task.status === status) : tasks.filter(task => task.status === status);
+
+        tasksToRender.forEach(task => {
+            container.innerHTML += renderCardHtml(task);
+        });
     });
+
     checkContainerTodo();
 }
 
-function checkContainerTodo(){
+function checkContainerTodo() {
     const container = document.getElementById('cardContainertoDo');
     document.getElementById('emptyTaskTodo').classList.toggle('hidden', container.innerHTML.trim() !== '');
-checkContainerInProgress();
+    checkContainerInProgress();
 }
 
-function checkContainerInProgress(){
+function checkContainerInProgress() {
     const container = document.getElementById('cardContainerinProgress');
     document.getElementById('emptyTaskInProgress').classList.toggle('hidden', container.innerHTML.trim() !== '');
-checkContainerAwaitFeedback();
+    checkContainerAwaitFeedback();
 }
 
-function checkContainerAwaitFeedback(){
+function checkContainerAwaitFeedback() {
     const container = document.getElementById('cardContainerawaitingFeedback');
     document.getElementById('emptyTaskAwait').classList.toggle('hidden', container.innerHTML.trim() !== '');
     checkContainerDone();
 }
 
-function checkContainerDone(){
+function checkContainerDone() {
     const container = document.getElementById('cardContainerdone');
     document.getElementById('emptyTaskDone').classList.toggle('hidden', container.innerHTML.trim() !== '');
 }
 
-function renderCardHtml(i) {
-    const completedSubtasks = tasks[i].subTasks.filter(subtask => subtask.completet).length; 
+function renderCardHtml(task) {
+    const completedSubtasks = task.subTasks.filter(subtask => subtask.completet).length;
     return `
-    <div onclick="openDialog(); renderCardBig(${i})" class="taskCard">
-        <label class="category">${tasks[i].category}</label>
-        <p class="titelCard">${tasks[i].title}</p>
-        <p class="descriptionCard">${tasks[i].description}</p>
+    <div draggable="true" ondragstart="startDragging(${task.id})" id="taskCard${task.id}"onclick="openDialog(); renderCardBig(${task.id})" class="taskCard">
+        <label class="category">${task.category}</label>
+        <p class="titelCard">${task.title}</p>
+        <p class="descriptionCard">${task.description}</p>
         <div>
             <div class="progress boardFlex">
                 <div class="progressBarContainer">
                     <div class="progressBar"></div>
                 </div>
-                <p class="amountSubtasks">${completedSubtasks}/${tasks[i].subTasks.length}</p> <!-- Anzahl der erledigten Unteraufgaben -->
+                <p class="amountSubtasks">${completedSubtasks}/${task.subTasks.length}</p>
             </div>
             <div class="footerCard boardFlex">
                 <div class="profileBadges">
-                    ${tasks[i].assignedTo.map(id => renderBadge(contacts[id])).join('')}
+                    ${task.assignedTo.map(id => renderBadge(contacts[id])).join('')}
                 </div>
                 <div class="prioImg">
-                    <img src="assets/img/icons/${tasks[i].priority}.svg" alt="">
+                    <img src="assets/img/icons/${task.priority}.svg" alt="">
                 </div>
             </div>
         </div>
     </div>`;
 }
-
 function renderBadge(contact) {
     return `<div class="badgeImg" style="background-color: ${contact.color}">${contact.initials}</div>`;
 }
@@ -304,6 +313,7 @@ function renderCardBigTop(i) {
 }
 
 
+
 function renderCardBigSubTo(i) {
     badgeContainer = document.getElementById('badgeContainer');
     badgeContainer.innerHTML = '';
@@ -332,4 +342,56 @@ function renderCardBigSubtask(i) {
             </ul> `
     });
     document.getElementById('subtasks').innerHTML = subtasksHtml;
+}
+
+function startDragging(id) {
+    draggedItemId = id;
+    const card = document.getElementById(`taskCard${id}`);
+    card.classList.add('dragging');
+    highlightDropZones();
+
+}
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drop(status) {
+    const taskIndex = tasks.findIndex(task => task.id === draggedItemId);
+    tasks[taskIndex].status = status;
+    removeHighlight();
+    renderCards();
+
+}
+
+function highlightDropZones() {
+    const containers = document.querySelectorAll('.cardContainer');
+    containers.forEach(container => {
+        if (container.id !== `cardContainer${tasks.find(task => task.id === draggedItemId).status}`) {
+            container.classList.add('highlightDragArea');
+        }
+    });
+}
+
+
+function removeHighlight() {
+    const containers = document.querySelectorAll('.cardContainer');
+    containers.forEach(container => {
+        container.classList.remove('highlightDragArea');
+    });
+}
+
+function getSearchKeyword() {
+    let input = document.getElementById('searchBar').value;
+
+    searchTasks(input);
+
+}
+
+function searchTasks(keyword) {
+    const filteredTasks = tasks.filter(task => {
+        return task.title.toLowerCase().includes(keyword.toLowerCase()) ||
+            task.description.toLowerCase().includes(keyword.toLowerCase());
+    });
+    renderCards(filteredTasks);
 }
