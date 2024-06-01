@@ -22,7 +22,6 @@ function updateFavicon() {
  */
 document.addEventListener('DOMContentLoaded', () => {
     updateFavicon();
-    favicon.href = isDarkMode ? './assets/img/favicon/logo_white.png' : './assets/img/favicon/logo_black.png';
 });
 
 
@@ -37,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
  * - animations
  * 
  */
-async function init() {
+async function initLogin() {
     changeOfDisplayNoneAfterAnimation();
 }
 
