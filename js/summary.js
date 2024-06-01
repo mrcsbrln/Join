@@ -1,11 +1,12 @@
 "use strict";
 
 /**
+ * Initializes the summary page by including HTML content and updating greeting text.
  * 
- * Initializes-function for summary.html 
- * - setting up the necessary event listeners.
- * 
-*/
+ * This function initializes the summary page by including HTML content using the includeHTML function
+ * and updating the greeting text using the updateGreetingText function.
+ *
+ */
 function initSummary() {
     includeHTML();
     updateGreetingText();
@@ -13,11 +14,12 @@ function initSummary() {
 
 
 /**
- * Updates the href-attribut of the link-tag in summary-html based on the user's preferred color scheme
- * to access and show dirfferent machting favicon
+ * Updates the favicon based on the user's color scheme preference.
  * 
- * IMPORTANT: Working on firefox and edge, maybe working on Chrome (Devtools -> Rendering -> emulate prefered color scheme)
- * 
+ * This function updates the favicon based on the user's color scheme preference.
+ * It sets the favicon to a white logo if the user prefers dark mode, otherwise
+ * it sets the favicon to a black logo.
+ *
  */
 function updateFavicon() {
     favicon.href = './assets/img/logo_white.png';
@@ -27,9 +29,12 @@ function updateFavicon() {
 
 
 /**
- * Adds event listeners for the summary.html. 
- * - update href on change of preferred color scheme
+ * Initializes the favicon based on the user's color scheme preference when the DOM content is loaded.
  * 
+ * This function initializes the favicon when the DOM content is loaded by calling the updateFavicon function
+ * and adding an event listener to update the favicon when the user's color scheme preference changes.
+ *
+ * @listens document#DOMContentLoaded
  */
 document.addEventListener('DOMContentLoaded', () => {
     updateFavicon();
@@ -45,8 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
  * inserts the content into the element. 
  * If the fetch operation fails, it inserts a "Page not found" message into the element.
  *
- * @async
- * @function includeHTML
  * @returns {Promise<void>} A promise that resolves when all HTML content is loaded and inserted.
  * 
  */
@@ -120,8 +123,7 @@ function resetIcon(element) {
  * If the current user information exists, it is returned; otherwise, an error message
  * is logged to the console and `null` is returned.
  *
- * @function getCurrentUser
- * @returns {object|null} The current user object if it exists, otherwise `null`.
+  * @returns {object|null} The current user object if it exists, otherwise `null`.
  */
 function getCurrentUser() {
   const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
@@ -129,7 +131,14 @@ function getCurrentUser() {
 }
 
 
-
+/**
+ * Updates the greeting text based on the current user's name.
+ * 
+ * This function retrieves the current user information, clears the text content of
+ * the greeting and user name elements, sets the appropriate greeting text based on
+ * the time of the day, and updates the user name with the capitalized current user's name.
+ *
+ */
 function updateGreetingText() {
     const currentUser = getCurrentUser();
     const userName = document.getElementById('user__name');
@@ -141,11 +150,21 @@ function updateGreetingText() {
 }
 
 
+/**
+ * Clears the text content of an HTML element.
+ * 
+ * @param {HTMLElement} element - The HTML element whose text content will be cleared.
+ */
 function clearText(element) {
     element.innerText = '';
 }
 
 
+/**
+ * Sets the greeting text based on the current time of the day.
+ * 
+ * @param {HTMLElement} greetingText - The HTML element to set the greeting text into.
+ */
 function setGreetingText(greetingText) {
     const timesOfDay = {
         morning: "Good morning,",
@@ -158,7 +177,12 @@ function setGreetingText(greetingText) {
 }
 
 
-
+/**
+ * Sets the current user's name in the provided HTML element.
+ * 
+ * @param {HTMLElement} userName - The HTML element to set the user's name into.
+ * @param {object|null} currentUser - The current user object.
+ */
 function setCurrentUserName(userName, currentUser) {
     if (currentUser) {
       userName.innerText = capitalizeFirstChar(currentUser['name']);
@@ -166,6 +190,12 @@ function setCurrentUserName(userName, currentUser) {
 }
 
 
+/**
+ * Capitalizes the first character of a string.
+ * 
+ * @param {string} string - The string to capitalize the first character of.
+ * @returns {string} The string with the first character capitalized.
+ */
 function capitalizeFirstChar(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
