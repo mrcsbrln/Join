@@ -8,6 +8,7 @@
 */
 function initSummary() {
     includeHTML();
+    updateGreetingText();
 }
 
 
@@ -108,4 +109,63 @@ function changeIcon(element) {
  */
 function resetIcon(element) {
   changeIconImage(element, 'reset');
+}
+
+
+
+/**
+ * Retrieves the current user information from session storage.
+ * 
+ * This function retrieves the current user information stored in the session storage.
+ * If the current user information exists, it is returned; otherwise, an error message
+ * is logged to the console and `null` is returned.
+ *
+ * @function getCurrentUser
+ * @returns {object|null} The current user object if it exists, otherwise `null`.
+ */
+function getCurrentUser() {
+  const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+  return currentUser ? currentUser : (console.error('No current user in local storage!'), null);
+}
+
+
+
+function updateGreetingText() {
+    const currentUser = getCurrentUser();
+    const userName = document.getElementById('user__name');
+    const greetingText = document.getElementById('greeting__text');
+    clearText(greetingText);
+    clearText(userName);
+    setGreetingText(greetingText);
+    setCurrentUserName(userName, currentUser);
+}
+
+
+function clearText(element) {
+    element.innerText = '';
+}
+
+
+function setGreetingText(greetingText) {
+    const timesOfDay = {
+        morning: "Good morning,",
+        afternoon: "Good afternoon,",
+        evening: "Good evening,"
+    };
+    const currentTime = new Date().getHours();
+    const greeting = currentTime < 12 ? timesOfDay.morning : (currentTime < 18 ? timesOfDay.afternoon : timesOfDay.evening);
+    greetingText.innerText = greeting;
+}
+
+
+
+function setCurrentUserName(userName, currentUser) {
+    if (currentUser) {
+      userName.innerText = capitalizeFirstChar(currentUser['name']);
+    }
+}
+
+
+function capitalizeFirstChar(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
