@@ -1,14 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join Add Task</title>
+    <title>Add Task</title>
+    <link rel="stylesheet" href="../../styles/addTask.css">
 </head>
-
 <body>
-
+    <div class="add-task-container">
+        <div class="heading">
+            <h1>Add Task</h1>
+        </div>
+        <form action="">
+            <div class="form-container">
+                <div class="form-col-container">
+                    <div class="form-col form-col-left">
+                        <div class="form-group">
+                            <label for="title">Title<span class="required">*</span></label>
+                            <input type="text" id="title" placeholder="Enter a title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" placeholder="Enter a description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="assigned-to">Assigned to</label>
+                            <select id="assigned-to">
+                                <option value="">Select contacts to assign</option>
+                                <option value="">Sofia Müller (You)</option>
+                                <option value="">Anton Mayer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="due-date">Due date<span class="required">*</span></label>
+                            <input type="date" id="due-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Prio</label>
+                            <div class="prio-buttons">
+                                <button type="button" class="prio-btn" data-prio="urgent">Urgent <img src="../img/icons_add_task/urgent.svg" alt=""></button>
+                                <button type="button" class="prio-btn selected" data-prio="medium">Medium <img src="../img/icons_add_task/medium.svg" alt=""></button>
+                                <button type="button" class="prio-btn" data-prio="low">Low <img src="../img/icons_add_task/low.svg" alt=""></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category<span class="required">*</span></label>
+                            <select id="category">
+                                <option value="">Select task category</option>
+                                <option value="">Technical Task</option>
+                                <option value="">User Story</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subtasks">Subtasks</label>
+                            <input type="text" id="subtasks" placeholder="Add new subtask">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-bottom">
+                    <p><span class="required">*</span> This Field is required</p>
+                    <div class="form-actions">
+                        <button type="button" class="clear-btn">Clear <img src="../img/icons_add_task/cancel.svg" alt=""></button>
+                        <button type="submit" class="create-btn">Create Task <img src="../img/icons_add_task/check.svg" alt=""></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="../../js/addTask.js"></script>
 </body>
-
 </html>

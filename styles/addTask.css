@@ -1,0 +1,157 @@
+@font-face {
+    font-family: 'Inter';
+    src: url('../fonts/static/Inter-VariableFont_slnt,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+}
+
+h1 {
+    font-size: 61px;
+    font-weight: 700;
+    padding: 0 16px;
+    width: 880px;
+}
+
+.add-task-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    gap: 32px;
+    background-color: #F6F7F8;
+    text-align: left;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 96px;
+}
+
+.form-col-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.form-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 16px;
+    width: 440px;
+}
+
+.form-col-left {
+    border-right: 1px solid #D1D1D1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+input {
+    border-radius: 10px;
+    padding: 12px 21px;
+    border: 1px solid #D1D1D1;
+    font-family: inherit;
+}
+
+select {
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+}
+
+textarea {
+    padding: 16px;
+    height: 120px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    font-family: inherit;
+}
+
+.prio-buttons {
+    display: flex;
+    gap: 4px;
+}
+
+.prio-btn {
+    padding: 16px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    flex: 1;
+}
+
+.prio-btn:hover {
+    box-shadow: 0 0 4px 0 #0000001A;
+}
+
+.prio-btn:focus {
+    background-color: #FFA800;
+    color: white;
+    outline: none;
+    box-shadow: none;
+}
+
+.form-bottom {
+    padding: 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.form-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.required {
+    color: #FFA800;
+}
+
+.clear-btn, .create-btn {
+    border: 1px solid #2A3647;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.create-btn {
+    background-color: #2A3647;
+    color: white;
+}
+
+.clear-btn:hover {
+    border: 1px solid lightblue;
+    color: lightblue;
+    box-shadow: 0 0 4px 0 #0000001A;
+}
+
+.create-btn:hover {
+    background-color: lightblue;
+    border: 1px solid lightblue;
+    box-shadow: 0 0 4px 0 #0000001A;
+}
