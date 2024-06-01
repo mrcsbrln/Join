@@ -22,6 +22,7 @@ function updateFavicon() {
  */
 document.addEventListener('DOMContentLoaded', () => {
     updateFavicon();
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
 });
 
 
