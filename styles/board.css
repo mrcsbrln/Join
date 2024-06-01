@@ -90,17 +90,19 @@
 }
 
 .taskCardBig {
-
     background-color: #ffffff;
     border-radius: 24px;
-
 }
 
 
 .cardContainer {
     display: flex;
     flex-direction: column;
+    align-items: center;
     row-gap: 16px;
+    min-height: 400px;
+    outline: 2px dashed transparent;
+    border-radius: 30px ;
 }
 
 .category {
@@ -428,4 +430,12 @@
 
 .hidden {
     display: none !important;
+}
+
+.cardContainer.highlightDragArea {
+    outline-color: #ababab;
+}
+
+.dragging {
+    transform: rotate(5deg);
 }

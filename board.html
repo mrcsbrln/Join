@@ -28,9 +28,11 @@
                 </div>
                 <div class="tools boardFlex">
                     <div class="searchContainer">
-                        <input class="searchBar" type="search" placeholder="Find Task">
+                        <input id="searchBar" onkeyup="getSearchKeyword()" onemptied="getSearchKeyword()" class="searchBar" type="search"
+                            placeholder="Find Task">
                         <div class="seperator"></div>
-                        <button class="searchIcon"><img src="assets/img/icons/search.svg" alt=""></button>
+                        <button onclick="getSearchKeyword()" class="searchIcon"><img src="assets/img/icons/search.svg"
+                                alt=""></button>
                     </div>
                     <button class="addBtn">Add task +</button>
                 </div>
@@ -44,7 +46,8 @@
                 <div class="taskBoard">
                     <div id="emptyTaskTodo" class="emptyTask">No tasks To do</div>
                 </div>
-                <div id="cardContainertoDo" class="cardContainer"></div>
+                <div id="cardContainertoDo" class="cardContainer" ondrop="drop('toDo')" ondragover="allowDrop(event)">
+                </div>
             </div>
             <div class="statusItem">
                 <div class="statusHeader boardFlex">
@@ -53,7 +56,8 @@
                 <div class="taskBoard">
                     <div id="emptyTaskInProgress" class="emptyTask">No tasks in Progress</div>
                 </div>
-                <div id="cardContainerinProgress" class="cardContainer"></div>
+                <div id="cardContainerinProgress" class="cardContainer" ondrop="drop('inProgress')"
+                    ondragover="allowDrop(event)"></div>
             </div>
             <div class="statusItem">
                 <div class="statusHeader boardFlex">
@@ -62,7 +66,8 @@
                 <div class="taskBoard">
                     <div id="emptyTaskAwait" class="emptyTask">No tasks await feedback</div>
                 </div>
-                <div id="cardContainerawaitingFeedback" class="cardContainer"></div>
+                <div id="cardContainerawaitingFeedback" class="cardContainer" ondrop="drop('awaitingFeedback')"
+                    ondragover="allowDrop(event)"></div>
             </div>
             <div class="statusItem">
                 <div class="statusHeader boardFlex">
@@ -71,7 +76,8 @@
                 <div class="taskBoard">
                     <div id="emptyTaskDone" class="emptyTask">No tasks done</div>
                 </div>
-                <div id="cardContainerdone" class="cardContainer"></div>
+                <div id="cardContainerdone" class="cardContainer" ondrop="drop('done')" ondragover="allowDrop(event)">
+                </div>
             </div>
     </section>
 
