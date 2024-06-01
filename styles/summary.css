@@ -247,6 +247,11 @@ body {
 }
 
 
+main {
+    font-family: "inter", sans-serif;
+}
+
+
 .main__container {
     display: flex;
     flex-direction: row;

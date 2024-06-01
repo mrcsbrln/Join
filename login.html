@@ -39,10 +39,10 @@
                     <h1>Log in</h1>
                     <img class="logIn__separator" src="./assets/img/icons_login/separator.png" alt="separator">
 
-                    <form id="login" class="logIn__form">
+                    <form id="login" class="logIn__form" onsubmit="loginSubmit(event)">
 
                         <div class="inputField__container inputField__container-margin32">
-                            <input id="username" type="email" placeholder="email" autocomplete="email" required>
+                            <input id="email" type="email" placeholder="email" autocomplete="email" required>
                             <img class="inputField__username__icon" src="./assets/img/icons_login/mail.png" alt="mail">
                         </div>
 

@@ -94,6 +94,9 @@ body {
     align-items: center;
 }
 
+.main {
+    font-family: "inter", sans-serif;
+}
 
 .content__container {
     position: relative;
