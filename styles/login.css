@@ -408,6 +408,14 @@ body {
 }
 
 
+.check-box img:hover {
+    transform: scale(1.1);
+    box-shadow: inset 0px 0px 6px 1px rgba(0,0,0,0.2),
+                0px 0px 1px 1px rgba(0,0,0,0.2);
+    border-radius: 2px;
+}
+
+
 .check-box p {
     width: 110px;
     height: 19px;
