@@ -175,8 +175,9 @@ let tasks = [
 
 let draggedItemId = "";
 
-function init() {
+function initBoard() {
     renderCards();
+    includeHTML().then(highlightBoard);
 }
 
 
