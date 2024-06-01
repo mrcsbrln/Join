@@ -16,13 +16,13 @@
         <title>Log in</title>
     </head>
 
-    <body onload="init()">
+    <body onload="initLogin()">
 
         <div class="content__container">
 
             <header>
                 <a href="./login.html">
-                    <img id="header__logo" class="header__logo d-none" src="./assets/img/logo_black.png" alt="Logo">
+                    <img id="header__logo" class="header__logo d-none" src="./assets/img/icons_login/logo_black.png" alt="Logo">
                 </a>
                 <nav>
                     <p>Not a Join User?</p> 
@@ -42,7 +42,7 @@
                     <form id="login" class="logIn__form">
 
                         <div class="inputField__container inputField__container-margin32">
-                            <input id="username" type="email" placeholder="username" autocomplete="username" required>
+                            <input id="username" type="email" placeholder="email" autocomplete="email" required>
                             <img class="inputField__username__icon" src="./assets/img/icons_login/mail.png" alt="mail">
                         </div>
 
@@ -57,9 +57,9 @@
                             <p>Remember me</p>
                         </div>
                         
-                        <div>
-                            <button type="submit" id="button__logIn">Log in</button>
-                            <button id="button__guest">Guest Log in</button>
+                        <div class="logIn__btn__container">
+                            <button type="submit" id="btn__logIn" class="btn__logIn">Log in</button>
+                            <button id="btn__guest" class="btn__guest">Guest Log in</button>
                         </div>
                     </form>
 
@@ -68,7 +68,7 @@
 
             </main>
 
-            <footer>
+            <footer class="login__footer">
                 <a href="./privacyPolicy.html">Privacy policy</a>
                 <a href="./legalNotice.html">Legal notice</a>
             </footer>
