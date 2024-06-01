@@ -1,12 +1,5 @@
-body {
-    margin: 0;
-    font-family: Inter;
-    font-size: 16;
-}
 
 .text-content {
-    width: calc(100vw - 428px);
-    height: calc(100vh - 196px);
     background-color: rgba(246, 247, 248, 0.466);
     padding: 196px 100px 0px 328px;
     display: flex;
@@ -18,7 +11,7 @@ body {
     position: fixed;
     padding: 4px 4px 0px 4px;
     border-radius: 100px;
-    top: 264px;
+    top: 224px;
     right: 80px;
 }
 

@@ -4,19 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link id="favicon" rel="shortcut icon" href="./assets/img/favicon/logo_black.png" type="image/x-icon">
     <title>Privacy Policy</title>
     <link rel="stylesheet" href="./styles/privacyPolicy.css">
     <link rel="stylesheet" href="./styles/desktopHeader.css">
     <link rel="stylesheet" href="./styles/desktopNav.css">
     <link rel="stylesheet" href="styles.css">
     <script src="./js/privacyPolicy.js"></script>
-    <script src="./js/includeHtml.js"></script>
+    <script src="script.js"></script>
     <script src="./js/desktopHeader.js"></script>
     <script src="./js/desktopNav.js"></script>
     
 </head>
 
-<body>
+<body onload="initPrivacyPolicy()">
     <div w3-include-html="./assets/templates/desktopHeader.html"></div> 
     <div w3-include-html="./assets/templates/desktopNav.html"></div> 
 
@@ -330,9 +331,7 @@
         </ul>
 
     </div>
-    <script>
-        includeHTML();
-    </script>
+  
 </body>
 
 </html>

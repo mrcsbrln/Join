@@ -4,56 +4,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link id="favicon" rel="shortcut icon" href="./assets/img/favicon/logo_black.png" type="image/x-icon">
     <title>Contacts</title>
     <link rel="stylesheet" href="./styles/contacts.css">
     <link rel="stylesheet" href="./styles/desktopHeader.css">
     <link rel="stylesheet" href="./styles/desktopNav.css">
     <link rel="stylesheet" href="styles.css">
     <script src="./js/contacts.js"></script>
-    <script src="./js/includeHtml.js"></script>
+    <script src="script.js"></script>
     <script src="./js/desktopHeader.js"></script>
     <script src="./js/desktopNav.js"></script>
-    
+
 </head>
 
-<body>
-    <div w3-include-html="./assets/templates/desktopHeader.html"></div> 
-    <div w3-include-html="./assets/templates/desktopNav.html"></div> 
+<body onload="initContacts()">
+    <div w3-include-html="./assets/templates/desktopHeader.html"></div>
+    <div w3-include-html="./assets/templates/desktopNav.html"></div>
 
     <div class="contacts-container">
 
-        <div class="add-contact-btn">
+        <div onclick="addContact()" class="add-contact-btn">
             <p>
                 <b>Add new contact</b>
             </p>
-
-            <img src="./assets/img/add_contact.svg" alt="">
-
+            <img src="./assets/img/contacts_img/add_contact.svg" alt="">
         </div>
+
+
 
         <div class="section-letter">
             A
         </div>
         <div class="separator-line"></div>
 
-        <div class="contact">
+        <div onclick="displayContact()" class="contact">
             <div class="contact-icon">
-                 BZ 
+                BZ
             </div>
             <div class="contact-data">
                 <p>Benedikt Ziegler</p>
                 <a href="#">benedikt@gmail.com</a>
             </div>
         </div>
+
+
+    </div>
+    <div class="main-container">
+        <div class="title-container">
+            <h1>Contacts</h1>
+            <div class="title-separator"></div>
+            <p>Better with a team</p>
+        </div>
+
+        <div class="contact-displayed">
+            <div class="contact-header">
+                <div class="contact-img">AM</div>
+                <div class="contact-name">
+                    <h2> Anton Mayer</h2>
+                    <div class="contact-btns">
+                        <div class="edit-contact">
+                            <img src="./assets/img/contacts_img/edit_contact.svg" alt="">
+                            <p>Edit</p>
+                        </div>
+                        <div class="delete-contact">
+                            <img src="./assets/img/contacts_img/delete_contact.svg" alt="">
+                            <p>Delete</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="contact-info-p">Contact Information</p>
+
+            <div class="contact-info">
+                <p>Email</p>
+                <a href="anton@gmail.com">anton@gmail.com</a>
+                <p>Phone</p>
+                <a href="tel:+49 1111 111 11 1">+49 1111 111 11 1</a>
+            </div>
+
+        </div>
+
     </div>
 
 
 
 
-
-    <script>
-        includeHTML();
-    </script>
 </body>
 
 </html>

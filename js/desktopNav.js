@@ -1,35 +1,34 @@
-
-function activateLink(activeId) {
-    const links = [
-        { id: 'summary-link', imgId: 'summary-img', activeSrc: './assets/img/summary_icon_active.svg', inactiveSrc: './assets/img/summary_icon.svg' },
-        { id: 'add-task-link', imgId: 'add-task-img', activeSrc: './assets/img/add_task_icon_active.svg', inactiveSrc: './assets/img/add_task_icon.svg' },
-        { id: 'board-link', imgId: 'board-img', activeSrc: './assets/img/board_icon_active.svg', inactiveSrc: './assets/img/board_icon.svg' },
-        { id: 'contacts-link', imgId: 'contacts-img', activeSrc: './assets/img/contacts_icon_active.svg', inactiveSrc: './assets/img/contacts_icon.svg' },
-    ];
-
-    links.forEach(link => {
-        const element = document.getElementById(link.id);
-        const imgElement = document.getElementById(link.imgId);
-
-        if (link.id === activeId) {
-            element.classList.add('link-active');
-            imgElement.src = link.activeSrc;
-        } else {
-            element.classList.remove('link-active');
-            imgElement.src = link.inactiveSrc;
-        }
-    });
+function highlightSummary() {
+    document.getElementById('summary-link').classList.add('link-active');
+    document.getElementById('summary-img').src = "./assets/img/nav_img/summary_icon_active.svg";
 }
 
-function openPrivacyPolicy() {
-document.getElementById('privacy-btn').classList.add('link-active');
-document.getElementById('legal-btn').classList.remove('link-active');
 
+function highlightAddTask() {
+    document.getElementById('add-task-link').classList.add('link-active');
+    document.getElementById('add-task-img').src = "./assets/img/nav_img/add_task_icon_active.svg";
 }
 
-function openLegalNotice() {
-    document.getElementById('legal-btn').classList.add('link-active');
-    document.getElementById('privacy-btn').classList.remove('link-active');
+
+function highlightBoard() {
+    document.getElementById('board-link').classList.add('link-active');
+    document.getElementById('board-img').src = "./assets/img/nav_img/board_icon_active.svg";
+}
+
+
+function highlightContacts() {
+    document.getElementById('contacts-link').classList.add('link-active');
+    document.getElementById('contacts-img').src = "./assets/img/nav_img/contacts_icon_active.svg";
+}
+
+
+function highlightPrivacyPolicy() {
+    document.getElementById('privacy-policy-link').classList.add('link-active');
+}
+
+
+function highlightLegalNotice() {
+    document.getElementById('legal-notice-link').classList.add('link-active');
 }
 
 
