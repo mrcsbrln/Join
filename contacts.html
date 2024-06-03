@@ -22,71 +22,65 @@
     <div w3-include-html="./assets/templates/desktopNav.html"></div>
 
     <div class="contacts-container">
-
-        <div onclick="addContact()" class="add-contact-btn">
-            <p>
-                <b>Add new contact</b>
-            </p>
-            <img src="./assets/img/contacts_img/add_contact.svg" alt="">
-        </div>
-
-
-
-        <div class="section-letter">
-            A
-        </div>
-        <div class="separator-line"></div>
-
-        <div onclick="displayContact()" class="contact">
-            <div class="contact-icon">
-                BZ
-            </div>
-            <div class="contact-data">
-                <p>Benedikt Ziegler</p>
-                <a href="#">benedikt@gmail.com</a>
+        <div class="add-contact-btn-container">
+            <div onclick="addContact()" class="add-contact-btn">
+                <p>
+                    <b>Add new contact</b>
+                </p>
+                <img src="./assets/img/contacts_img/add_contact.svg" alt="">
             </div>
         </div>
-
-
+        <div class="contacts-list" id="contacts-list"></div>
     </div>
+
+
     <div class="main-container">
         <div class="title-container">
             <h1>Contacts</h1>
             <div class="title-separator"></div>
             <p>Better with a team</p>
         </div>
-
-        <div class="contact-displayed">
-            <div class="contact-header">
-                <div class="contact-img">AM</div>
-                <div class="contact-name">
-                    <h2> Anton Mayer</h2>
-                    <div class="contact-btns">
-                        <div class="edit-contact">
-                            <img src="./assets/img/contacts_img/edit_contact.svg" alt="">
-                            <p>Edit</p>
-                        </div>
-                        <div class="delete-contact">
-                            <img src="./assets/img/contacts_img/delete_contact.svg" alt="">
-                            <p>Delete</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <p class="contact-info-p">Contact Information</p>
-
-            <div class="contact-info">
-                <p>Email</p>
-                <a href="anton@gmail.com">anton@gmail.com</a>
-                <p>Phone</p>
-                <a href="tel:+49 1111 111 11 1">+49 1111 111 11 1</a>
-            </div>
-
+        <div id="contact-displayed" class="contact-displayed"></div>
+        <div id="contact-created" class="contact-created">
+            Contact succesfully created
         </div>
-
     </div>
 
+    <div class="modal">
+        <div class="pop-up-container">
+            <div class="pop-up-banner">
+                    <div class="pop-up-banner-content">
+                    <img src="./assets/img/contacts_img/banner_logo.svg" alt="">
+                    <h1>Add contact</h1>
+                    <p>Tasks are better with a team!</p>
+                    <div></div>
+                </div>
+            </div>
+            <div class="pop-up-content">
+                <div onclick="closePopUp()" class="close-pop-up">
+                    <img src="./assets/img/contacts_img/close_pop_up.svg" alt="">
+                </div>
+                <div class="contact-img add-contact-img">
+                    <img src="./assets/img/contacts_img/new_contact_icon.svg" alt="">
+                </div>
+                <div class="forms">
+
+                </div>
+                
+                <div class="pop-up-btns">
+                    <div class="cancel-btn">
+                        <p>Cancel</p>
+                        <img src="./assets/img/contacts_img/close_pop_up.svg" alt="">
+                    </div>
+                    <div class="approve-btn">
+                        <p>Create contact</p>
+                        <img src="./assets/img/contacts_img/check_icon.svg" alt="">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 
 
