@@ -1,0 +1,240 @@
+.dialogContainer {
+    position: fixed;
+    top: 0;
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.125s ease, visibility 0.125s ease;
+    visibility: hidden;
+}
+
+.containerCloseBtn {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+
+.closeBtn {
+    margin-right: 50px;
+}
+
+.dialog {
+    background-color: #FFFFFF;
+    width: 525px;
+    padding: 48px 0;
+    box-shadow: 0px 0px 4px 0px #00000029;
+    border-radius: 30px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.dialogContainer.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dialogContainer.open .dialog {
+    transform: translateX(0);
+}
+
+.dialogContent {
+    position: relative;
+    height: 100%;
+    overflow-y: none;
+    width: 445px;
+
+}
+
+.okBtnContainer {
+    display: flex;
+    justify-content: end;
+}
+
+.okBtnContainer button {
+    display: flex;
+}
+
+.taskCardBig {
+    background-color: #ffffff;
+    border-radius: 24px;
+}
+
+.categoryBig {
+    background-color: #0038FF;
+    padding: 4px 24px 4px 24px;
+    border-radius: 8px;
+    color: white;
+    font-size: 23px;
+    font-weight: 400;
+}
+
+.titelCardBig {
+    font-size: 61px;
+    font-weight: 700;
+    color: #2A3647;
+    margin: 24px 0 24px 0;
+}
+
+.descriptionCardBig {
+    font-size: 20px;
+    color: #000;
+    margin: 0 0 24px 0;
+}
+
+.footerCardBig img {
+    margin-right: 8px;
+}
+
+.footerCardBig p {
+    margin: 0;
+}
+
+.footerCardBig {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    font-size: 16px;
+    text-align: center;
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+}
+
+.footerCardEdit p {
+    margin: 0;
+}
+
+.footerCardEdit {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    font-size: 16px;
+    text-align: center;
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+}
+
+
+.footerCardBig .seperator {
+    height: 16px;
+}
+
+.taskCardBigHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.textareaContainer {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.textareaContainer textarea {
+    height: 100px !important;
+    width: 100% !important;
+    resize: none;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+    border: 1px solid #D1D1D1;
+    border-radius: 10px;
+    padding: 0 10px;
+}
+
+.textareaContainer::after {
+    content: '';
+    position: absolute;
+    right: 11px;
+    bottom: 8px;
+    width: 18.9px;
+    height: 18.9px;
+    background: url('../assets/img/icons/textarea.svg') no-repeat;
+    background-size: cover;
+    cursor: nwse-resize;
+}
+
+.prioEdit {
+    width: 137px;
+    height: 56px;
+    background-color: #fff;
+    border-radius: 10px;
+    font-size: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+    margin-bottom: 32px;
+}
+
+.prioEditContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.subtaskEdit {
+    margin-top: 32px;
+}
+
+.subtaskEdit input {
+    margin-bottom: 10px;
+}
+
+.profileBadgesEdit {
+    gap: 8px;
+}
+
+.subtasksEditList {
+    padding-left: 50px;
+}
+
+.custom-scroll {
+    overflow-y: auto;
+    width: calc(100% - 20px);
+    display: flex;
+    justify-content: center;
+    margin-right: 10px;
+    height: 90%;
+}
+
+/* Webkit-basiertes Scrollbar-Styling */
+.custom-scroll::-webkit-scrollbar {
+    width: 10px;
+    position: relative;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+    margin: 50px;
+    /* Optional: Anpassen des oberen und unteren Abstands */
+
+    /* Ändere den rechten Abstand nach Bedarf */
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+    background: #A8A8A8;
+    border-radius: 10px;
+    height: 20px;
+    width: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    width: 10px;
+}
