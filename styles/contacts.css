@@ -5,23 +5,79 @@
     flex-direction: column;
     align-items: center;
     width: 456px;
-    height: 100vh;
+    height: calc(100vh - 97px);
     top: 96px;
     left: 232px;
-    padding-top: 28px;
+    padding-top: 101px;
     box-shadow: 4px 0 6px rgba(0, 0, 0, 0.08);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+
+.contacts-container::-webkit-scrollbar {
+    width: 24px;
+}
+
+.contacts-container::-webkit-scrollbar-thumb {
+    background: rgba(168, 168, 168, 1);
+    border-radius: 100px;
+    border: 8px solid white;
+}
+
+.contacts-container::-webkit-scrollbar-thumb:hover {
+    background: rgb(150, 150, 150);
+}
+
+.contacts-container::-webkit-scrollbar-track {
+    background: white;
+}
+
+.contacts-container::-webkit-scrollbar-button:single-button {
+    background-repeat: no-repeat;
+    width: 4px;
+    height: 24px;
+}
+
+.contacts-container::-webkit-scrollbar-button:single-button:vertical:decrement {
+    background-image: url('../assets/img/contacts_img/scroll_up.svg');
+    background-position: center bottom;
+}
+
+.contacts-container::-webkit-scrollbar-button:single-button:vertical:increment {
+    background-image: url('../assets/img/contacts_img/scroll_down.svg');
+    background-position: center top;
+}
+
+
+.contacts-list {
+    padding-left: 24px;
+    padding-bottom: 24px;
+}
+
+.add-contact-btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    height: 101px;
+    width: 432px;
+    top: 96px;
+    left: 232px;
+    background-color: white;
 }
 
 .add-contact-btn {
     display: flex;
     justify-content: center;
     align-items: center;
+    left: 0px;
     gap: 16px;
     width: 352px;
     height: 56px;
     border-radius: 10px;
     background-color: rgba(42, 54, 71, 1);
-    margin-bottom: 10px;
+    margin-left: 24px;
 }
 
 .add-contact-btn:hover {
@@ -45,7 +101,7 @@
     font-size: 20px;
     width: 320px;
     height: 58px;
-    padding-left: 32px;
+    padding-left: 36px;
 }
 
 .separator-line {
@@ -60,9 +116,15 @@
     align-items: center;
     width: 352px;
     height: 78px;
-    padding-left: 32px;
+    padding-left: 24px;
     gap: 35px;
     border-radius: 10px;
+}
+
+.contact-selected {
+    background-color: rgba(42, 54, 71, 1);
+    color: white;
+    pointer-events: none;
 }
 
 .contact:hover {
@@ -141,13 +203,16 @@
 
 
 .contact-displayed {
+    top: 0px;
+    left: 0px;
+    position: relative;
+    transform: translateX(100%);
+    transition: transform 125ms ease-in-out;
     display: flex;
     flex-direction: column;
     gap: 21px;
-    width: 461px;
     height: 364px;
 }
-
 
 .contact-header {
     display: flex;
@@ -165,7 +230,7 @@
     height: 120px;
     border-radius: 70px;
     color: white;
-    background-color: orange;
+    background-color: rgba(209, 209, 209, 1);
     border: 3px solid white;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 }
@@ -182,37 +247,44 @@
     font-size: 47px;
     font-weight: 500;
 }
+
 .contact-btns {
     position: relative;
     display: flex;
     gap: 16px;
 }
+
 .edit-contact {
     position: absolute;
     display: flex;
     gap: 8px;
 }
+
 .delete-contact {
     left: 78px;
     position: absolute;
     display: flex;
     gap: 8px;
 }
+
 .edit-contact img {
     height: 18.28px;
     width: 18.28px;
     margin-left: 3px;
 }
+
 .edit-contact img {
     height: 18.28px;
     width: 18.28px;
 }
+
 .contact-btns div:hover {
     cursor: pointer;
     color: #29abe2;
     font-weight: 700;
 }
-.contact-btns div:hover img{
+
+.contact-btns div:hover img {
     filter: invert(45%) sepia(43%) saturate(2123%) hue-rotate(162deg) brightness(95%) contrast(102%);
 }
 
@@ -224,5 +296,166 @@
 }
 
 .contact-info {
-    
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.contact-info div {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-info div p {
+    font-weight: 700;
+}
+
+.contact-info div a {
+    color: rgba(0, 124, 238, 1);
+}
+
+.contact-created {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 100px;
+    left: 0;
+    transform: translateX(2000%);
+    transition: transform 125ms ease-in-out;
+    width: 326px;
+    height: 74px;
+    border-radius: 20px;
+    font-size: 20px;
+    color: white;
+    background-color: rgba(42, 54, 71, 1);
+    box-shadow: 0 0 4 rgba(0, 0, 0, 0.15);
+}
+
+.modal {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.pop-up-container {
+    display: flex;
+    border-radius: 30px;
+}
+
+.pop-up-banner {
+    position: relative;
+    height: 594px;
+    width: 450px;
+    padding: 66px 48px;
+    border-radius: 30px 0px 0px 30px;
+    background-color: rgba(42, 54, 71, 1);
+}
+
+.pop-up-banner-content {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 154px;
+    gap: 12px;
+    color: white;
+}
+
+.pop-up-banner-content h1 {
+    font-size: 61px;
+
+}
+
+.pop-up-banner-content p {
+    font-size: 27px;
+}
+
+.pop-up-banner-content img {
+    height: 66.48px;
+    width: 55.6px;
+}
+
+.pop-up-banner-content div {
+    width: 90px;
+    height: 3px;
+    background-color: rgba(41, 171, 226, 1);
+    border-radius: 10px;
+}
+
+.pop-up-content {
+    position: relative;
+    width: 745px;
+    height: 594px;
+    background-color: white;
+    border-radius: 0px 30px 30px 0px;
+}
+
+.close-pop-up {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 48px;
+    right: 48px;
+    height: 32px;
+    width: 32px;
+    border-radius: 30px;
+}
+
+.close-pop-up:hover {
+    cursor: pointer;
+    background-color: rgba(238, 238, 238, 1);
+}
+
+.add-contact-img {
+    position: absolute;
+    top: 204px;
+    right: 542px;
+}
+
+
+
+
+
+.pop-up-btns {
+    position: absolute;
+    display: flex;
+    top: 400px;
+    right: 106px;
+    height: 57px;
+    width: 364px;
+    gap: 24px;
+}
+
+.cancel-btn {  
+    transition: 75ms;  
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(42, 54, 71, 1);
+    border-radius: 10px;
+    padding: 16px;
+    gap: 4px;
+    color: rgba(42, 54, 71, 1);
+    font-size: 20px;
+}
+
+.cancel-btn:hover {
+    padding: 15px;
+    color: rgba(41, 171, 226, 1);
+    cursor: pointer;
+    border: 2px solid rgba(41, 171, 226, 1);
+    box-shadow: 0 1px 3px white,
+        0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.cancel-btn:hover img {
+    filter: invert(45%) sepia(43%) saturate(2123%) hue-rotate(162deg) brightness(95%) contrast(102%);
 }
