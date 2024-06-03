@@ -264,5 +264,15 @@ function clearForm(email, password) {
 
 
 
+/**
+ * Redirects the browser to the signup page.
+ * 
+ * This function changes the current location of the browser to 'signup.html', effectively
+ * navigating the user to the signup page.
+ *
+ */
+function redirectToSignUp() {
+    window.location.href = 'signup.html';
+}
 
 

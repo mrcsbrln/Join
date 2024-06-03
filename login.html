@@ -28,7 +28,7 @@
                 <nav class="login__nav">
                     <p>Not a Join User?</p> 
                     <a href="#">
-                        <div class="login__signUp">Sign Up</div>
+                        <div class="login__signUp" onclick="redirectToSignUp()">Sign Up</div>
                     </a>
                 </nav>
             </header>
@@ -43,12 +43,12 @@
                     <form id="login" class="logIn__form" onsubmit="loginSubmit(event)">
 
                         <div class="inputField__container inputField__container-margin32">
-                            <input id="email" type="email" placeholder="email" autocomplete="email" required>
+                            <input id="email" type="email" placeholder="Email" autocomplete="email" required>
                             <img class="inputField__username__icon" src="./assets/img/icons_login/mail.png" alt="mail">
                         </div>
 
                         <div class="inputField__container inputField__container-margin44">
-                            <input id="password" type="password" placeholder="password" autocomplete="current-password" required>
+                            <input id="password" type="password" placeholder="Password" autocomplete="current-password" required>
                             <img class="inputField__password__icon" src="./assets/img/icons_login/lock.png" alt="lock">
                         </div>
 
