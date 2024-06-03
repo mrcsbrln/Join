@@ -1,28 +1,37 @@
-/* * {
-    outline: 1px solid red;
-} */
+button{
+    cursor: pointer;
+}
+
 .body {
     background-color: #F6F7F8;
     margin: 0;
     padding: 0;
 }
 
+.overflowHidden {
+    overflow: hidden !important;
+}
+
 .board {
     flex-direction: column;
     padding-top: 96px;
     padding-left: 232px;
+}
 
+.imgDelete{
+    cursor: pointer;
+}
+
+.imgEdit{
+    cursor: pointer;
 }
 
 .boardHeader {
-
     flex-direction: column;
     align-items: space-between;
-
 }
 
 .containerTools {
-
     justify-content: space-between;
     height: 232px;
     align-items: center;
@@ -38,7 +47,6 @@
 }
 
 .tools {
-
     gap: 24px;
 }
 
@@ -83,17 +91,12 @@
 }
 
 .taskCard {
-    width: 220px;
+    width: 252px;
     background-color: #ffffff;
     border-radius: 24px;
     padding: 16px;
+    cursor: pointer;
 }
-
-.taskCardBig {
-    background-color: #ffffff;
-    border-radius: 24px;
-}
-
 
 .cardContainer {
     display: flex;
@@ -102,7 +105,7 @@
     row-gap: 16px;
     min-height: 400px;
     outline: 2px dashed transparent;
-    border-radius: 30px ;
+    border-radius: 30px;
 }
 
 .category {
@@ -112,38 +115,12 @@
     color: white;
 }
 
-.categoryBig {
-    background-color: #0038FF;
-    padding: 4px 24px 4px 24px;
-    border-radius: 8px;
-    color: white;
-    font-size: 23px;
-    font-weight: 400;
-}
-
-
 .titelCard {
     line-height: 19.2px;
     font-weight: 700;
     height: 38px;
     color: #2A3647;
     margin: 24px 0 8px 0;
-}
-
-.titelCardBig {
-    font-size: 61px;
-    font-weight: 700;
-    color: #2A3647;
-    margin: 24px 0 24px 0;
-}
-
-.descriptionCardBig {
-    margin: 0 0 24px 0;
-}
-
-.taskCardBigHeader {
-    display: flex;
-    justify-content: space-between;
 }
 
 .cardTextGrey {
@@ -171,7 +148,6 @@
 .prioContainer p {
     margin: 0 30px 0 0;
 }
-
 
 .prioContainer img {
     width: 20px;
@@ -202,7 +178,7 @@
 
 .profileBadgesBig {
     list-style-type: none;
-    padding-left: 10px;
+    padding: 10px;
 }
 
 .date {
@@ -223,7 +199,6 @@
     margin-right: 10px;
 }
 
-
 .subtasksItem {
     list-style-type: none;
     padding-left: 16px;
@@ -234,30 +209,6 @@
     margin-bottom: 24px;
 }
 
-.footerCardBig {
-    display: flex;
-    justify-content: flex-end;
-    gap: 16px;
-    font-size: 16px;
-    text-align: center;
-}
-
-.footerCardBig p {
-    margin: 0;
-}
-
-.footerCardBig img {
-    height: 16px;
-}
-
-.footerCardBig .seperator {
-    height: 16px;
-}
-
-.footerCardBig img {
-    margin-right: 8px;
-}
-
 .descriptionCard {
     line-height: 19.2px;
     color: #A8A8A8;
@@ -266,12 +217,6 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
-    margin: 0 0 24px 0;
-}
-
-.descriptionCardBig {
-    font-size: 20px;
-    color: #000;
     margin: 0 0 24px 0;
 }
 
@@ -286,12 +231,10 @@
     width: 128px;
     height: 8px;
     background: #F4F4F4;
-
 }
 
 .progressBar {
     height: 8px;
-    width: 50%;
     background-color: #4589FF;
 }
 
@@ -334,8 +277,6 @@
     font-size: 12px;
 }
 
-
-
 .boardFlex {
     display: flex;
 }
@@ -353,7 +294,6 @@
     font-weight: 400;
     line-height: 24px;
     font-size: 20px;
-
 }
 
 .searchBar::placeholder {
@@ -367,7 +307,6 @@
     display: flex;
     gap: 10px;
     background-color: #ffffff;
-
 }
 
 .addBtn {
@@ -388,46 +327,6 @@
     background-color: #D1D1D1;
 }
 
-.dialogContainer {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    overflow-x: hidden;
-    overflow-y: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: right 0.3s ease;
-}
-
-.dialog {
-    background-color: #FFFFFF;
-    width: 445px;
-    padding: 48px 40px 48px 40px;
-    box-shadow: 0px 0px 4px 0px #00000029;
-    border-radius: 30px;
-
-}
-
-.dialogContainer.open {
-    right: 0;
-}
-
-.closeBtn {
-    font-size: 24px;
-    color: #2A3647;
-    ;
-    cursor: pointer;
-}
-
-.dialogContent {
-    position: relative;
-}
-
 .hidden {
     display: none !important;
 }
@@ -438,4 +337,25 @@
 
 .dragging {
     transform: rotate(5deg);
+}
+
+.closeEdit {
+    display: flex;
+    justify-content: end;
+}
+
+.inputEdit {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #D1D1D1;
+    border-radius: 10px;
+    margin-top: 8px;
+    margin-bottom: 32px;
+    padding: 0 10px;
+}
+
+.imgInput {
+    background: url('../assets/img/icons/plusInput.svg') no-repeat;
+    background-size: 20px 20px;
+    background-position: right;
 }
