@@ -33,6 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+
+
 /**
  * Initializes the application by setting up everything:
  * - animations
@@ -41,7 +44,51 @@ document.addEventListener('DOMContentLoaded', () => {
 async function initLogin() {
     changeOfDisplayNoneAfterAnimation();
     deleteCurrentUserFromSessionStorage();    // temporary function for testing
+
+    // check if a currentUser exists in local storage (remember me was checked!)
+    checkLocalStorageForLoginData();
+
 }
+
+
+
+function checkLocalStorageForLoginData() {
+    const currentUserString = localStorage.getItem('currentUser');
+    if (currentUserString) {
+        try {
+            const currentUser = JSON.parse(currentUserString);
+            console.log('Current user found in Local Storage:', currentUser);
+
+            // put data of current user to login form
+            document.getElementById('email').value = currentUser.email;
+            document.getElementById('password').value = currentUser.password;
+            checkbox.src = './assets/img/icons_login/checkbox_checked.png';
+
+            return currentUser;
+        } catch (error) {
+            console.error('Error parsing JSON from Local Storage', error);
+            return null;
+        }
+    } else {
+        console.log('No current user found in Local Storage');
+        return null;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /**
@@ -134,8 +181,15 @@ async function loginAsGuest() {
         id: 'guest',
         color: '#00BEE8',
         initials: 'G',
+        password: 'guest',
     };
     setCurrentUser(guestUser);
+
+    // clear local storage + form (name + password) and uncheck checkbox
+    localStorage.removeItem('currentUser');
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = '';
+    checkbox.src = './assets/img/icons_login/checkbox_unchecked.png';
     // saveCurrentUserToSessionStorage(guestUser);
     redirectToSummary();
 }
@@ -173,6 +227,18 @@ function redirectToSummary() {
     window.location.href = 'summary.html';
 }
 
+
+
+/**
+ * Redirects the browser to the signup page.
+ * 
+ * This function changes the current location of the browser to 'signup.html', effectively
+ * navigating the user to the signup page.
+ *
+ */
+function redirectToSignUp() {
+    window.location.href = 'signup.html';
+}
 
 
 
@@ -216,6 +282,7 @@ async function checkLoginValues(email, password) {
 
 /* ---------  LOGIN PROCEDURE --------- */
 
+
 function loginSubmit(event) {
     event.preventDefault();
     login();
@@ -249,6 +316,7 @@ function setCurrentUser(userData) {
         id: userData.id,
         color: userData.color,
         initials: userData.initials,
+        password: userData.password,
     };
     saveCurrentUserToSessionStorage(currentUser);
 }
@@ -260,19 +328,6 @@ function setCurrentUser(userData) {
 function clearForm(email, password) {
     document.getElementById(`${email}`).value = '';
     document.getElementById(`${password}`).value = '';
-}
-
-
-
-/**
- * Redirects the browser to the signup page.
- * 
- * This function changes the current location of the browser to 'signup.html', effectively
- * navigating the user to the signup page.
- *
- */
-function redirectToSignUp() {
-    window.location.href = 'signup.html';
 }
 
 

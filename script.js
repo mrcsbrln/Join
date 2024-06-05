@@ -64,6 +64,15 @@ async function includeHTML() {
 }
 
 
+/**
+ * This function will redirect the user back to login.html
+ */
+function backToLogin() {
+    setTimeout(function () {
+        window.location.href = "login.html";
+    }, 1000);
+}
+
 
 
 
