@@ -134,7 +134,7 @@ function renderCardEditHtml(i) {
         </div>
         <div class="assignedEdit">
             <p class="cardTextGrey">Assigned to</p>
-            <select class="cardTextBlack inputEdit">
+            <select id="contactsEdit" class="cardTextBlack inputEdit">
                 <option value="">Du</option>
                 <option value="">Benjamin Blümchen</option>
                 <option value="">Karl Heinz</option>

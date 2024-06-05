@@ -181,6 +181,7 @@ function renderCardEdit(i) {
     document.getElementById('dialogContent').innerHTML = renderCardEditHtml(i);
     renderEditBadges();
     renderEditSubtaks();
+    renderCardEditContacts();
 }
 
 /**
@@ -205,6 +206,16 @@ function renderEditSubtaks() {
     actSubtasks.forEach(subtask => {
         subtaskContainer.innerHTML += `
             <li>${subtask.content}</li>
+        `;
+    });
+}
+
+function renderCardEditContacts() {
+    const contactList = document.getElementById('contactsEdit');
+    contactList.innerHTML = "";
+    contacts.forEach(contact => {
+        contactList.innerHTML += `
+            <option value="${contact.id}">${contact.name}</option>
         `;
     });
 }
