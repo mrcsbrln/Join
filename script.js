@@ -1,5 +1,18 @@
 "use strict";
 
+
+// global variable with all date of the current user
+let currentUser = {
+	name: '',
+	email: '',
+	id: '',
+	color: '',
+	initials: '',
+	password: '',
+};
+
+
+
 /**
  * 
  * Initializes-function for summary.html 
