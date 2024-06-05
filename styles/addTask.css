@@ -1,9 +1,9 @@
-@font-face {
+/* @font-face {
     font-family: 'Inter';
     src: url('../fonts/static/Inter-VariableFont_slnt,wght.ttf') format('truetype');
     font-weight: 100 900;
     font-style: normal;
-}
+} */
 
 * {
     padding: 0;
@@ -19,18 +19,23 @@ h1 {
     font-size: 61px;
     font-weight: 700;
     padding: 0 16px;
-    width: 880px;
+}
+
+.heading {
+    width: 100%;
 }
 
 .add-task-container {
+    margin-top: 96px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
-    width: 100%;
+    height: calc(100vh - 97px);
+    width: calc(100vw - 232px);
     gap: 32px;
     background-color: #F6F7F8;
     text-align: left;
+    float: right;
 }
 
 .form-container {
@@ -49,8 +54,7 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding: 0 16px;
-    width: 440px;
+    padding: 8px 16px;
 }
 
 .form-col-left {
@@ -63,17 +67,130 @@ h1 {
     gap: 4px;
 }
 
-input {
+.form-input {
     border-radius: 10px;
     padding: 12px 21px;
     border: 1px solid #D1D1D1;
     font-family: inherit;
+    width: 100%;
+    cursor: pointer;
+    width: 440px;
 }
 
-select {
-    padding: 12px 16px;
-    border-radius: 10px;
+.dropdown-container {
+    position: relative;
+    max-width: 440px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.select-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 48px;
+    padding: 0 16px;
     border: 1px solid #D1D1D1;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.select-btn .arrow-down {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 24px;
+    width: 24px;
+    transition: 125ms;
+}
+
+.select-btn.show-menu .arrow-down {
+    transform: rotate(-180deg);
+}
+
+.list-items {
+    position: relative;
+    top: -8px;
+    padding-top: 8px;
+    background-color: #fff;
+    border-radius: 0 0 10px 10px;
+    border: 1px solid #D1D1D1;
+    border-top: none;
+    display: none;
+}
+
+.select-btn.show-menu ~ .list-items {
+    display: block;
+}
+
+.list-items .list-item {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 16px;
+    height: 48px;
+    transition: 125ms;
+}
+
+.list-items .list-item:hover {
+    background-color: #EEEEEE;
+    border-radius: 10px;
+}
+
+.list-item-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cicle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #9747FF;
+    color: #fff;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    width: 40px;
+    height: 40px;
+}
+
+.list-item.checked {
+    background-color: #2A3647;
+    color: white;
+    border-radius: 10px;
+}
+
+.list-item.checked:hover {
+    background-color: #091931;
+}
+
+.custom-input-container {
+    display: flex;
+    width: 440px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.custom-input {
+    border-radius: 10px 0 0 10px;
+    border-right: 0;
+}
+
+.custom-input:focus {
+    outline: none;
+}
+
+.input-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 16px;
+    background-color: white;
+    border: 1px solid #D1D1D1;
+    border-left: 0;
+    border-radius: 0 10px 10px 0;
 }
 
 textarea {
@@ -82,6 +199,8 @@ textarea {
     border-radius: 10px;
     border: 1px solid #D1D1D1;
     font-family: inherit;
+    cursor: pointer;
+    width: 440px;
 }
 
 .prio-buttons {
@@ -99,6 +218,7 @@ textarea {
     border-radius: 10px;
     border: 1px solid #D1D1D1;
     flex: 1;
+    cursor: pointer;
 }
 
 .prio-btn:hover {
@@ -146,12 +266,12 @@ textarea {
 
 .clear-btn:hover {
     border: 1px solid lightblue;
-    color: lightblue;
-    box-shadow: 0 0 4px 0 #0000001A;
+    color: #9747FF;
+    box-shadow: 0 0 8px 0 #0000001A;
 }
 
 .create-btn:hover {
-    background-color: lightblue;
-    border: 1px solid lightblue;
+    background-color: #9747FF;
+    border: 1px solid #9747FF;
     box-shadow: 0 0 4px 0 #0000001A;
 }
