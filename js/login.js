@@ -37,6 +37,7 @@ async function initLogin() {
     checkLocalStorageForUserData();
     changePasswordIcon();
     disableLoginButtonIfFormIsEmpty();
+    logInIsCorrected();
 
 
 }
@@ -209,6 +210,7 @@ async function checkLoginValues(email, password) {
             return matchingContact;
         } else {
             console.warn("Falsches Passwort");
+            wrongPassword();
         }
     } else {
         console.warn("Kein Benutzer mit dieser E-Mail gefunden");
@@ -357,3 +359,16 @@ function disableLoginButtonIfFormIsEmpty() {
 
 
 
+let containerPassword = document.getElementById('password__container');
+let feedbackPassword = document.getElementById('form__wrongPassword__message');
+
+
+function wrongPassword() {
+    containerPassword.classList.add('wrongPassword');
+    feedbackPassword.innerHTML = 'Wrong password Ups! Try again.';
+}
+
+function logInIsCorrected() {
+    containerPassword.classList.remove('wrongPassword');
+    feedbackPassword.innerHTML = '';
+}

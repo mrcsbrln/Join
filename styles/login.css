@@ -409,6 +409,7 @@ body {
     gap: 8px;
     margin-bottom: 32px;
     margin-right: 204px;
+    margin-top: 20.4px;
 }
 
 
@@ -458,4 +459,26 @@ body {
     cursor: default;
     background-color: #a8a8a8!important;
     box-shadow: none!important;
+}
+
+
+.form__wrongPassword__container {
+    width: 100%;
+    margin-top: 8px;
+    height: 15.6px;
+    content: none;
+}
+
+
+.form__wrongPassword__message {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 15.6px;
+    color: #FF8190;
+}
+
+
+.wrongPassword {
+    /* outline: none; */
+    border-color: #FF8190 !important;
 }

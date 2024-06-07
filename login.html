@@ -47,9 +47,13 @@
                             <img class="inputField__username__icon" src="./assets/img/icons_login/mail.png" alt="mail">
                         </div>
 
-                        <div class="inputField__container inputField__container-margin44">
+                        <div id="password__container" class="inputField__container">
                             <input id="password" type="password" placeholder="Password" autocomplete="current-password" required onkeyup="changePasswordIcon()">
                             <img id="password__icon" class="inputField__password__icon pointerEvents__none" src="./assets/img/icons_login/lock.png" alt="lock" onclick="showPassword()">
+                        </div>
+
+                        <div class="form__wrongPassword__container">
+                            <div class="form__wrongPassword__message" id="form__wrongPassword__message"></div>
                         </div>
 
                         <div class="check-box">
