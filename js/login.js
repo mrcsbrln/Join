@@ -1,6 +1,24 @@
 "use strict";
 
 
+/* ####################################################################################################################################    */
+/* ---------  Still to implement --------- */
+/* ####################################################################################################################################    */
+/* 
+/* 
+/* if a currentUser is existing in sessionStorage and the user is accessing the login-html,
+/* the user should automatically redirected to summary.html
+/* 
+/* 
+/* 
+/**/
+
+
+
+
+
+
+
 // global variables  : by Meik  - shoule be only declared in script.js
 const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
 
@@ -252,7 +270,9 @@ async function login() {
     const password = document.getElementById('password').value
     const matchingContact = await checkLoginValues(email, password);
     if (matchingContact) {
-        setCurrentUser(matchingContact);
+        currentUser = matchingContact;
+        saveCurrentUserToSessionStorage(currentUser);
+        // setCurrentUser(matchingContact);
         clearForm('email', 'password');
         const checkbox = document.getElementById('checkbox');
         if (checkIfCheckBoxIsClicked(checkbox)) {
@@ -263,6 +283,7 @@ async function login() {
         }
         redirectToSummary();
     } else {
+        localStorage.removeItem('currentUser');
         console.warn("Fehler bei der Anmeldung!");
     }
 }
@@ -272,20 +293,6 @@ async function login() {
 function clearForm(email, password) {
     document.getElementById(`${email}`).value = '';
     document.getElementById(`${password}`).value = '';
-}
-
-
-
-function setCurrentUser(userData) {
-    const currentUser = {
-        name: userData.name,
-        email: userData.email,
-        id: userData.id,
-        color: userData.color,
-        initials: userData.initials,
-        password: userData.password,
-    };
-    saveCurrentUserToSessionStorage(currentUser);
 }
 
 
