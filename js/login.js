@@ -217,15 +217,10 @@ function loginAsGuest() {
         initials: 'G',
         password: 'guest',
     };
-
-    saveCurrentUser(guestUser);
-
-    // loadCurrentUser() is element of script.js
-    currentUser = loadCurrentUser();
-
+    currentUser = guestUser;
+    saveCurrentUser(currentUser);
+    clearForm('email', 'password');
     localStorage.removeItem('currentUser');
-    document.getElementById('email').value = '';
-    document.getElementById('password').value = '';
     checkbox.src = './assets/img/icons_login/checkbox_unchecked.png';
     redirectToSummary();
 }
@@ -236,21 +231,6 @@ function loginAsGuest() {
 function saveCurrentUser(user) {
     sessionStorage.setItem('currentUser', JSON.stringify(user));
 }
-
-
-
-function setCurrentUserAsGuest() {
-    currentUser = {
-        name: 'guest',
-        email: 'guest@join.de',
-        id: 'guest',
-        color: '#00BEE8',
-        initials: 'G',
-        password: 'guest',
-    };
-    console.log("Function setCurrentUserAsGuest: ", currentUser);
-}
-
 
 
 
