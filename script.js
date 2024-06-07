@@ -96,11 +96,6 @@ const defaultUser = {
 };
 
 
-// save to session storage
-function saveCurrentUser(user) {
-    sessionStorage.setItem('currentUser', JSON.stringify(user));
-}
-
 
 // check if in session storage already
 function loadCurrentUser() {
