@@ -9,6 +9,7 @@
  */
 function initSummary() {
     // includeHTML();
+    console.log(currentUser);
     includeHTML().then(highlightSummary);
     updateGreetingText();
 }
@@ -117,19 +118,19 @@ function resetIcon(element) {
 
 
 
-/**
- * Retrieves the current user information from session storage.
- * 
- * This function retrieves the current user information stored in the session storage.
- * If the current user information exists, it is returned; otherwise, an error message
- * is logged to the console and `null` is returned.
- *
-  * @returns {object|null} The current user object if it exists, otherwise `null`.
- */
-function getCurrentUser() {
-  const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-  return currentUser ? currentUser : (console.error('No current user in local storage!'), null);
-}
+// /**
+//  * Retrieves the current user information from session storage.
+//  * 
+//  * This function retrieves the current user information stored in the session storage.
+//  * If the current user information exists, it is returned; otherwise, an error message
+//  * is logged to the console and `null` is returned.
+//  *
+//   * @returns {object|null} The current user object if it exists, otherwise `null`.
+//  */
+// function getCurrentUser() {
+//   const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+//   return currentUser ? currentUser : (console.error('No current user in local storage!'), null);
+// }
 
 
 /**
@@ -141,13 +142,14 @@ function getCurrentUser() {
  *
  */
 function updateGreetingText() {
-    const currentUser = getCurrentUser();
+    // const currentUser = getCurrentUser();
     const userName = document.getElementById('user__name');
     const greetingText = document.getElementById('greeting__text');
     clearText(greetingText);
     clearText(userName);
     setGreetingText(greetingText);
-    setCurrentUserName(userName, currentUser);
+    // setCurrentUserName(userName, currentUser);
+    setCurrentUserName(userName);
 }
 
 
@@ -184,7 +186,7 @@ function setGreetingText(greetingText) {
  * @param {HTMLElement} userName - The HTML element to set the user's name into.
  * @param {object|null} currentUser - The current user object.
  */
-function setCurrentUserName(userName, currentUser) {
+function setCurrentUserName(userName) {
     if (currentUser) {
       userName.innerText = capitalizeFirstChar(currentUser['name']);
     }

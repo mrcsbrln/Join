@@ -1,15 +1,10 @@
 "use strict";
 
 
-// global variable with all date of the current user
-let currentUser = {
-	name: '',
-	email: '',
-	id: '',
-	color: '',
-	initials: '',
-	password: '',
-};
+// global variables  : by Meik 
+// const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
+
+
 
 
 
@@ -88,9 +83,42 @@ function backToLogin() {
 
 
 
+/* -----------   Session Storage & globle variable : by Meik   -------------  */
+
+
+const defaultUser = {
+    name: '',
+    email: '',
+    id: '',
+    color: '',
+    initials: '',
+    password: '',
+};
+
+
+// save to session storage
+function saveCurrentUser(user) {
+    sessionStorage.setItem('currentUser', JSON.stringify(user));
+}
+
+
+// check if in session storage already
+function loadCurrentUser() {
+    const user = sessionStorage.getItem('currentUser');
+    return user ? JSON.parse(user) : defaultUser;
+}
+
+
+// initialise globle variable
+let currentUser = loadCurrentUser();
+// console.log('main.js currentUser:', currentUser);
+
+
+
+
 
 /* ----------- Temporary contacts and tasks are initialised and set up here --------- */
-/* later we will get data from firebase realtime datebase*/
+/* later we will get data from firebase realtime datebase  : by Meik  */
 
 
 let contacts = [

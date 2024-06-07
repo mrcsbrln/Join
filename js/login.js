@@ -1,39 +1,8 @@
 "use strict";
 
 
-/**
- * Updates the href-attribut of the link-tag in summary-html based on the user's preferred color scheme
- * to access and show dirfferent machting favicon
- * 
- * IMPORTANT: Working on firefox and edge, maybe working on Chrome (Devtools -> Rendering -> emulate prefered color scheme)
- * 
- */
-function updateFavicon() {
-    favicon.href = './assets/img/logo_white.png';
-    const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    favicon.href = isDarkMode ? './assets/img/logo_white.png' : './assets/img/logo_black.png';
-}
-
-
-/**
- * Adds event listeners for the summary.html. 
- * - update href on change of preferred color scheme
- * 
- */
-document.addEventListener('DOMContentLoaded', () => {
-    updateFavicon();
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
-});
-
-
-
-
-
-/* ===============  Explizites JavaScript für die Seite =============== */
-
-
-
-
+// global variables  : by Meik  - shoule be only declared in script.js
+const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
 
 
 /**
@@ -43,60 +12,65 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 async function initLogin() {
     changeOfDisplayNoneAfterAnimation();
-    deleteCurrentUserFromSessionStorage();    // temporary function for testing
 
     // check if a currentUser exists in local storage (remember me was checked!)
-    checkLocalStorageForLoginData();
+    // if YES, form.mail & form.password & checkbox=checked are set in login.form, currentUser get data of local-storage
+    // if NO, form.mail & form.password = currentUSer & checkbox=unchecked are set in login.form
+    checkLocalStorageForUserData();
+
 
 }
 
 
+function checkLocalStorageForUserData() {
+    const userInLocalStorage = checkLocalStorageForLoginData();
+    if (userInLocalStorage) {
+        currentUser = userInLocalStorage;
+        updateLogInForm(true);
+    } else {
+        updateLogInForm(false);
+    }
+}
+
 
 function checkLocalStorageForLoginData() {
-    const currentUserString = localStorage.getItem('currentUser');
-    if (currentUserString) {
+    const userInLocalStorageString = localStorage.getItem('currentUser');
+    if (userInLocalStorageString) {
         try {
-            const currentUser = JSON.parse(currentUserString);
-            console.log('Current user found in Local Storage:', currentUser);
-
-            // put data of current user to login form
-            document.getElementById('email').value = currentUser.email;
-            document.getElementById('password').value = currentUser.password;
-            checkbox.src = './assets/img/icons_login/checkbox_checked.png';
-
-            return currentUser;
+            const userInLocalStorage = JSON.parse(userInLocalStorageString);
+            console.log('Current user found in Local Storage:', userInLocalStorage);
+            return userInLocalStorage;
         } catch (error) {
             console.error('Error parsing JSON from Local Storage', error);
             return null;
         }
     } else {
-        console.log('No current user found in Local Storage');
+        // console.log('No current user found in Local Storage');
         return null;
     }
 }
 
 
+function updateCheckboxState(checkbox, isChecked) {
+    checkbox.src = isChecked ? './assets/img/icons_login/checkbox_checked.png' : './assets/img/icons_login/checkbox_unchecked.png';
+    checkbox.dataset.checked = isChecked ? 'true' : 'false';
+}
 
 
+function updateLogInForm(inStorage) {
+    const emailField = document.getElementById('email');
+    const passwordField = document.getElementById('password');
+    const checkbox = document.getElementById('checkbox');
+    emailField.value = inStorage ? currentUser.email : '';
+    passwordField.value = inStorage ? currentUser.password : '';
+    updateCheckboxState(checkbox, inStorage);
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-/**
- * This function deleted the 'currentUser' from session storage
- * 
- */
-function deleteCurrentUserFromSessionStorage() {
-    sessionStorage.removeItem('currentUser');
+function checkBoxClicked() {
+    const checkbox = document.getElementById('checkbox');
+    const isChecked = checkIfCheckBoxIsClicked(checkbox);
+    updateCheckboxState(checkbox, !isChecked);
 }
 
 
@@ -140,79 +114,6 @@ function checkIfCheckBoxIsClicked(checkbox) {
 }
 
 
-/**
- * Toggles the checkbox state and updates its appearance.
- * 
- * This function checks the current state of a checkbox element (based on its `data-checked` attribute),
- * and toggles its state between checked and unchecked. It also updates the `src` attribute of the
- * checkbox image to reflect the new state.
- *
- * @function checkBoxClicked
- * @returns {void} This function does not return a value.
- */
-function checkBoxClicked() {
-    const checkbox = document.getElementById('checkbox');
-    const isChecked = checkIfCheckBoxIsClicked(checkbox);
-    checkbox.src = isChecked 
-        ? './assets/img/icons_login/checkbox_unchecked.png' 
-        : './assets/img/icons_login/checkbox_checked.png';
-    checkbox.dataset.checked = isChecked ? 'false' : 'true';
-}
-
-
-
-
-
-/**
- * Logs in a guest user by setting the current user information in session storage
- * and redirects to the summary page.
- *
- * This function creates a guest user object with predefined credentials, stores
- * this object in the session storage, and then calls the `redirectToSummary` function
- * to navigate to the summary page.
- *
- * @function loginAsGuest
- * @returns {void} This function does not return a value.
- */
-async function loginAsGuest() {
-    const guestUser = {
-        name: 'guest',
-        email: 'guest@join.de',
-        id: 'guest',
-        color: '#00BEE8',
-        initials: 'G',
-        password: 'guest',
-    };
-    setCurrentUser(guestUser);
-
-    // clear local storage + form (name + password) and uncheck checkbox
-    localStorage.removeItem('currentUser');
-    document.getElementById('email').value = '';
-    document.getElementById('password').value = '';
-    checkbox.src = './assets/img/icons_login/checkbox_unchecked.png';
-    // saveCurrentUserToSessionStorage(guestUser);
-    redirectToSummary();
-}
-
-
-/**
- * Saves the current user object to the session storage.
- * 
- * This function saves the current user object to the session storage if it exists.
- * If the currentUser parameter is null or undefined, a warning message is logged
- * to the console, and the function returns early without saving anything.
- *
-  * @param {object|null} currentUser - The current user object to be saved.
-  */
-function saveCurrentUserToSessionStorage(currentUser) {
-    if (currentUser) {
-        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-    } else {
-        console.warn("currentUser NA - save to local Storage not possible");
-        return;
-    }
-}
-
 
 /**
  * Redirects the browser to the summary page.
@@ -243,16 +144,15 @@ function redirectToSignUp() {
 
 
 
-/* ####################################################################################################################################    */
-/* ####################################################################################################################################    */
-/* ####################################################################################################################################    */
-/* ####################################################################################################################################    */
 
 
 
+
+/* ####################################################################################################################################    */
 /* ---------  LOAD DATA FROM FIREBASE --------- */
+/* ####################################################################################################################################    */
 
-const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
+
 
 
 async function loadData(path="") {
@@ -279,8 +179,66 @@ async function checkLoginValues(email, password) {
 
 
 
+function clearForm(email, password) {
+    document.getElementById(`${email}`).value = '';
+    document.getElementById(`${password}`).value = '';
+}
 
+
+
+
+
+
+/* ####################################################################################################################################    */
 /* ---------  LOGIN PROCEDURE --------- */
+/* ####################################################################################################################################    */
+
+
+
+
+
+// // save to session storage
+// function saveCurrentUser(user) {
+//     sessionStorage.setItem('currentUser', JSON.stringify(user));
+// }
+
+
+
+
+
+function loginAsGuest() {
+    let guestUser = {
+        name: 'guest',
+        email: 'guest@join.de',
+        id: 'guest',
+        color: '#00BEE8',
+        initials: 'G',
+        password: 'guest',
+    };
+
+    saveCurrentUser(guestUser);
+    currentUser = loadCurrentUser();
+
+    localStorage.removeItem('currentUser');
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = '';
+    checkbox.src = './assets/img/icons_login/checkbox_unchecked.png';
+    redirectToSummary();
+}
+
+
+function setCurrentUserAsGuest() {
+    currentUser = {
+        name: 'guest',
+        email: 'guest@join.de',
+        id: 'guest',
+        color: '#00BEE8',
+        initials: 'G',
+        password: 'guest',
+    };
+    console.log("Function setCurrentUserAsGuest: ", currentUser);
+}
+
 
 
 function loginSubmit(event) {
@@ -298,16 +256,16 @@ async function login() {
         clearForm('email', 'password');
         const checkbox = document.getElementById('checkbox');
         if (checkIfCheckBoxIsClicked(checkbox)) {
-            let currentUserString = sessionStorage.getItem('currentUser');
+            let currentUserString = JSON.stringify(currentUser);
             localStorage.setItem('currentUser', currentUserString);
+        } else {
+            localStorage.removeItem('currentUser');
         }
         redirectToSummary();
     } else {
         console.warn("Fehler bei der Anmeldung!");
     }
 }
-
-
 
 function setCurrentUser(userData) {
     const currentUser = {
@@ -323,11 +281,59 @@ function setCurrentUser(userData) {
 
 
 
-
-
-function clearForm(email, password) {
-    document.getElementById(`${email}`).value = '';
-    document.getElementById(`${password}`).value = '';
+function saveCurrentUserToSessionStorage(currentUser) {
+    if (currentUser) {
+        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+    } else {
+        console.warn("currentUser NA - save to local Storage not possible");
+        return;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ALTER CODE */
+
+// /**
+//  * Updates the href-attribut of the link-tag in summary-html based on the user's preferred color scheme
+//  * to access and show dirfferent machting favicon
+//  * 
+//  * IMPORTANT: Working on firefox and edge, maybe working on Chrome (Devtools -> Rendering -> emulate prefered color scheme)
+//  * 
+//  */
+// function updateFavicon() {
+//     favicon.href = './assets/img/logo_white.png';
+//     const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+//     favicon.href = isDarkMode ? './assets/img/logo_white.png' : './assets/img/logo_black.png';
+// }
+
+
+// /**
+//  * Adds event listeners for the summary.html. 
+//  * - update href on change of preferred color scheme
+//  * 
+//  */
+// document.addEventListener('DOMContentLoaded', () => {
+//     updateFavicon();
+//     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
+// });
+
+
+
 
 
