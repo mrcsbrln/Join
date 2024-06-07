@@ -36,6 +36,9 @@ async function initLogin() {
     // if NO, form.mail & form.password = currentUSer & checkbox=unchecked are set in login.form
     checkLocalStorageForUserData();
 
+    changePasswordIcon();
+    // updatePasswordIcon();
+
 
 }
 
@@ -309,6 +312,32 @@ function saveCurrentUserToSessionStorage(currentUser) {
 
 
 
+/* ####################################################################################################################################    */
+/* ---------  Effects --------- */
+/* show password and toggle icon */
+/* disable login button until form is filled */
+/* ####################################################################################################################################    */
 
+
+
+function showPassword() {
+    const passwordField = document.getElementById('password');
+    const passwordIcon = document.getElementById('password__icon');
+    const isPasswordVisible = passwordField.type === 'password';
+    passwordField.type = isPasswordVisible ? 'text' : 'password';
+    passwordIcon.src = isPasswordVisible ? './assets/img/icons_login/visibility.png' : './assets/img/icons_login/visibility_off.png';
+    passwordIcon.classList.toggle('visible', isPasswordVisible);
+    passwordField.onkeyup = isPasswordVisible ? '' : 'changePasswordIcon()';
+}
+
+
+function changePasswordIcon() {
+    const passwordField = document.getElementById('password');
+    const passwordIcon = document.getElementById('password__icon');
+    const isEmpty = passwordField.value.length === 0;
+    passwordIcon.src = isEmpty ? './assets/img/icons_login/lock.png' : './assets/img/icons_login/visibility_off.png';
+    passwordIcon.classList.toggle('visible__no', !isEmpty);
+    passwordIcon.classList.toggle('pointerEvents__none', isEmpty);
+}
 
 

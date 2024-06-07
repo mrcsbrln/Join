@@ -12,7 +12,7 @@
         <link rel="stylesheet" type="text/css" href="./styles.css">
         <link rel="stylesheet" type="text/css" href="./styles/login.css">
         <script src="./script.js" type="text/javascript"></script>
-        <script src="./js/login.js" type="text/javascript"></script>
+        <script defer src="./js/login.js" type="text/javascript"></script>
         <title>Log in</title>
     </head>
 
@@ -48,8 +48,8 @@
                         </div>
 
                         <div class="inputField__container inputField__container-margin44">
-                            <input id="password" type="password" placeholder="Password" autocomplete="current-password" required>
-                            <img class="inputField__password__icon" src="./assets/img/icons_login/lock.png" alt="lock">
+                            <input id="password" type="password" placeholder="Password" autocomplete="current-password" required onkeyup="changePasswordIcon()">
+                            <img id="password__icon" class="inputField__password__icon pointerEvents__none" src="./assets/img/icons_login/lock.png" alt="lock" onclick="showPassword()">
                         </div>
 
                         <div class="check-box">

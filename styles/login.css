@@ -436,3 +436,19 @@ body {
     text-align: center;
     color: #000000;
 }
+
+
+.pointerEvents__none {
+    pointer-events: none;
+}
+
+.visible__no {
+    width: 21.65px;
+    height: 18.95px;
+}
+
+.visible {
+    margin-bottom: 2px;
+    width: 21.65px;
+    height: 15px;
+}
