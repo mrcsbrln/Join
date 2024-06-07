@@ -452,3 +452,10 @@ body {
     width: 21.65px;
     height: 15px;
 }
+
+
+.btn__disabled {
+    cursor: default;
+    background-color: #a8a8a8!important;
+    box-shadow: none!important;
+}

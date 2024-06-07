@@ -40,7 +40,7 @@
                     <h1>Log in</h1>
                     <img class="logIn__separator" src="./assets/img/icons_login/separator.png" alt="separator">
 
-                    <form id="login" class="logIn__form" onsubmit="loginSubmit(event)">
+                    <form id="login" class="logIn__form" onsubmit="loginSubmit(event)" onkeyup="disableLoginButtonIfFormIsEmpty()">
 
                         <div class="inputField__container inputField__container-margin32">
                             <input id="email" type="email" placeholder="Email" autocomplete="email" required>

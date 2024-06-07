@@ -35,9 +35,8 @@ async function initLogin() {
     // if YES, form.mail & form.password & checkbox=checked are set in login.form, currentUser get data of local-storage
     // if NO, form.mail & form.password = currentUSer & checkbox=unchecked are set in login.form
     checkLocalStorageForUserData();
-
     changePasswordIcon();
-    // updatePasswordIcon();
+    disableLoginButtonIfFormIsEmpty();
 
 
 }
@@ -339,5 +338,22 @@ function changePasswordIcon() {
     passwordIcon.classList.toggle('visible__no', !isEmpty);
     passwordIcon.classList.toggle('pointerEvents__none', isEmpty);
 }
+
+
+
+function disableLoginButtonIfFormIsEmpty() {
+    let button = document.getElementById('btn__logIn');
+    const email = document.getElementById('email').value.length
+    const password = document.getElementById('password').value.length
+    if (email == 0 || password == 0) {
+        button.disabled = true;
+        button.classList.add('btn__disabled');
+    } else {
+        button.disabled = false;
+        button.classList.remove('btn__disabled')
+    }
+}
+
+
 
 
