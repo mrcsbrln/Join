@@ -32,9 +32,9 @@ body {
   background-color: #F6F7F8;
 }
 
-.d-none {
+/* .d-none {
   display: none !important;
-}
+} */
 
 
 a {
@@ -399,5 +399,48 @@ body {
     margin-bottom: 2px;
     width: 21.65px;
     height: 15px;
+}
+
+
+.signup__overlay__container {
+    position: absolute;
+    inset: 0 0 0 0;
+    opacity: 1;
+    background-color: transparent;
+    animation: animation_overlay 1000ms ease-in-out 0ms forwards;
+}
+
+.signup__overlay__img {
+    position: relative;
+    top: 100%;
+    left: 50%;
+    height: 74px;
+    width: 312px;
+    background-image: url('../assets/img/icons_signup/successfully.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    transform: translate(-50%, -50%);
+    animation: animation_signup 750ms ease-in-out 0ms forwards;
+}
+
+
+@keyframes animation_overlay {
+    to {
+        background-color: #F6F7F8;
+    }
+}
+
+
+@keyframes animation_signup {
+    from {
+        top: 100%;
+        left: 50%;
+    }
+
+    to {
+        top: 50%;
+        left: 50%;
+    }
 }
 
