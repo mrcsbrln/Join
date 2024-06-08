@@ -37,7 +37,7 @@
                     <h1>Sign Up</h1>
                     <img class="signUp__separator" src="./assets/img/icons_signup/separator.png" alt="separator">
 
-                    <form id="signup" class="signUp__form" onsubmit="loginSubmit(event)" onkeyup="disableSignupButtonIfFormIsEmpty()">
+                    <form id="signup" class="signUp__form" onsubmit="signUpSubmit(event)" onkeyup="disableSignupButtonIfFormIsEmpty()">
 
                         <div class="inputField__container inputField__container-margin24">
                             <input id="name" type="text" placeholder="Name" autocomplete="name" required>
@@ -56,9 +56,14 @@
                         </div>
 
                         <!-- Confirm Passwort -->
-                        <div class="inputField__container inputField__container-margin24">
+                        <div id="password__container" class="inputField__container inputField__container-margin24">
                             <input id="password__confirm" type="password" placeholder="Confirm Password" required onkeyup="changePasswordIcon('password__confirm')">
                             <img id="password__confirm__icon" class="inputField__password__icon pointerEvents__none" src="./assets/img/icons_signup/lock.png" alt="lock" onclick="showPassword('password__confirm')">
+                        </div>
+
+                        <!-- If passwords do not match, show me -->
+                        <div class="form__wrongPassword__container">
+                            <div class="form__wrongPassword__message" id="form__wrongPassword__message"></div>
                         </div>
 
                         <div class="check-box">

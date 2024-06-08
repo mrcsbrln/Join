@@ -13,6 +13,7 @@ function initSignUp() {
     changePasswordIcon('password');
     changePasswordIcon('password__confirm');
     disableSignupButtonIfFormIsEmpty();
+    logInIsCorrected();
 }
 
 
@@ -119,6 +120,103 @@ function disableSignupButtonIfFormIsEmpty() {
         button.classList.remove('btn__disabled')
     }
 }
+
+
+
+
+/* ####################################################################################################################################    */
+/* ---------  SIGNUP PROCEDURE --------- */
+/* ####################################################################################################################################    */
+
+
+function signUpSubmit(event) {
+    event.preventDefault();
+    signUp();
+}
+
+
+
+// should be async function
+function signUp() {
+    const name = document.getElementById('name').value
+    const email = document.getElementById('email').value
+    const password = document.getElementById('password').value
+    const passwordConfirm = document.getElementById('password__confirm').value
+    const passwordsMatching = checkIfPasswordsAreMatching(password, passwordConfirm);
+
+    if (!passwordsMatching) {
+        wrongPassword();
+    }
+
+
+    if (passwordsMatching) {
+        // check if password and passwordConfirm matching.
+        // if NOT passwordsMatching -> show text like in login wrong password
+        // if YES, creat newUser (see below)
+        //  - write function to get the id
+        //  - write function for initials
+        //  - creat array with 15 colors and pick one random for the newUser
+        //  - save newUser to firebase-database AND to global variable contacts
+
+        logInIsCorrected();
+
+        const newUser = {
+            name : name,
+            email : email,
+            password : password,
+            phone: '',
+            color: '',  // random please
+            initials: '',  // write a function for this
+            id: '', // write a function for this
+        }
+
+
+        // if everythign is fine:
+        // clearSignUpForm();
+        // redirectToLogin();
+    
+    }
+}
+
+
+function checkIfPasswordsAreMatching(password, passwordConfirm) {
+    const check = password === passwordConfirm;
+    return check;
+
+    // if not than show 'Ups! Your passwords don't match!
+}
+
+
+
+function clearSignUpForm() {
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('password__confirm').value = '';
+}
+
+
+
+/* Temprary for testing..... */
+let containerPassword = document.getElementById('password__container');
+let feedbackPassword = document.getElementById('form__wrongPassword__message');
+
+
+function wrongPassword() {
+    containerPassword.classList.add('wrongPassword');
+    feedbackPassword.innerHTML = `Ups! Your passwords don't match!`;
+}
+
+function logInIsCorrected() {
+    containerPassword.classList.remove('wrongPassword');
+    feedbackPassword.innerHTML = '';
+}
+
+
+/* .... new featur until here*/
+
+
+
 
 
 
