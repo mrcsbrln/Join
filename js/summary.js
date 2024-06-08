@@ -228,49 +228,28 @@ async function loadData(path="") {
 
 
 
+
 function renderSummary() {
-  console.log('Update Summary läuft jetzt');
-  console.log('toDo', XXX());
-  console.log('done', XXXX());
-  console.log('awaitingFeedback', XXXXXXXX());
-  console.log('inProgress', XXXXXXX());
-  console.log('urgent', XXXXX());
-  console.log('Anzahl Tasks', XXXXXX());
+    const todo = countTasksByCriteria('status', 'toDo');
+    const done = countTasksByCriteria('status', 'done');
+    const progress = countTasksByCriteria('status', 'inProgress');
+    const awaitingFeedback = countTasksByCriteria('status', 'awaitingFeedback');
+    const urgent = countTasksByCriteria('priority', 'urgent');
+
+    console.log('todo ', todo);
+    console.log('done ', done);
+    console.log('progress ', progress);
+    console.log('awaitingFeedback ', awaitingFeedback);
+    console.log('urgent ', urgent);
+    
+}
+
+function countTasksByCriteria(criteria, value) {
+  return tasks.filter(task => task[criteria].toLowerCase() === value.toLowerCase()).length;
 }
 
 
 
-// this function will count the to-do
-function XXX () {
-  return tasks.filter((task) => task.status.toLowerCase() === 'toDo'.toLowerCase()).length;
-}
-
-
-// this function will count the already done
-function XXXX () {
-  return tasks.filter((task) => task.status.toLowerCase() === 'done'.toLowerCase()).length;
-}
-
-// this function will count the urgent and check for Upcoming deadline
-function XXXXX () {
-  return tasks.filter((task) => task.priority.toLowerCase() === 'urgent'.toLowerCase()).length;
-}
-
-// this function will count number of tasks in total
-function XXXXXX () {
-  return tasks.length;
-}
-
-
-// this function will count number of tasks in progress
-function XXXXXXX () {
-  return tasks.filter((task) => task.status.toLowerCase() === 'inProgress'.toLowerCase()).length;
-}
-
-// this function will count number of tasks awaiting feedback
-function XXXXXXXX () {
-  return tasks.filter((task) => task.status.toLowerCase() === 'awaitingFeedback'.toLowerCase()).length;
-}
 
 
 
