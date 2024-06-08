@@ -29,6 +29,9 @@ const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.ap
  * 
  */
 async function initLogin() {
+
+    checkForCurrentUserLogin();
+
     changeOfDisplayNoneAfterAnimation();
 
     // check if a currentUser exists in local storage (remember me was checked!)
@@ -371,4 +374,32 @@ function wrongPassword() {
 function logInIsCorrected() {
     containerPassword.classList.remove('wrongPassword');
     feedbackPassword.innerHTML = '';
+}
+
+
+
+
+/* ####################################################################################################################################    */
+/* ---------  If currentUser exists in session Storage, one can not access login.html  but --------- */
+/* ---------  get redirected to summary.html  --------- */
+/* ####################################################################################################################################    */
+
+
+// check if a currentUser exists
+function checkForCurrentUserLogin() {
+    const userString = sessionStorage.getItem('currentUser');
+
+    if (userString) {
+        try {
+            const userJSON = JSON.parse(userString);
+            // console.log('Current user found in Session Storage:', userJSON.name);
+            redirectToSummary();
+        } catch (error) {
+            console.error('Error parsing JSON from Session Storage', error);
+            // redirectToLogin();
+        }
+    } else {
+        console.log('No current user found in Session Storage');
+        // redirectToLogin();
+    }
 }
