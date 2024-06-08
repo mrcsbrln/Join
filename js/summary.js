@@ -195,9 +195,7 @@ const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.ap
 getDataFromFirebase().then(renderSummary);
 
 async function getDataFromFirebase() {
-  console.log('tasks before loading = ', tasks);
-	tasks = await checkIfDatabaseIsEmpty("/tasks");
-  console.log('loaded tasks = ', tasks)
+    tasks = await checkIfDatabaseIsEmpty("/tasks");
 }
 
 
@@ -235,31 +233,60 @@ function renderSummary() {
     const progress = countTasksByCriteria('status', 'inProgress');
     const awaitingFeedback = countTasksByCriteria('status', 'awaitingFeedback');
     const urgent = countTasksByCriteria('priority', 'urgent');
-
-    // console.log('todo ', todo);
-    // console.log('done ', done);
-    // console.log('progress ', progress);
-    // console.log('awaitingFeedback ', awaitingFeedback);
-    // console.log('urgent ', urgent);
-
-    renderDateToSummary("summary__todo", todo);
-    renderDateToSummary("summary__done", done);
-    renderDateToSummary("summary__progress", progress);
-    renderDateToSummary("summary__feedback", awaitingFeedback);
-    renderDateToSummary("summary__urgent", urgent);
-    
+    renderDataToSummary("summary__todo", todo);
+    renderDataToSummary("summary__done", done);
+    renderDataToSummary("summary__progress", progress);
+    renderDataToSummary("summary__feedback", awaitingFeedback);
+    renderDataToSummary("summary__urgent", urgent);
+    renderUrgentTasksNearestDueDate();
 }
 
 
 function countTasksByCriteria(criteria, value) {
-  return tasks.filter(task => task[criteria].toLowerCase() === value.toLowerCase()).length;
+    return tasks.filter(task => task[criteria].toLowerCase() === value.toLowerCase()).length;
 }
 
 
-function renderDateToSummary(elementId, number) {
-    let element = document.getElementById(elementId);
+function renderDataToSummary(id, number) {
+    let element = document.getElementById(id);
     element.innerText = `${number}`;
 }
+
+
+function getMostUrgentTask(tasks) {
+    const urgentTasks = tasks.filter(task => task.priority.toLowerCase() === 'urgent');
+
+    if (urgentTasks.length === 0) {
+        return null;
+    }
+
+    return urgentTasks.reduce((earliestTask, currentTask) => {
+        return new Date(currentTask.dueDate) < new Date(earliestTask.dueDate) ? currentTask : earliestTask;
+    });
+}
+
+
+function formatDateString(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', options);
+}
+
+
+function renderUrgentTasksNearestDueDate() {
+    const mostUrgentTask = getMostUrgentTask(tasks);
+    if (mostUrgentTask) {
+        const mostUrgentTasksDueDate = formatDateString(mostUrgentTask.dueDate);
+        renderDataToSummary("summary__date", mostUrgentTasksDueDate);
+    } else {
+        renderDataToSummary("summary__date", 'no urgent tasks');
+        console.log('No urgent tasks found.');
+    }
+}
+
+
+
+
 
 
 
