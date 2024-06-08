@@ -39,6 +39,14 @@ async function includeHTML() {
 }
 
 
+
+
+/* ####################################################################################################################################    */
+/* ---------  Hover Effect with icon change --------- */
+/* ####################################################################################################################################    */
+
+
+
 /**
  * Changes the source image of buttons based on the provided state.
  * 
@@ -87,19 +95,20 @@ function resetIcon(element) {
 
 
 
-// /**
-//  * Retrieves the current user information from session storage.
-//  * 
-//  * This function retrieves the current user information stored in the session storage.
-//  * If the current user information exists, it is returned; otherwise, an error message
-//  * is logged to the console and `null` is returned.
-//  *
-//   * @returns {object|null} The current user object if it exists, otherwise `null`.
-//  */
-// function getCurrentUser() {
-//   const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-//   return currentUser ? currentUser : (console.error('No current user in local storage!'), null);
-// }
+
+
+
+
+/* ####################################################################################################################################    */
+/* ---------  Set Greeting Text & loading currentUser from sessionStorage --------- */
+/* ####################################################################################################################################    */
+
+
+
+// loading currentUser-data from session storage
+// this is not nessesary, because currentUser is already defined f.e. in script.js,
+// but for savety we can load it here 'again'
+currentUser = loadCurrentUser();
 
 
 /**
@@ -111,13 +120,11 @@ function resetIcon(element) {
  *
  */
 function updateGreetingText() {
-    // const currentUser = getCurrentUser();
     const userName = document.getElementById('user__name');
     const greetingText = document.getElementById('greeting__text');
     clearText(greetingText);
     clearText(userName);
     setGreetingText(greetingText);
-    // setCurrentUserName(userName, currentUser);
     setCurrentUserName(userName);
 }
 
@@ -149,18 +156,6 @@ function setGreetingText(greetingText) {
 }
 
 
-/**
- * Sets the current user's name in the provided HTML element.
- * 
- * @param {HTMLElement} userName - The HTML element to set the user's name into.
- * @param {object|null} currentUser - The current user object.
- */
-function setCurrentUserName(userName) {
-    if (currentUser) {
-      userName.innerText = capitalizeFirstChar(currentUser['name']);
-    }
-}
-
 
 /**
  * Capitalizes the first character of a string.
@@ -171,3 +166,172 @@ function setCurrentUserName(userName) {
 function capitalizeFirstChar(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+
+function setCurrentUserName(userName) {
+  if (currentUser) {
+    userName.innerText = capitalizeFirstChar(currentUser['name']);
+  }
+}
+
+
+
+
+/* ####################################################################################################################################    */
+/* ---------  load tasks-datas from firebase realtime database  --------- */
+/* ####################################################################################################################################    */
+
+
+// function for fetching data from firebase
+// while not existing we will take the data provided in script.js
+// object called tasks
+// else we will load data from firebase realtime database starting with calling getDataFromFirebase()
+
+// this const should be declared in script.js - but some memeber have it in their .js, we need to fix this
+const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
+
+
+// starts the fetch prozess. After data are fetched, the summary will get rendered with this fetched data. So the 'than' is mandatory
+getDataFromFirebase().then(renderSummary);
+
+async function getDataFromFirebase() {
+  console.log('tasks before loading = ', tasks);
+	tasks = await checkIfDatabaseIsEmpty("/tasks");
+  console.log('loaded tasks = ', tasks)
+}
+
+
+async function checkIfDatabaseIsEmpty(path="") {
+	let result = await loadData(path);
+	if (!result) {
+		console.warn("Datenbank bzw. angegebener Pfad innerhalb der Datenbank ist leer");
+		return tasksDummy;
+	} else {
+		return result;
+	}
+}
+
+
+async function loadData(path="") {
+	let response = await fetch(BASE_URL + path + ".json");
+	let responseToJson = await response.json();
+	return responseToJson;
+}
+
+
+
+
+
+/* ####################################################################################################################################    */
+/* ---------  render Date from database to summary.html --------- */
+/* ####################################################################################################################################    */
+
+
+
+function renderSummary() {
+  console.log('Update Summary läuft jetzt');
+  console.log('toDo', XXX());
+  console.log('done', XXXX());
+  console.log('awaitingFeedback', XXXXXXXX());
+  console.log('inProgress', XXXXXXX());
+  console.log('urgent', XXXXX());
+  console.log('Anzahl Tasks', XXXXXX());
+}
+
+
+
+// this function will count the to-do
+function XXX () {
+  return tasks.filter((task) => task.status.toLowerCase() === 'toDo'.toLowerCase()).length;
+}
+
+
+// this function will count the already done
+function XXXX () {
+  return tasks.filter((task) => task.status.toLowerCase() === 'done'.toLowerCase()).length;
+}
+
+// this function will count the urgent and check for Upcoming deadline
+function XXXXX () {
+  return tasks.filter((task) => task.priority.toLowerCase() === 'urgent'.toLowerCase()).length;
+}
+
+// this function will count number of tasks in total
+function XXXXXX () {
+  return tasks.length;
+}
+
+
+// this function will count number of tasks in progress
+function XXXXXXX () {
+  return tasks.filter((task) => task.status.toLowerCase() === 'inProgress'.toLowerCase()).length;
+}
+
+// this function will count number of tasks awaiting feedback
+function XXXXXXXX () {
+  return tasks.filter((task) => task.status.toLowerCase() === 'awaitingFeedback'.toLowerCase()).length;
+}
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////
+
+
+// tesksDummy is existing while testing the application so checkIfDatabaseIsEmpty() has a return-value, if firebase is empty
+let tasksDummy = [
+	{
+		"id" : 0,
+		"title" : "Dummy 0",
+		"description" : "Build start page with recipe recommendation.",
+		"category" : "User Story",
+		"status" : "toDo",
+		"dueDate" : "2024-07-31",
+		"priority" : "medium",
+		"subTasks" : [
+			{
+				"id" : 0,
+				"content" : "Implement Recipe Recommendation",
+				"completet" : true,
+			},
+			{
+				"id" : 1,
+				"content" : "Start Page Layout",
+				"completet" : false,
+			},
+		],
+		"assignedTo" : [0,5,6],
+	},
+
+	{
+		"id" : 1,
+		"title" : "Dummy 1",
+		"description" : "Define CSS naming conventions and structure",
+		"category" : "Technical Tasks",
+		"status" : "inProgress",
+		"dueDate" : "2024-07-31",
+		"priority" : "urgent",
+		"subTasks" : [
+			{
+				"id" : 0,
+				"content" : "Establish CSS Methodology",
+				"completet" : true,
+			},
+			{
+				"id" : 1,
+				"content" : "Setup Base Styles",
+				"completet" : true,
+			},
+		],
+
+		"assignedTo" : [2,7],
+	},
+
+]
