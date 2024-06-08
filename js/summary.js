@@ -236,22 +236,30 @@ function renderSummary() {
     const awaitingFeedback = countTasksByCriteria('status', 'awaitingFeedback');
     const urgent = countTasksByCriteria('priority', 'urgent');
 
-    console.log('todo ', todo);
-    console.log('done ', done);
-    console.log('progress ', progress);
-    console.log('awaitingFeedback ', awaitingFeedback);
-    console.log('urgent ', urgent);
+    // console.log('todo ', todo);
+    // console.log('done ', done);
+    // console.log('progress ', progress);
+    // console.log('awaitingFeedback ', awaitingFeedback);
+    // console.log('urgent ', urgent);
+
+    renderDateToSummary("summary__todo", todo);
+    renderDateToSummary("summary__done", done);
+    renderDateToSummary("summary__progress", progress);
+    renderDateToSummary("summary__feedback", awaitingFeedback);
+    renderDateToSummary("summary__urgent", urgent);
     
 }
+
 
 function countTasksByCriteria(criteria, value) {
   return tasks.filter(task => task[criteria].toLowerCase() === value.toLowerCase()).length;
 }
 
 
-
-
-
+function renderDateToSummary(elementId, number) {
+    let element = document.getElementById(elementId);
+    element.innerText = `${number}`;
+}
 
 
 
