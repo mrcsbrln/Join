@@ -10,6 +10,9 @@
 function initSummary() {
     includeHTML().then(highlightSummary);
     updateGreetingText();
+
+    // testing the following function
+    checkForCurrentUser();
 }
 
 
