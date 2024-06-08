@@ -1,46 +1,35 @@
 "use strict";
 
 
-/**
- * Updates the href-attribut of the link-tag in summary-html based on the user's preferred color scheme
- * to access and show dirfferent machting favicon
- * 
- * IMPORTANT: Working on firefox and edge, maybe working on Chrome (Devtools -> Rendering -> emulate prefered color scheme)
- * 
- */
-function updateFavicon() {
-    favicon.href = './assets/img/logo_white.png';
-    const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    favicon.href = isDarkMode ? './assets/img/logo_white.png' : './assets/img/logo_black.png';
-}
-
-
-/**
- * Adds event listeners for the summary.html. 
- * - update href on change of preferred color scheme
- * 
- */
-document.addEventListener('DOMContentLoaded', () => {
-    updateFavicon();
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
-});
-
-
-
-
-
-/* ===============  Explizites JavaScript für die Seite =============== */
 
 
 /**
  * 
  * Initializes-function for summary.html 
- * - setting up the necessary event listeners.
  * 
 */
 function initSignUp() {
     // includeHTML();
+    changePasswordIcon('password');
+    changePasswordIcon('password__confirm');
+    disableSignupButtonIfFormIsEmpty();
 }
+
+
+
+
+
+
+/* ####################################################################################################################################    */
+/* ---------  Effects --------- */
+/* allows to check and uncheck the checkbox */
+/* clicking on the bluw arrow redirects back to last visited page */
+/* show password and toggle icon */
+/* disable login button until form is filled */
+/* ####################################################################################################################################    */
+
+
+
 
 
 /**
@@ -73,9 +62,11 @@ function checkBoxClicked() {
     const checkbox = document.getElementById('checkbox');
     const isChecked = checkIfCheckBoxIsClicked(checkbox);
     checkbox.src = isChecked 
-        ? './assets/img/icons_login/checkbox_unchecked.png' 
-        : './assets/img/icons_login/checkbox_checked.png';
+        ? './assets/img/icons_signup/checkbox_unchecked.png' 
+        : './assets/img/icons_signup/checkbox_checked.png';
     checkbox.dataset.checked = isChecked ? 'false' : 'true';
+
+    disableSignupButtonIfFormIsEmpty();
 }
 
 
@@ -88,3 +79,65 @@ function checkBoxClicked() {
 function goBack() {
     window.history.back();
 }
+
+
+function showPassword(element) {
+    const passwordField = document.getElementById(element);
+    const passwordIcon = document.getElementById(element+'__icon');
+    const isPasswordVisible = passwordField.type === 'password';
+    passwordField.type = isPasswordVisible ? 'text' : 'password';
+    passwordIcon.src = isPasswordVisible ? './assets/img/icons_signup/visibility.png' : './assets/img/icons_signup/visibility_off.png';
+    passwordIcon.classList.toggle('visible', isPasswordVisible);
+    passwordField.onkeyup = isPasswordVisible ? '' : 'changePasswordIcon()';
+}
+
+
+function changePasswordIcon(element) {
+    const passwordField = document.getElementById(element);
+    const passwordIcon = document.getElementById(element+'__icon');
+    const isEmpty = passwordField.value.length === 0;
+    passwordIcon.src = isEmpty ? './assets/img/icons_signup/lock.png' : './assets/img/icons_signup/visibility_off.png';
+    passwordIcon.classList.toggle('visible__no', !isEmpty);
+    passwordIcon.classList.toggle('pointerEvents__none', isEmpty);
+}
+
+
+
+function disableSignupButtonIfFormIsEmpty() {
+    let button = document.getElementById('btn__signUp');
+    const name = document.getElementById('name').value.length
+    const email = document.getElementById('email').value.length
+    const password = document.getElementById('password').value.length
+    const password__confirm = document.getElementById('password__confirm').value.length
+    const checkbox = document.getElementById('checkbox');
+    const isChecked = checkIfCheckBoxIsClicked(checkbox);
+    if (email == 0 || password == 0 || name == 0 || password__confirm == 0 || !isChecked) {
+        button.disabled = true;
+        button.classList.add('btn__disabled');
+    } else {
+        button.disabled = false;
+        button.classList.remove('btn__disabled')
+    }
+}
+
+
+
+
+
+
+
+// let containerPassword = document.getElementById('password__container');
+// let feedbackPassword = document.getElementById('form__wrongPassword__message');
+
+
+// function wrongPassword() {
+//     containerPassword.classList.add('wrongPassword');
+//     feedbackPassword.innerHTML = 'Wrong password Ups! Try again.';
+// }
+
+// function logInIsCorrected() {
+//     containerPassword.classList.remove('wrongPassword');
+//     feedbackPassword.innerHTML = '';
+// }
+
+

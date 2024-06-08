@@ -376,3 +376,28 @@ body {
     left: 53.33px;
     cursor: pointer;
 }
+
+/* ------------------ */
+
+
+.btn__disabled {
+    cursor: default;
+    background-color: #a8a8a8!important;
+    box-shadow: none!important;
+}
+
+.pointerEvents__none {
+    pointer-events: none;
+}
+
+.visible__no {
+    width: 21.65px;
+    height: 18.95px;
+}
+
+.visible {
+    margin-bottom: 2px;
+    width: 21.65px;
+    height: 15px;
+}
+

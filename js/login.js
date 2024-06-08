@@ -6,8 +6,6 @@
 /* ####################################################################################################################################    */
 /* 
 /* 
-/* if a currentUser is existing in sessionStorage and the user is accessing the login-html,
-/* the user should automatically redirected to summary.html
 /* 
 /* 
 /* 
