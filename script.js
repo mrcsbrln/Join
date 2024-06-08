@@ -288,7 +288,7 @@ let tasks = [
 		"title" : "Contact Form & Imprint",
 		"description" : "Create a contac form and imprint page",
 		"category" : "User Story",
-		"status" : "toDo",
+		"status" : "done",
 		"dueDate" : "2024-07-31",
 		"priority" : "medium",
 		"subTasks" : [
