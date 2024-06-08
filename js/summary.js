@@ -8,40 +8,9 @@
  *
  */
 function initSummary() {
-    // includeHTML();
-    console.log(currentUser);
     includeHTML().then(highlightSummary);
     updateGreetingText();
 }
-
-
-/**
- * Updates the favicon based on the user's color scheme preference.
- * 
- * This function updates the favicon based on the user's color scheme preference.
- * It sets the favicon to a white logo if the user prefers dark mode, otherwise
- * it sets the favicon to a black logo.
- *
- */
-function updateFavicon() {
-    favicon.href = './assets/img/logo_white.png';
-    const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    favicon.href = isDarkMode ? './assets/img/favicon/logo_white.png' : './assets/img/favicon/logo_black.png';
-}
-
-
-/**
- * Initializes the favicon based on the user's color scheme preference when the DOM content is loaded.
- * 
- * This function initializes the favicon when the DOM content is loaded by calling the updateFavicon function
- * and adding an event listener to update the favicon when the user's color scheme preference changes.
- *
- * @listens document#DOMContentLoaded
- */
-document.addEventListener('DOMContentLoaded', () => {
-    updateFavicon();
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
-});
 
 
 /**
