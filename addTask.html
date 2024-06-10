@@ -30,64 +30,103 @@
                             <label for="description">Description</label>
                             <textarea id="description" placeholder="Enter a description"></textarea>
                         </div>
-                        <div class="dropdown-container">
-                            <div id="select-btn" class="select-btn">
-                                <span class="btn-text">Select contacts to assign</span>
-                                <span class="arrow-down">
-                                    <img src="./assets/img/icons_add_task/chevron.svg" alt="">
-                                </span>
+                        <div class="form-group">
+                            <label for="dropdown-container">Assigned to</label>
+                            <div class="dropdown-container" id="dropdown-container">
+                                <div id="select-btn" class="select-btn">
+                                    <span class="btn-text">Select contacts to assign</span>
+                                    <span class="arrow-down">
+                                        <img src="./assets/img/icons_add_task/chevron.svg" alt="">
+                                    </span>
+                                </div>
+                                <ul class="list-items">
+                                    <li class="list-item assigned-to">
+                                        <div class="list-item-name">
+                                            <div class="cicle">SM</div>
+                                            <span>Sofia Müller</span>
+                                        </div>
+                                        <img class="checkbox" src="./assets/img/icons_add_task/checkbox.svg" alt="">
+                                    </li>
+                                    <li class="list-item assigned-to">
+                                        <div class="list-item-name">
+                                            <div class="cicle">AM</div>
+                                            <span>Anton Mayer</span>
+                                        </div>
+                                        <img class="checkbox" src="./assets/img/icons_add_task/checkbox.svg" alt="">
+                                    </li>
+                                    <li class="list-item assigned-to">
+                                        <div class="list-item-name">
+                                            <div class="cicle">AS</div>
+                                            <span>Anja Schulz</span>
+                                        </div>
+                                        <img class="checkbox" src="./assets/img/icons_add_task/checkbox.svg" alt="">
+                                    </li>
+                                </ul>
                             </div>
-
-                            <ul class="list-items">
-                                <li class="list-item">
-                                    <div class="list-item-name">
-                                        <div class="cicle">SM</div>
-                                        <span>Sofia Müller</span>
-                                    </div>
-                                    <img class="checkbox" src="./assets/img/icons_add_task/checkbox.svg" alt="">
-                                </li>
-                                <li class="list-item">
-                                    <div class="list-item-name">
-                                        <div class="cicle">AM</div>
-                                        <span>Anton Mayer</span>
-                                    </div>
-                                    <img class="checkbox" src="./assets/img/icons_add_task/checkbox.svg" alt="">
-                                </li>
-                                <li class="list-item">
-                                    <div class="list-item-name">
-                                        <div class="cicle">AS</div>
-                                        <span>Anja Schulz</span>
-                                    </div>
-                                    <img class="checkbox" src="./assets/img/icons_add_task/checkbox.svg" alt="">
-                                </li>
-                            </ul>
                         </div>
                     </div>
                     <div class="form-col">
                         <div class="form-group">
-                            <label for="due-date">Due date<span class="required">*</span></label>
-                            <input type="date" id="due-date" required>
+                            <label for="due-date-input">Due date<span class="required">*</span></label>
+                            <input class="form-input" type="date" id="due-date-input" required>
                         </div>
                         <div class="form-group">
                             <label>Prio</label>
                             <div class="prio-buttons">
-                                <button type="button" id="urgent-btn" class="prio-btn" data-prio="urgent">Urgent <img src="./assets/img/icons_add_task/urgent.svg" alt=""></button>
-                                <button type="button" id="medium-btn" class="prio-btn" data-prio="medium">Medium <img src="./assets/img/icons_add_task/medium.svg" alt=""></button>
-                                <button type="button" id="low-btn" class="prio-btn" data-prio="low">Low <img src="./assets/img/icons_add_task/low.svg" alt=""></button>
+                                <button type="button" id="urgent" class="prio-btn">Urgent<img src="./assets/img/icons_add_task/urgent.svg" alt=""></button>
+                                <button type="button" id="medium" class="prio-btn active">Medium<img src="./assets/img/icons_add_task/medium-white.svg" alt=""></button>
+                                <button type="button" id="low" class="prio-btn">Low<img src="./assets/img/icons_add_task/low.svg" alt=""></button>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="category">Category<span class="required">*</span></label>
+                            <label for="category-selected">Category<span class="required">*</span></label>
+                            <div class="dropdown-container">
+                                <div id="select-btn" class="select-btn category">
+                                    <span id="category-displayed" class="btn-text">Select task category</span>
+                                    <span class="arrow-down">
+                                        <img src="./assets/img/icons_add_task/chevron.svg" alt="">
+                                    </span>
+                                </div>
+                                <ul class="list-items category">
+                                    <li data-value="Technical stack" class="list-item category">
+                                        <span>Technical stack</span>
+                                    </li>
+                                    <li data-value="User-story" class="list-item category">
+                                        <span>User Story</span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="subtasks">Subtasks</label>
-                            <div class="subtask-input">
-                                <div class="custom-input-container">
-                                    <input class="form-input custom-input" type="text" id="subtasks" placeholder="Add new subtask">
-                                    <div class="input-btn">
-                                        <img src="./assets/img/icons_add_task/add.svg" alt="">
+                            <div class="subtask-input-container">
+                                <input class="form-input subtask-input" type="text" placeholder="Add new subtask">
+                                <div class="subtask-btn add">
+                                    <img src="./assets/img/icons_add_task/add.svg" alt="">
+                                </div>
+                                <div class="subtask-btn check-cancel-div">
+                                    <div class="subtask-cancel">
+                                        <img src="./assets/img/icons_add_task/subtask-close.svg" alt="">
+                                    </div>
+                                    <div class="subtask-divider"></div>
+                                    <div class="subtask-check">
+                                        <img src="./assets/img/icons_add_task/subtask-check.svg" alt="">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="display-subtasks-container">
+                                <ul class="subtasks-list">
+                                    <li class="subtask-list-item">
+                                        <div>
+                                            <span class="li-text">Contact Form</span>
+                                        </div>
+                                        <div class="subtask-edit-icon-div">
+                                            <img src="./assets/img/icons_add_task/subtask-edit.svg" alt="">
+                                            <div class="subtask-divider-2"></div>
+                                            <img src="./assets/img/icons_add_task/subtask-delete.svg" alt="">
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>

@@ -1,10 +1,3 @@
-/* @font-face {
-    font-family: 'Inter';
-    src: url('../fonts/static/Inter-VariableFont_slnt,wght.ttf') format('truetype');
-    font-weight: 100 900;
-    font-style: normal;
-} */
-
 * {
     padding: 0;
     margin: 0;
@@ -23,6 +16,9 @@ h1 {
 
 .heading {
     width: 100%;
+    position: sticky;
+    top: 96px;
+    background-color: #F6F7F8;
 }
 
 .add-task-container {
@@ -73,6 +69,7 @@ h1 {
     border: 1px solid #D1D1D1;
     font-family: inherit;
     width: 100%;
+    height: 48px;
     cursor: pointer;
     width: 440px;
 }
@@ -109,14 +106,20 @@ h1 {
 }
 
 .list-items {
-    position: relative;
-    top: -8px;
+    position: absolute;
+    top: 48px;
+    width: 100%;
     padding-top: 8px;
     background-color: #fff;
     border-radius: 0 0 10px 10px;
     border: 1px solid #D1D1D1;
     border-top: none;
     display: none;
+}
+
+.select-btn.show-menu {
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
 }
 
 .select-btn.show-menu ~ .list-items {
@@ -166,31 +169,129 @@ h1 {
     background-color: #091931;
 }
 
-.custom-input-container {
+.list-item.category {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 16px;
+    height: 48px;
+    transition: 500ms;
+}
+
+.list-item.category:hover {
+    background-color: #EEEEEE;
+    border-radius: 10px;
+}
+
+.subtask-input-container {
     display: flex;
     width: 440px;
     cursor: pointer;
-    z-index: 2;
 }
 
-.custom-input {
+.form-input.subtask-input {
     border-radius: 10px 0 0 10px;
     border-right: 0;
+    width: calc(100% - 48px);
 }
 
-.custom-input:focus {
+.subtask-input:focus {
     outline: none;
 }
 
-.input-btn {
+.subtask-btn {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     padding: 0 16px;
     background-color: white;
     border: 1px solid #D1D1D1;
     border-left: 0;
     border-radius: 0 10px 10px 0;
+}
+
+.subtask-btn img {
+    width: 14px;
+    height: 14px;
+}
+
+.check-cancel-div {
+    display: none;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 8px;
+}
+
+.subtask-cancel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    height: 32px;
+    width: 32px;
+}
+
+.subtask-divider {
+    width: 1px;
+    height: 67%;
+    border-right: 1px solid #D1D1D1;
+    margin: 0 4px;
+}
+
+.subtask-divider-2 {
+    width: 1px;
+    height: 24px;
+    border-right: 1px solid #091931;
+    margin: 0 8px;
+}
+
+.subtask-check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    height: 32px;
+    width: 32px;
+    transition: 125ms;
+}
+
+.subtask-cancel:hover, .subtask-check:hover {
+    background-color: #D1D1D1;
+}
+
+.subtasks-list {
+    padding: 8px 0;
+}
+
+.subtask-list-item {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    padding: 4px 16px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.subtask-list-item:hover {
+    background-color: #D1D1D1;
+}
+
+.li-text::before {
+    content: "•";
+    margin-right: 8px;
+}
+
+.subtask-edit-icon-div {
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.subtask-list-item:hover .subtask-edit-icon-div {
+    display: flex;
 }
 
 textarea {
@@ -201,6 +302,7 @@ textarea {
     font-family: inherit;
     cursor: pointer;
     width: 440px;
+    resize: none;
 }
 
 .prio-buttons {
@@ -225,7 +327,7 @@ textarea {
     box-shadow: 0 0 4px 0 #0000001A;
 }
 
-.prio-btn:focus {
+.prio-btn.active {
     background-color: #FFA800;
     color: white;
     outline: none;
@@ -266,12 +368,12 @@ textarea {
 
 .clear-btn:hover {
     border: 1px solid lightblue;
-    color: #9747FF;
+    color: #29ABE2;
     box-shadow: 0 0 8px 0 #0000001A;
 }
 
 .create-btn:hover {
-    background-color: #9747FF;
+    background-color: #29ABE2;
     border: 1px solid #9747FF;
     box-shadow: 0 0 4px 0 #0000001A;
 }
