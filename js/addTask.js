@@ -7,7 +7,7 @@ function initAddTask() {
     changeSvgOnHover();
     categoryMenu();
     styleSubtaskInput();
-    addSubtask();
+    addSubTask();
 }
 
 function showMenu() {
@@ -123,7 +123,7 @@ function styleSubtaskInput() {
     })
 }
 
-function addSubtask() {
+function addSubTask() {
     const subtaskInput = document.querySelector('.subtask-input');
     const subtaskBtnCheck = document.querySelector('.subtask-check');
     const subtasksList = document.querySelector('.subtasks-list');
@@ -132,21 +132,36 @@ function addSubtask() {
         if (subtaskInput.value != '') {
             subtasksList.innerHTML += `
                 <li class="subtask-list-item">
-                    <div>
-                        <span class="li-text">${subtaskInput.value}</span>
+                    <div class="li-text">
+                        ${subtaskInput.value}
                     </div>
                     <div class="subtask-edit-icon-div">
-                        <img src="./assets/img/icons_add_task/subtask-edit.svg" alt="">
+                        <img  id="edit-subtask" src="./assets/img/icons_add_task/subtask-edit.svg" alt="">
                         <div class="subtask-divider-2"></div>
                         <img src="./assets/img/icons_add_task/subtask-delete.svg" alt="">
                     </div>
                 </li>
             `;
             subtaskInput.value = '';
+            editSubTask();
         } 
     })
 }
 
+function editSubTask() {
+    const subTaskListItmes = document.querySelectorAll('.subtask-list-item');
+
+    subTaskListItmes.forEach(item => {
+        item.addEventListener('click', () => {
+            let input = item.querySelector('.edit-subtask-input');
+            if (!input) {
+                let liText = item.querySelector('.li-text');
+                item.innerHTML = `<input class="edit-subtask-input" type="text" value="${liText.textContent.trim()}">`;
+                input = item.querySelector('.edit-subtask-input');
+            }
+        })
+    })
+}
 
 
 
