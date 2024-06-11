@@ -1,5 +1,6 @@
 function initAddTask() {
     includeHTML().then(highlightAddTask);
+    renderAssignedToContacts();
     showMenu();
     changeSvgOnHover();
     selectListItems();
@@ -36,6 +37,22 @@ function selectListItems() {
             }
         });
     });
+}
+
+function renderAssignedToContacts() {
+    console.log(contacts);
+    const assignedToList = document.querySelector('.list-items');
+    contacts.forEach(item => {
+        assignedToList.innerHTML += `
+            <li class="list-item assigned-to">
+                <div class="list-item-name">
+                    <div class="cicle" style="background-color: ${item.color}">${item.initials}</div>
+                    <span>${item.name}</span>
+                </div>
+                <img class="checkbox" src="./assets/img/icons_add_task/checkbox.svg" alt="">
+            </li>
+        `;
+    })
 }
 
 function changePrioBtn() {
@@ -156,10 +173,18 @@ function editSubTask() {
             let input = item.querySelector('.edit-subtask-input');
             if (!input) {
                 let liText = item.querySelector('.li-text');
-                item.innerHTML = `<input class="edit-subtask-input" type="text" value="${liText.textContent.trim()}">`;
+                item.innerHTML = `
+                    <input class="edit-subtask-input" type="text" value="${liText.textContent.trim()}">
+                    <div class="edit-subtask-button-div">
+                        <span><img src="./assets/img/icons_add_task/subtask-delete.svg"></span>
+                        <div class="subtask-divider"></div>
+                        <span><img src="./assets/img/icons_add_task/subtask-check.svg"></span>
+                    </div>
+                `;
                 input = item.querySelector('.edit-subtask-input');
+                item.classList.add('subtask-list-item-edit');
             }
-        })
+        })   
     })
 }
 
