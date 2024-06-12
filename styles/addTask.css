@@ -150,6 +150,13 @@ h1 {
     gap: 8px;
 }
 
+.selected-contacts-div {
+    padding: 8px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap:4px;
+}
+
 .cicle {
     display: flex;
     align-items: center;

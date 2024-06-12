@@ -1,3 +1,5 @@
+const selectedContacts = [];
+
 function initAddTask() {
     includeHTML().then(highlightAddTask);
     renderAssignedToContacts();
@@ -21,14 +23,36 @@ function showMenu() {
     })
 }
 
-function selectListItems() {
-    const listItems = document.querySelectorAll('.list-item.assigned-to');
+function renderAssignedToContacts() {
+    console.log(contacts);
+    const assignedToList = document.querySelector('.list-items');
 
-    listItems.forEach(item => {
+    contacts.forEach(item => {
+        assignedToList.innerHTML += `
+            <li class="list-item">
+                <div class="list-item-name">
+                    <div class="cicle" style="background-color: ${item.color}">${item.initials}</div>
+                    <span>${item.name}</span>
+                </div>
+                <img class="checkbox" src="./assets/img/icons_add_task/checkbox.svg" alt="">
+            </li>
+        `;
+    })
+}
+
+function selectListItems() {
+    const listItems = document.querySelectorAll('.list-item');
+
+    listItems.forEach((item, i) => {
         item.addEventListener('click', () => {
             const img = item.querySelector('.checkbox');
             item.classList.toggle('checked');
             img.classList.toggle('checked');
+
+            selectedContacts.push(contacts[i]);
+            console.log(selectedContacts);
+
+            renderSelectedContacts();
 
             if (img.classList.contains('checked')) {
                 img.src = './assets/img/icons_add_task/checkedbox.svg';
@@ -39,21 +63,16 @@ function selectListItems() {
     });
 }
 
-function renderAssignedToContacts() {
-    console.log(contacts);
-    const assignedToList = document.querySelector('.list-items');
-    contacts.forEach(item => {
-        assignedToList.innerHTML += `
-            <li class="list-item assigned-to">
-                <div class="list-item-name">
-                    <div class="cicle" style="background-color: ${item.color}">${item.initials}</div>
-                    <span>${item.name}</span>
-                </div>
-                <img class="checkbox" src="./assets/img/icons_add_task/checkbox.svg" alt="">
-            </li>
+function renderSelectedContacts() {
+    const selectedContactsDiv = document.querySelector('.selected-contacts-div');
+    selectedContactsDiv.innerHTML = '';
+    selectedContacts.forEach(item => {
+        selectedContactsDiv.innerHTML += `
+            <div class="cicle" style="background-color: ${item.color}">${item.initials}</div>
         `;
     })
 }
+
 
 function changePrioBtn() {
     const buttons = document.querySelectorAll('.prio-btn');
