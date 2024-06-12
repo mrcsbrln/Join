@@ -41,7 +41,7 @@ function renderAssignedToContacts() {
 }
 
 function selectListItems() {
-    const listItems = document.querySelectorAll('.list-item');
+    const listItems = document.querySelectorAll('.list-item.assigned-to');
 
     listItems.forEach((item, i) => {
         item.addEventListener('click', () => {
