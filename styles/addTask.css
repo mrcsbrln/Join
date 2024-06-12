@@ -93,6 +93,15 @@ h1 {
     background-color: #fff;
 }
 
+.select-btn-input {
+    border: unset;
+    width: 100%;
+}
+
+.select-btn-input:focus {
+    outline: unset;
+}
+
 .select-btn .arrow-down {
     display: flex;
     justify-content: center;

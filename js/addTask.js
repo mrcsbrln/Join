@@ -49,7 +49,7 @@ function selectListItems() {
             item.classList.toggle('checked');
             img.classList.toggle('checked');
 
-            selectedContacts.push(contacts[i]);
+            selectedContacts.push(contacts[i])
             console.log(selectedContacts);
 
             renderSelectedContacts();
@@ -73,6 +73,12 @@ function renderSelectedContacts() {
     })
 }
 
+function restoreInputValue() {
+    const selectBtnInput = document.querySelector('.select-btn-input');
+    if (selectBtnInput.value === '') {
+        selectBtnInput.value = 'Select contacts to assign';
+    }
+}
 
 function changePrioBtn() {
     const buttons = document.querySelectorAll('.prio-btn');
