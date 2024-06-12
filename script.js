@@ -185,6 +185,60 @@ function redirectToSummary() {
 /* later we will get data from firebase realtime datebase  : by Meik  */
 
 
+// These are the signed up users, which can login with password and mail
+// if a new user signs up, the new user will be stored here
+let users = [
+	{
+	  "color": "#FF70AA",
+	  "email": "antom@gmail.com",
+	  "id": 0,
+	  "initials": "AM",
+	  "name": "Anton Mayer",
+	  "password": "1234",
+	  "phone": "+49 1111 11 111 1"
+	},
+	{
+	  "color": "#FFC700",
+	  "email": "wolf@gmail.com",
+	  "id": 1,
+	  "initials": "TW",
+	  "name": "Tatjana Wolf",
+	  "password": "1234",
+	  "phone": "+49 2222 222 22 2"
+	},
+	{
+	  "color": "#6E52FF",
+	  "email": "benedikt@gmail.com",
+	  "id": 2,
+	  "initials": "BZ",
+	  "name": "Benedikt Ziegler",
+	  "password": "1234",
+	  "phone": "+49 3333 333 33 3"
+	},
+	{
+	  "color": "#FC71FF",
+	  "email": "davidberg@gmail.com",
+	  "id": 3,
+	  "initials": "DE",
+	  "name": "David Eisenberg",
+	  "password": "1234",
+	  "phone": "+49 4444 444 44 4"
+	},
+	{
+	  "color": "#FFBB2B",
+	  "email": "eva@gmail.com",
+	  "id": 4,
+	  "initials": "EF",
+	  "name": "Eva Fischer",
+	  "password": "1234",
+	  "phone": "+49 5555 555 55 5"
+	}
+]
+
+
+// These are all known contacts which can be added to tasks
+// users are at the moment integrated into contacts
+// the id should be same as the position-no
 let contacts = [
 	{
 		"id" : 0,
@@ -279,7 +333,8 @@ let contacts = [
 ];
 
 
-
+// here you can find all existing tasks of the join canban board
+// 'assignedTo' links via arry to the id in contacts-array - the id should be same as the position-no
 let tasks = [
 	{
 		"id" : 0,
