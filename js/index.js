@@ -1,6 +1,13 @@
 "use strict";
 
-checkForCurrentUser();
+
+function initIndex() {
+
+    checkForCurrentUser() ? redirectToSummary() : redirectToLogin();
+
+}
+
+
 
 // // check if a currentUser exists
 // function checkForCurrentUser() {

@@ -11,9 +11,12 @@ function initSummary() {
     includeHTML().then(highlightSummary);
     updateGreetingText();
 
-    // testing the following function
-    checkForCurrentUser();
+    // checks if a currentUser is existing in session storage. 
+    // if true, nothing happens. 
+    // if false, the user gets rediurected to the login.html
+    checkForCurrentUser() ? '' : redirectToLogin();
 }
+
 
 
 /**

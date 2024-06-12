@@ -124,15 +124,18 @@ function checkForCurrentUser() {
     if (userString) {
         try {
             const userJSON = JSON.parse(userString);
-            // console.log('Current user found in Session Storage:', userJSON.name);
+            console.log('Current user found in Session Storage:', userJSON.name);
+			return true;
             // redirectToSummary();
         } catch (error) {
             console.error('Error parsing JSON from Session Storage', error);
-            redirectToLogin();
+			return false;
+            // redirectToLogin();
         }
     } else {
         console.log('No current user found in Session Storage');
-        redirectToLogin();
+		return false;
+        // redirectToLogin();
     }
 }
 
