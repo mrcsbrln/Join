@@ -1,0 +1,18 @@
+.mobile-header {
+    position: fixed;
+    height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 16px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+
+}
+.sub-menu-mobile {
+    top: 70px;
+    right: 10px;
+}
+.mobile-profile-icon {
+    
+}

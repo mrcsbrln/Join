@@ -7,13 +7,15 @@
     <link id="favicon" rel="shortcut icon" href="./assets/img/favicon/logo_black.png" type="image/x-icon">
     <title>Contacts</title>
     <link rel="stylesheet" href="./styles/contacts.css">
+    <link rel="stylesheet" href="./styles/contactsPopUp.css">
     <link rel="stylesheet" href="./styles/desktopHeader.css">
     <link rel="stylesheet" href="./styles/desktopNav.css">
     <link rel="stylesheet" href="styles.css">
-    <script src="./js/contacts.js"></script>
     <script src="script.js"></script>
-    <script src="./js/desktopHeader.js"></script>
+    <script src="./js/contacts.js"></script>
+    <script src="./js/contactsTemplates.js"></script>
     <script src="./js/desktopNav.js"></script>
+    <script src="./js/desktopHeader.js"></script>
 
 </head>
 
@@ -21,9 +23,9 @@
     <div w3-include-html="./assets/templates/desktopHeader.html"></div>
     <div w3-include-html="./assets/templates/desktopNav.html"></div>
 
-    <div class="contacts-container">
-        <div class="add-contact-btn-container">
-            <div onclick="addContact()" class="add-contact-btn">
+    <div id="contacts-container" class="contacts-container">
+        <div class="add-contact-btn-container d-flex-center">
+            <div onclick="openPopUpWindow('add-contact')" class="add-contact-btn d-flex-center">
                 <p>
                     <b>Add new contact</b>
                 </p>
@@ -41,45 +43,71 @@
             <p>Better with a team</p>
         </div>
         <div id="contact-displayed" class="contact-displayed"></div>
-        <div id="contact-created" class="contact-created">
+        <div id="contact-created" class="contact-created d-flex-center">
             Contact succesfully created
         </div>
     </div>
 
-    <div class="modal">
-        <div class="pop-up-container">
+    <div id="modal" class="modal d-flex-center d-none">
+        <div id="add-contact" class="pop-up-container d-none">
             <div class="pop-up-banner">
-                    <div class="pop-up-banner-content">
+                <div class="pop-up-banner-content">
                     <img src="./assets/img/contacts_img/banner_logo.svg" alt="">
-                    <h1>Add contact</h1>
-                    <p>Tasks are better with a team!</p>
-                    <div></div>
+                    <div>
+                        <h1>Add contact</h1>
+                        <p>Tasks are better with a team!</p>
+                    </div>
+                    <span></span>
                 </div>
             </div>
             <div class="pop-up-content">
-                <div onclick="closePopUp()" class="close-pop-up">
+                <div onclick="closePopUpWindow('add-contact')" class="close-pop-up d-flex-center">
                     <img src="./assets/img/contacts_img/close_pop_up.svg" alt="">
                 </div>
-                <div class="contact-img add-contact-img">
+                <div class="contact-img pop-up-img d-flex-center ">
                     <img src="./assets/img/contacts_img/new_contact_icon.svg" alt="">
                 </div>
-                <div class="forms">
+                <div class="form">
+                    <form id="add-contact-form" onsubmit="addContact(); return false">
+                        <div class="input">
+                            <input id="new-name" type="text" placeholder="Name" required>
+                            <div class="icon-container">
+                                <img src="./assets/img/contacts_img/name_icon.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="input">
+                            <input id="new-email" type="email" placeholder="Email" required>
+                            <div class="icon-container">
+                                <img src="./assets/img/contacts_img/mail_icon.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="input">
+                            <input id="new-phone" type="number" placeholder="Phone" required>
+                            <div class="icon-container">
+                                <img src="./assets/img/contacts_img/phone_icon.svg" alt="">
+                            </div>
+                        </div>
 
+                    </form>
                 </div>
-                
                 <div class="pop-up-btns">
-                    <div class="cancel-btn">
+                    <button onclick="closePopUpWindow('add-contact')" class="cancel-btn">
                         <p>Cancel</p>
-                        <img src="./assets/img/contacts_img/close_pop_up.svg" alt="">
-                    </div>
-                    <div class="approve-btn">
-                        <p>Create contact</p>
-                        <img src="./assets/img/contacts_img/check_icon.svg" alt="">
-                    </div>
+                        <div class="icon-container">
+                            <img src="./assets/img/contacts_img/close_pop_up.svg" alt="">
+                        </div>
+                    </button>
+                    <button type="submit" form="add-contact-form" class="approve-btn">
+                        <p><b>Create contact</b></p>
+                        <div class="icon-container">
+                            <img src="./assets/img/contacts_img/check_icon.svg" alt="">
+                        </div>
+                    </button>
                 </div>
-
             </div>
         </div>
+        <div id="edit-contact" class="pop-up-container d-none"></div>
+
     </div>
 
 

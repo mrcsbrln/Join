@@ -1,6 +1,10 @@
 function initHelp() {
-    includeHTML().then(hideHelpIcon);
+    includeHTML().then(() => {
+    hideHelpIcon();
+    updateHeaderProfileInitials();
+    });
 }
+
 
 
 function goBack() {

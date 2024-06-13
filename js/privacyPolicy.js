@@ -1,5 +1,9 @@
-function initPrivacyPolicy(){
-    includeHTML().then(highlightPrivacyPolicy);
+ function initPrivacyPolicy(){
+    includeHTML().then(() => {
+        hideNavBar()
+        hideHeaderIcons();
+        highlightPrivacyPolicy();
+    });
 }
 
 function goBack() {

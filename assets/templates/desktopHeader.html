@@ -1,23 +1,33 @@
 <header>
-    <p>Kanban Project Management Tool
+    <img class="header-logo" src="./assets/img/header_img/header_logo.svg" alt="">
+    <p class="header-slogan">Kanban Project Management Tool
     </p>
-    <div class="header-icons">
+    <div id="header-icons" class="header-icons">
         <div class="help-icon">
-            <a href="../../help.html">
-                <img id="hide-help-icon" src="../../assets/img/header_img/help_icon.svg" alt="">
+            <a href="./help.html">
+                <img id="hide-help-icon" src="./assets/img/header_img/help_icon.svg" alt="">
             </a>
         </div>
         <div onclick="openSubMenu()" class="profile-icon">
-            <div class="profile-name">SM</div>    
+            <div id="header-profile-icon" class="profile-name">SM</div>
         </div>
     </div>
 </header>
 
 
-<div id="sub-menu-bg" class="d-none">
+<div id="sub-menu-modal" class="sub-menu-bg d-none">
     <div class="sub-menu">
-        <a href="./legalNotice.html"><div>Legal Notice</div></a>
-        <a href="./privacyPolicy.html"><div>Privacy Policy</div></a>
-        <a href="#"><div>Log Out</div></a>
+        <a class="help-link" href="./help.html">
+            <div>Help</div>
+        </a>
+        <a href="./legalNotice.html">
+            <div>Legal Notice</div>
+        </a>
+        <a href="./privacyPolicy.html">
+            <div>Privacy Policy</div>
+        </a>
+        <a href="#">
+            <div>Log Out</div>
+        </a>
     </div>
 </div>

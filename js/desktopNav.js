@@ -31,6 +31,16 @@ function highlightLegalNotice() {
     document.getElementById('legal-notice-link').classList.add('link-active');
 }
 
+function hideNavBar() {
+    let navLinks = document.getElementById('nav-links');
+    if (!currentUser.name) {
+        navLinks.classList.add('d-none');
+    } else {
+        navLinks.classList.remove('d-none');
+    }
+}
+
+
 
 
 

@@ -1,5 +1,9 @@
-function initLegalNotice(){
-    includeHTML().then(highlightLegalNotice);
+function initLegalNotice() {
+    includeHTML().then(() => {
+        hideNavBar();
+        hideHeaderIcons();
+        highlightLegalNotice();
+ });
 }
 
 
