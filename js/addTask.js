@@ -41,15 +41,16 @@ function renderAssignedToContacts() {
 }
 
 function selectListItems() {
-    const listItems = document.querySelectorAll('.list-item.assigned-to');
+    const listItems = document.querySelectorAll('.list-item');
 
     listItems.forEach((item, i) => {
         item.addEventListener('click', () => {
             const img = item.querySelector('.checkbox');
             item.classList.toggle('checked');
             img.classList.toggle('checked');
-
             selectedContacts.push(contacts[i])
+
+            
             console.log(selectedContacts);
 
             renderSelectedContacts();
