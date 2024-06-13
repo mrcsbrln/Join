@@ -29,7 +29,7 @@ function renderAssignedToContacts() {
 
     contacts.forEach(item => {
         assignedToList.innerHTML += `
-            <li class="list-item">
+            <li class="list-item assigned-to">
                 <div class="list-item-name">
                     <div class="cicle" style="background-color: ${item.color}">${item.initials}</div>
                     <span>${item.name}</span>
@@ -41,25 +41,28 @@ function renderAssignedToContacts() {
 }
 
 function selectListItems() {
-    const listItems = document.querySelectorAll('.list-item');
+    const listItems = document.querySelectorAll('.list-item.assigned-to');
 
     listItems.forEach((item, i) => {
         item.addEventListener('click', () => {
             const img = item.querySelector('.checkbox');
             item.classList.toggle('checked');
             img.classList.toggle('checked');
-            selectedContacts.push(contacts[i])
 
-            
-            console.log(selectedContacts);
-
-            renderSelectedContacts();
-
-            if (img.classList.contains('checked')) {
+            const contact = contacts[i];
+            if (item.classList.contains('checked')) {
+                if (!selectedContacts.includes(contact)) {
+                    selectedContacts.push(contact);
+                }
                 img.src = './assets/img/icons_add_task/checkedbox.svg';
             } else {
+                const index = selectedContacts.indexOf(contact);
+                if (index !== -1) {
+                    selectedContacts.splice(index, 1);
+                }
                 img.src = './assets/img/icons_add_task/checkbox.svg';
             }
+            renderSelectedContacts();
         });
     });
 }

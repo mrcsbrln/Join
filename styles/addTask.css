@@ -129,6 +129,7 @@ h1 {
     border: 1px solid #D1D1D1;
     border-top: none;
     display: none;
+    z-index: 2;
 }
 
 .select-btn.show-menu {
