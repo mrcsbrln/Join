@@ -484,6 +484,6 @@ body {
 
 
 .inputField__container:has(input:focus) {
-    border-color: #29ABE2;
+    border-color: #29ABE2 !important;
 }
 

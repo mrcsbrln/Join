@@ -329,7 +329,7 @@ function showPassword() {
     passwordField.type = isPasswordVisible ? 'text' : 'password';
     passwordIcon.src = isPasswordVisible ? './assets/img/icons_login/visibility.png' : './assets/img/icons_login/visibility_off.png';
     passwordIcon.classList.toggle('visible', isPasswordVisible);
-    passwordField.onkeyup = isPasswordVisible ? '' : 'changePasswordIcon()';
+    passwordField.onkeyup = isPasswordVisible ? null : 'changePasswordIcon()';
 }
 
 
@@ -374,6 +374,10 @@ function logInIsCorrected() {
     feedbackPassword.innerHTML = '';
 }
 
+
+function keyIsUp() {
+    console.log("Key is up");
+}
 
 
 
