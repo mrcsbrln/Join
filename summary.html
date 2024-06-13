@@ -22,11 +22,8 @@
 
     <body onload="initSummary()">
 
-        <header w3-include-html="assets/templates/desktopHeader.html">
-        </header>
-
-        <nav w3-include-html="assets/templates/desktopNav.html">
-        </nav>
+        <div w3-include-html="assets/templates/desktopHeader.html"></div>
+        <div w3-include-html="assets/templates/desktopNav.html"></div>
 
         <main>
 
@@ -47,7 +44,7 @@
 
                             <!-- two tiles  -->
                             <div class="summary__first__section">
-                                <a href="#">
+                                <a href="./board.html">
                                     <div class="summary__two_tiles" onmouseover="changeIcon(this)" onmouseout="resetIcon(this)">
                                         <img id="summary__toDo" src="./assets/img/icons_summary/edit_dark.png" alt="edit">
                                         <!-- <div class="edit_img"></div> -->
@@ -58,7 +55,7 @@
                                     </div>
                                 </a>
 
-                                <a href="#">
+                                <a href="./board.html">
                                     <div class="summary__two_tiles" onmouseover="changeIcon(this)" onmouseout="resetIcon(this)">
                                         <!-- <img id="summary__done" src="./assets/img/icons/icons_summary/done_dark.png" alt="check"> -->
                                         <img id="summary__done" src="./assets/img/icons_summary/done_dark.png" alt="check">
@@ -72,7 +69,7 @@
 
                             <!-- one tile/s  -->
                             <div>
-                                <a href="#">
+                                <a href="./board.html">
                                     <div class="summary__second__section">
 
                                         <div>
@@ -97,21 +94,21 @@
 
                             <!-- 3 tiles  -->
                             <div class="summary__third__section">
-                                <a href="#">
+                                <a href="./board.html">
                                     <div class="summary__third__section-tiles">
                                         <div id="summary__tasks" class="summary__tiles__number">5</div>
                                         <div class="summary__text__top-and-bottom">Tasks in<br>Board</div>
                                 </div>
                                 </a>
 
-                                <a href="#">
+                                <a href="./board.html">
                                     <div class="summary__third__section-tiles">
                                         <div id="summary__progress" class="summary__tiles__number">2</div>
                                         <div class="summary__text__top-and-bottom">Tasks in<br>Progress</div>
                                     </div>
                                 </a>
 
-                                <a href="#">
+                                <a href="./board.html">
                                     <div class="summary__third__section-tiles">
                                         <div id="summary__feedback" class="summary__tiles__number">2</div>
                                         <div class="summary__text__top-and-bottom summary__text__top-and-bottom-text_align">Awaiting<br>Feedback</div>

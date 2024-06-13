@@ -8,7 +8,11 @@
  *
  */
 function initSummary() {
-    includeHTML().then(highlightSummary);
+    includeHTML().then(() => {
+      highlightSummary();
+      updateHeaderProfileInitials()
+    })
+
     updateGreetingText();
 
     // checks if a currentUser is existing in session storage. 

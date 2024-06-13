@@ -479,6 +479,11 @@ body {
 
 
 .wrongPassword {
-    /* outline: none; */
     border-color: #FF8190 !important;
 }
+
+
+.inputField__container:has(input:focus) {
+    border-color: #29ABE2;
+}
+
