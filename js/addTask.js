@@ -17,9 +17,14 @@ function initAddTask() {
 function showMenu() {
     const selectBtns = document.querySelectorAll('.select-btn');
 
-    selectBtns.forEach( selectBtn => {
+    selectBtns.forEach(selectBtn => {
         selectBtn.addEventListener('click', () => {
-            selectBtn.classList.toggle('show-menu');    
+            selectBtn.classList.toggle('show-menu');
+        })
+    })
+    selectBtns.forEach(selectBtn => {
+        selectBtn.addEventListener('focus', () => {
+            selectBtn.classList.toggle('show-menu');
         })
     })
 }
@@ -29,9 +34,7 @@ function filterContacts() {
     selectBtnInput.addEventListener('input', () => {
         let filterValue = selectBtnInput.value.toLowerCase();
         filteredContacts = contacts.filter(contact => contact.name.toLowerCase().startsWith(filterValue));
-        // console.log(filteredContacts);
         renderContacts();
-        selectListItems();
     })
 }
 
@@ -40,19 +43,19 @@ function renderContacts() {
     assignedToList.innerHTML = '';
 
     filteredContacts.forEach(item => {
+        const isSelected = selectedContacts.includes(item);
         assignedToList.innerHTML += `
-            <li class="list-item assigned-to">
+            <li class="list-item assigned-to ${isSelected ? 'checked' : ''}">
                 <div class="list-item-name">
                     <div class="cicle" style="background-color: ${item.color}">${item.initials}</div>
                     <span>${item.name}</span>
                 </div>
-                <img class="checkbox" src="./assets/img/icons_add_task/checkbox.svg" alt="">
+                <img class="checkbox ${isSelected ? 'checked' : ''}" src="./assets/img/icons_add_task/${isSelected ? 'checkedbox' : 'checkbox'}.svg" alt="">
             </li>
         `;
     });
     selectListItems();
 }
-
 
 function selectListItems() {
     const listItems = document.querySelectorAll('.list-item.assigned-to');
@@ -63,7 +66,7 @@ function selectListItems() {
             item.classList.toggle('checked');
             img.classList.toggle('checked');
 
-            const contact = contacts[i];
+            const contact = filteredContacts[i];
             if (item.classList.contains('checked')) {
                 if (!selectedContacts.includes(contact)) {
                     selectedContacts.push(contact);
@@ -76,12 +79,12 @@ function selectListItems() {
                 }
                 img.src = './assets/img/icons_add_task/checkbox.svg';
             }
-            renderSelectedContacts();
+            renderSelectedContactsBelow();
         });
     });
 }
 
-function renderSelectedContacts() {
+function renderSelectedContactsBelow() {
     const selectedContactsDiv = document.querySelector('.selected-contacts-div');
     selectedContactsDiv.innerHTML = '';
     selectedContacts.forEach(item => {
@@ -90,7 +93,6 @@ function renderSelectedContacts() {
         `;
     })
 }
-
 
 function changePrioBtn() {
     const buttons = document.querySelectorAll('.prio-btn');
@@ -130,15 +132,15 @@ function changeSvgOnHover() {
     const cancelIcon = document.getElementById('cancel-icon');
 
     clearBtn.addEventListener('mouseover', () => {
-    cancelIcon.src = './assets/img/icons_add_task/cancel-hover.svg';
-});
+        cancelIcon.src = './assets/img/icons_add_task/cancel-hover.svg';
+    });
 
     clearBtn.addEventListener('mouseout', () => {
-    cancelIcon.src = './assets/img/icons_add_task/cancel.svg';
-});    
+        cancelIcon.src = './assets/img/icons_add_task/cancel.svg';
+    });
 }
 
-function categoryMenu(){
+function categoryMenu() {
     const selectBtnCategory = document.querySelector('.select-btn.category');
     const categoryDisplayed = document.getElementById('category-displayed');
     const listItems = document.querySelectorAll('.list-item.category');
@@ -160,12 +162,12 @@ function styleSubtaskInput() {
     const subtaskBtnAdd = document.querySelector('.subtask-btn.add');
     const subtaskBtnCheckCancel = document.querySelector('.check-cancel-div');
     const subtaskCancelBtn = document.querySelector('.subtask-cancel');
-    
+
     subtaskBtnAdd.addEventListener('click', () => {
         subtaskBtnAdd.style.display = 'none';
         subtaskBtnCheckCancel.style.display = 'flex';
     })
-    
+
     subtaskInput.addEventListener('focus', () => {
         subtaskBtnAdd.style.display = 'none';
         subtaskBtnCheckCancel.style.display = 'flex';
@@ -190,7 +192,7 @@ function addSubTask() {
                         ${subtaskInput.value}
                     </div>
                     <div class="subtask-edit-icon-div">
-                        <img  id="edit-subtask" src="./assets/img/icons_add_task/subtask-edit.svg" alt="">
+                        <img id="edit-subtask" src="./assets/img/icons_add_task/subtask-edit.svg" alt="">
                         <div class="subtask-divider-2"></div>
                         <img src="./assets/img/icons_add_task/subtask-delete.svg" alt="">
                     </div>
@@ -198,14 +200,14 @@ function addSubTask() {
             `;
             subtaskInput.value = '';
             editSubTask();
-        } 
+        }
     })
 }
 
 function editSubTask() {
-    const subTaskListItmes = document.querySelectorAll('.subtask-list-item');
+    const subTaskListItems = document.querySelectorAll('.subtask-list-item');
 
-    subTaskListItmes.forEach(item => {
+    subTaskListItems.forEach(item => {
         item.addEventListener('click', () => {
             let input = item.querySelector('.edit-subtask-input');
             if (!input) {
@@ -221,10 +223,6 @@ function editSubTask() {
                 input = item.querySelector('.edit-subtask-input');
                 item.classList.add('subtask-list-item-edit');
             }
-        })   
+        })
     })
 }
-
-
-
-
