@@ -1,16 +1,17 @@
 const selectedContacts = [];
+let filteredContacts = contacts;
 
 function initAddTask() {
     includeHTML().then(highlightAddTask);
-    renderAssignedToContacts();
+    filterContacts();
     showMenu();
     changeSvgOnHover();
-    selectListItems();
     changePrioBtn();
     changeSvgOnHover();
     categoryMenu();
     styleSubtaskInput();
     addSubTask();
+    renderContacts();
 }
 
 function showMenu() {
@@ -23,11 +24,22 @@ function showMenu() {
     })
 }
 
-function renderAssignedToContacts() {
-    console.log(contacts);
-    const assignedToList = document.querySelector('.list-items');
+function filterContacts() {
+    const selectBtnInput = document.querySelector('.select-btn-input');
+    selectBtnInput.addEventListener('input', () => {
+        let filterValue = selectBtnInput.value.toLowerCase();
+        filteredContacts = contacts.filter(contact => contact.name.toLowerCase().startsWith(filterValue));
+        // console.log(filteredContacts);
+        renderContacts();
+        selectListItems();
+    })
+}
 
-    contacts.forEach(item => {
+function renderContacts() {
+    const assignedToList = document.querySelector('.list-items');
+    assignedToList.innerHTML = '';
+
+    filteredContacts.forEach(item => {
         assignedToList.innerHTML += `
             <li class="list-item assigned-to">
                 <div class="list-item-name">
@@ -37,8 +49,10 @@ function renderAssignedToContacts() {
                 <img class="checkbox" src="./assets/img/icons_add_task/checkbox.svg" alt="">
             </li>
         `;
-    })
+    });
+    selectListItems();
 }
+
 
 function selectListItems() {
     const listItems = document.querySelectorAll('.list-item.assigned-to');
@@ -77,12 +91,6 @@ function renderSelectedContacts() {
     })
 }
 
-function restoreInputValue() {
-    const selectBtnInput = document.querySelector('.select-btn-input');
-    if (selectBtnInput.value === '') {
-        selectBtnInput.value = 'Select contacts to assign';
-    }
-}
 
 function changePrioBtn() {
     const buttons = document.querySelectorAll('.prio-btn');
