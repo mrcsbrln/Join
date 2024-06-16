@@ -1,4 +1,5 @@
 const selectedContacts = [];
+const subtasks = [];
 let filteredContacts = contacts;
 
 function initAddTask() {
@@ -10,7 +11,7 @@ function initAddTask() {
     changeSvgOnHover();
     categoryMenu();
     styleSubtaskInput();
-    addSubTask();
+    pushSubtask();
     renderContacts();
 }
 
@@ -179,50 +180,83 @@ function styleSubtaskInput() {
     })
 }
 
-function addSubTask() {
+function pushSubtask() {
     const subtaskInput = document.querySelector('.subtask-input');
     const subtaskBtnCheck = document.querySelector('.subtask-check');
-    const subtasksList = document.querySelector('.subtasks-list');
-
     subtaskBtnCheck.addEventListener('click', () => {
-        if (subtaskInput.value != '') {
-            subtasksList.innerHTML += `
-                <li class="subtask-list-item">
-                    <div class="li-text">
-                        ${subtaskInput.value}
-                    </div>
-                    <div class="subtask-edit-icon-div">
-                        <img id="edit-subtask" src="./assets/img/icons_add_task/subtask-edit.svg" alt="">
-                        <div class="subtask-divider-2"></div>
-                        <img src="./assets/img/icons_add_task/subtask-delete.svg" alt="">
-                    </div>
-                </li>
-            `;
-            subtaskInput.value = '';
-            editSubTask();
-        }
+        subtasks.push(subtaskInput.value);
+        renderSubtasks();
+        subtaskInput.value = '';
     })
 }
 
-function editSubTask() {
-    const subTaskListItems = document.querySelectorAll('.subtask-list-item');
+function renderSubtasks() {
+    const subtasksList = document.querySelector('.subtasks-list');
+    subtasksList.innerHTML = '';
+    subtasks.forEach(item => {
+        subtasksList.innerHTML += `
+            <li class="subtask-list-item">
+                <div class="li-text">
+                    ${item}
+                </div>
+                <div class="subtask-edit-icon-div">
+                    <img class="edit-subtask-btn" src="./assets/img/icons_add_task/subtask-edit.svg" alt="">
+                    <div class="subtask-divider-2"></div>
+                    <img class="delete-subtask-btn" src="./assets/img/icons_add_task/subtask-delete.svg" alt="">
+                </div>
+            </li>
+        `;
+    })
+    editSubTask();
+    deleteSubtask();
+}
 
-    subTaskListItems.forEach(item => {
-        item.addEventListener('click', () => {
+function editSubTask() {
+    const subtaskListItems = document.querySelectorAll('.subtask-list-item');
+
+    subtaskListItems.forEach(item => {
+        const editSubtaskBtn = item.querySelector('.edit-subtask-btn');
+        editSubtaskBtn.addEventListener('click', () => {
             let input = item.querySelector('.edit-subtask-input');
             if (!input) {
                 let liText = item.querySelector('.li-text');
                 item.innerHTML = `
                     <input class="edit-subtask-input" type="text" value="${liText.textContent.trim()}">
                     <div class="edit-subtask-button-div">
-                        <span><img src="./assets/img/icons_add_task/subtask-delete.svg"></span>
+                        <span class="delete-subtask-btn edit"><img src="./assets/img/icons_add_task/subtask-delete.svg"></span>
                         <div class="subtask-divider"></div>
-                        <span><img src="./assets/img/icons_add_task/subtask-check.svg"></span>
+                        <span class="confirm-subtask-edit-btn"><img src="./assets/img/icons_add_task/subtask-check.svg"></span>
                     </div>
                 `;
-                input = item.querySelector('.edit-subtask-input');
                 item.classList.add('subtask-list-item-edit');
+                deleteSubtask();
+                confirmSubtaskEdit();
             }
         })
     })
+}
+
+function deleteSubtask() {
+    const subtaskListItems = document.querySelectorAll('.subtask-list-item');
+    
+    subtaskListItems.forEach((item, index) => {
+        const deleteSubtaskBtn = item.querySelector('.delete-subtask-btn');
+        deleteSubtaskBtn.addEventListener('click', () => {
+            subtasks.splice(index, 1);
+            renderSubtasks();
+        })
+    });
+}
+
+function confirmSubtaskEdit() {
+    const subtaskListItemsEdit = document.querySelectorAll('.subtask-list-item-edit');
+    
+    subtaskListItemsEdit.forEach((item, index) => {
+        const confirmSubtaskEditBtn = item.querySelector('.confirm-subtask-edit-btn');
+        confirmSubtaskEditBtn.addEventListener('click', () => {
+            const input = item.querySelector('.edit-subtask-input');
+            subtasks[index] = input.value;
+            renderSubtasks();
+        });
+    });
 }

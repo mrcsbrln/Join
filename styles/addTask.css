@@ -356,9 +356,22 @@ h1 {
     border-bottom: 1px solid #29ABE2;
 }
 
-.edit-subtask-button-div img:hover {
+/* .edit-subtask-button-div img:hover {
     background-color: #D1D1D1;
     border-radius: 50%;
+} */
+
+.delete-subtask-btn.edit, .confirm-subtask-edit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+}
+
+.delete-subtask-btn:hover, .confirm-subtask-edit-btn:hover {
+    background-color: #D1D1D1;
 }
 
 textarea {
