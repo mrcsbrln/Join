@@ -75,6 +75,11 @@ h1 {
     width: 440px;
 }
 
+.form-input:focus {
+    outline: none;
+    border-color: #29ABE2;
+}
+
 .dropdown-container {
     position: relative;
     max-width: 440px;
@@ -222,8 +227,9 @@ h1 {
     width: calc(100% - 48px);
 }
 
-.subtask-input:focus {
+.subtask-input:focus ~ .subtask-btn {
     outline: none;
+    border-color: #29ABE2;
 }
 
 .subtask-btn {
@@ -356,11 +362,6 @@ h1 {
     border-bottom: 1px solid #29ABE2;
 }
 
-/* .edit-subtask-button-div img:hover {
-    background-color: #D1D1D1;
-    border-radius: 50%;
-} */
-
 .delete-subtask-btn.edit, .confirm-subtask-edit-btn {
     display: flex;
     align-items: center;
@@ -385,6 +386,11 @@ textarea {
     resize: none;
 }
 
+textarea:focus {
+    outline: none;
+    border-color: #29ABE2;
+}
+
 .prio-buttons {
     display: flex;
     gap: 4px;
@@ -405,7 +411,6 @@ textarea {
 
 .prio-btn:hover {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
 }
 
 .prio-btn.active {
@@ -466,4 +471,17 @@ textarea {
     background-color: #29ABE2;
     border: 1px solid #29ABE2;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+@media screen and (max-width: 1304px) {
+    .form-col-left {
+        border-style: none;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .add-task-container {
+        width: 100%;
+        float: none;
+    }
 }

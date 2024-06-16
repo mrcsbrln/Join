@@ -187,15 +187,16 @@ function pushSubtask() {
         subtasks.push(subtaskInput.value);
         renderSubtasks();
         subtaskInput.value = '';
+        console.log(subtasks);
     })
 }
 
 function renderSubtasks() {
     const subtasksList = document.querySelector('.subtasks-list');
     subtasksList.innerHTML = '';
-    subtasks.forEach(item => {
+    subtasks.forEach((item, index) => {
         subtasksList.innerHTML += `
-            <li class="subtask-list-item">
+            <li class="subtask-list-item" data-index="${index}">
                 <div class="li-text">
                     ${item}
                 </div>
@@ -250,10 +251,11 @@ function deleteSubtask() {
 
 function confirmSubtaskEdit() {
     const subtaskListItemsEdit = document.querySelectorAll('.subtask-list-item-edit');
-    
-    subtaskListItemsEdit.forEach((item, index) => {
+
+    subtaskListItemsEdit.forEach(item => {
         const confirmSubtaskEditBtn = item.querySelector('.confirm-subtask-edit-btn');
         confirmSubtaskEditBtn.addEventListener('click', () => {
+            const index = item.getAttribute('data-index');
             const input = item.querySelector('.edit-subtask-input');
             subtasks[index] = input.value;
             renderSubtasks();
