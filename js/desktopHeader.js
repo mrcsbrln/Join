@@ -48,5 +48,5 @@ function updateHeaderProfileInitials() {
 
 function LogOut() {
     sessionStorage.removeItem('currentUser');
-    backToLogin()
+    redirectToLogin()
 } 
