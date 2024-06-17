@@ -9,7 +9,6 @@
 
 
 
-
 // global variables  : by Meik  - shoule be only declared in script.js
 const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
 

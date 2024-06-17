@@ -126,10 +126,11 @@ function disableSignupButtonIfFormIsEmpty() {
     const name = document.getElementById('name').value.length
     const email = document.getElementById('email').value.length
     const password = document.getElementById('password').value.length
-    const password__confirm = document.getElementById('password__confirm').value.length
+    // password__confirm
+    const passwordConfirm = document.getElementById('password__confirm').value.length
     const checkbox = document.getElementById('checkbox');
     const isChecked = checkIfCheckBoxIsClicked(checkbox);
-    if (email == 0 || password == 0 || name == 0 || password__confirm == 0 || !isChecked) {
+    if (email == 0 || password == 0 || name == 0 || passwordConfirm == 0 || !isChecked) {
         button.disabled = true;
         button.classList.add('btn__disabled');
     } else {
