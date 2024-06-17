@@ -2,12 +2,24 @@
 let draggedItemId = "";
 let actSubtask = [];
 let actAssignedTo = [];
+let taskEditAsiggnedTo = [];
+let svgMappingsEdit = {
+    'urgent': 'assets/img/icons_add_task/urgent.svg',
+    'urgent-active': 'assets/img/icons_add_task/urgent-white.svg',
+    'medium': 'assets/img/icons_add_task/medium.svg',
+    'medium-active': 'assets/img/icons_add_task/medium-white.svg',
+    'low': 'assets/img/icons_add_task/low.svg',
+    'low-active': 'assets/img/icons_add_task/low-white.svg'
+};
 /**
  * init function to render all Cards and highlight the boards Button on the Side Navigation
  */
 function initBoard() {
     renderCards();
-    includeHTML().then(highlightBoard);
+    includeHTML().then(() => {
+        highlightBoard();
+        updateHeaderProfileInitials();
+    });
 }
 
 /**
@@ -16,6 +28,20 @@ function initBoard() {
 function openDialog() {
     document.getElementById('dialogContainer').classList.add('open');
     document.documentElement.classList.add('overflowHidden');
+}
+
+function openDialogTasks() {
+    document.getElementById('dialogContainerAddTask').classList.add('open');
+    document.documentElement.classList.add('overflowHidden');
+    filterContacts();
+    showMenu();
+    changeSvgOnHover();
+    changePrioBtn();
+    changeSvgOnHover();
+    categoryMenu();
+    styleSubtaskInput();
+    pushSubtask();
+    renderContacts();
 }
 
 /**
@@ -30,11 +56,25 @@ function closeDialog(event) {
     }
 }
 
+function closeDialogTask(event) {
+    if (event.currentTarget === event.target) {
+        event.stopPropagation();
+        document.getElementById('dialogContainerAddTask').classList.remove('open');
+        document.documentElement.classList.remove('overflowHidden');
+    }
+}
+
+
 /**
  * Closes the dialog when a button is clicked.
  */
 function closeDialogBtn() {
     document.getElementById('dialogContainer').classList.remove('open');
+    document.documentElement.classList.remove('overflowHidden');
+}
+
+function closeDialogTaskBtn() {
+    document.getElementById('dialogContainerAddTask').classList.remove('open');
     document.documentElement.classList.remove('overflowHidden');
 }
 
@@ -128,9 +168,15 @@ function renderBadge(contact) {
  * @param {number} i - The index of the task.
  */
 function renderCardBig(i) {
-    renderCardBigTop(i);
-    renderCardBigSubTo(i);
-    renderCardBigSubtask(i);
+    tasks.forEach((task, index) => {
+        if (task.id == i) {
+            renderCardBigTop(index);
+            renderCardBigSubTo(index);
+            renderCardBigSubtask(index);
+        }
+
+    });
+
 }
 
 /**
@@ -165,9 +211,24 @@ function renderCardBigSubtask(i) {
             completet: subtask.completet,
             content: subtask.content
         });
-        subtasksHtml += renderCardBigSubHtml(subtask);
+        subtasksHtml += renderCardBigSubHtml(subtask, i);
     });
     document.getElementById('subtasks').innerHTML = subtasksHtml;
+}
+
+function handleSubtaskChange(taskId, subtaskId, checkboxElement) {
+    const task = tasks.find(t => t.id === taskId);
+    if (task) {
+        const subtask = task.subTasks.find(st => st.id === subtaskId);
+        if (subtask) {
+            subtask.completet = checkboxElement.checked;
+            updateTaskDisplay();
+        }
+    }
+}
+
+function updateTaskDisplay() {
+    renderCards();
 }
 
 /**
@@ -179,11 +240,94 @@ function renderCardBigSubtask(i) {
  */
 function renderCardEdit(i) {
     document.getElementById('dialogContent').innerHTML = renderCardEditHtml(i);
-    renderEditBadges();
-    renderEditSubtaks();
-    renderCardEditContacts();
+    taskEditAsiggnedTo = tasks[i].assignedTo.slice();
+    changePrioBtnEdit(i);
+    renderContacsEdit(i);
+    selectListItemsEdit(i);
+    styleSubtaskInput();
+ 
+    renderSelectedContactsEdit();
+    renderEditSubtasks(i);
+    pushSubtask();
 }
 
+
+function showDropdown() {
+    document.getElementById('dropDownContact').classList.toggle('show-menu')
+}
+
+function renderContacsEdit(i) {
+    const listContacts = document.getElementById('listContacts');
+    contacts.forEach(item => {
+        // Check if contact is already assigned
+
+        const isAssigned = tasks[i].assignedTo.includes(item.id);
+
+        const checkedClass = isAssigned ? 'checked' : '';
+
+        listContacts.innerHTML += `
+            <li class="list-item assigned-to contactListItems ${checkedClass}">
+                <div class="list-item-name">
+                    <div class="cicle" style="background-color: ${item.color}">${item.initials}</div>
+                    <span>${item.name}</span>
+                </div>
+                <img class="checkbox" src="./assets/img/icons_add_task/${isAssigned ? 'checkedbox' : 'checkbox'}.svg" alt="">
+            </li>
+        `;
+    });
+}
+
+function selectListItemsEdit(i) {
+    const listItems = document.querySelectorAll('.contactListItems');
+    listItems.forEach((item, j) => {
+        item.addEventListener('click', () => {
+            const img = item.querySelector('.checkbox');
+            item.classList.toggle('checked');
+            img.classList.toggle('checked');
+
+            const contactId = j; // Nehmen Sie die ID des Kontakts aus NodeList
+
+            if (item.classList.contains('checked')) {
+                taskEditAsiggnedTo.push(contactId);
+                img.src = './assets/img/icons_add_task/checkedbox.svg';
+            } else {
+                const indexToRemove = taskEditAsiggnedTo.indexOf(contactId);
+                if (indexToRemove !== -1) {
+                    taskEditAsiggnedTo.splice(indexToRemove, 1);
+                }
+                img.src = './assets/img/icons_add_task/checkbox.svg';
+            }
+
+            renderSelectedContactsEdit();
+        });
+    });
+}
+
+
+function renderSelectedContactsEdit() {
+    const selectedContactsDiv = document.querySelector('.selectedContactsContainer');
+    selectedContactsDiv.innerHTML = '';
+    taskEditAsiggnedTo.forEach(i => {
+        selectedContactsDiv.innerHTML += `
+            <div class="cicle" style="background-color: ${contacts[i].color}">${contacts[i].initials}</div>
+        `;
+    })
+}
+
+function saveEdit(i) {
+    tasks[i].assignedTo = taskEditAsiggnedTo;
+    tasks[i].title = document.getElementById('editedTitle').value;
+    tasks[i].description = document.getElementById('editedDescription').value;
+    tasks[i].dueDate = document.getElementById('editedDate').value;
+    closeDialogBtn();
+    renderCards();
+}
+
+function deleteTask(i) {
+    tasks.splice(i, 1);
+    closeDialogBtn();
+    renderCards();
+}
 /**
  * Renders badges for assigned contacts in the edit card interface.
  */
@@ -196,29 +340,6 @@ function renderEditBadges() {
     });
 }
 
-/**
- * Renders subtasks in the edit card interface.
- * Updates 'subtaskEditList' with the content of each subtask from `actSubtasks`.
- */
-function renderEditSubtaks() {
-    const subtaskContainer = document.getElementById('subtaskEditList');
-    subtaskContainer.innerHTML = "";
-    actSubtasks.forEach(subtask => {
-        subtaskContainer.innerHTML += `
-            <li>${subtask.content}</li>
-        `;
-    });
-}
-
-function renderCardEditContacts() {
-    const contactList = document.getElementById('contactsEdit');
-    contactList.innerHTML = "";
-    contacts.forEach(contact => {
-        contactList.innerHTML += `
-            <option value="${contact.id}">${contact.name}</option>
-        `;
-    });
-}
 
 /**
  * Initiates the dragging operation for a task card.
@@ -276,13 +397,49 @@ function removeHighlight() {
  * Updates the progress bar width based on completed and total subtasks.
  * @param {number} id - The ID of the task.
  */
-function changeProgressBar(id) {
-    const completedSubtasks = tasks[id].subTasks.filter(subtask => subtask.completet).length;
-    const totalSubtasks = tasks[id].subTasks.length;
+function changeProgressBar(i) {
+    tasks.forEach((task, index) => {
+        if (task.id == i) {
+            const completedSubtasks = tasks[index].subTasks.filter(subtask => subtask.completet).length;
+            const totalSubtasks = tasks[index].subTasks.length;
 
-    let percent = 0;
-    if (totalSubtasks !== 0) {
-        percent = (completedSubtasks / totalSubtasks) * 100;
-    }
-    document.getElementById(`progressBar${id}`).style.width = percent + '%';
+            let percent = 0;
+            if (totalSubtasks !== 0) {
+                percent = (completedSubtasks / totalSubtasks) * 100;
+            }
+            document.getElementById(`progressBar${i}`).style.width = percent + '%';
+
+        }
+
+    });
+
+}
+
+function changePrioBtnEdit() {
+    const prioContainer = document.querySelector('.prio-buttons');
+    if (!prioContainer) return;
+
+    prioContainer.addEventListener('click', (event) => {
+        const button = event.target.closest('.prioEdit');
+        if (!button) return;
+        document.querySelectorAll('.prioEdit').forEach(btn => {
+            const prio = btn.value;
+            const img = btn.querySelector('img');
+            if (btn === button) {
+                btn.classList.add('active');
+                img.src = svgMappingsEdit[`${prio}-active`];
+            } else {
+                btn.classList.remove('active');
+                img.src = svgMappingsEdit[prio];
+            }
+        });
+    });
+}
+
+function renderEditSubtasks(i) {
+    tasks[i].subTasks.forEach(subtask => {
+        document.getElementById('subtaskList').innerHTML += renderSubtaskEditHtml(subtask,i);
+       
+    });
+   
 }
