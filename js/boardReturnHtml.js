@@ -58,7 +58,7 @@ function renderCardBigTop(i) {
         <div id="subtasks" class="subtasks"></div>
     </div>
     <div class="footerCardBig boardFlex">
-        <div class="imgDelete boardFlex"><img src="assets/img/icons/delete.svg" alt="">
+        <div onclick="deleteTask(${i})" class="imgDelete boardFlex"><img src="assets/img/icons/delete.svg" alt="">
             <p>Delete</p>
         </div>
         <div class="seperator"></div>
@@ -74,12 +74,12 @@ function renderCardBigTop(i) {
  * @param {Object} subtask - The subtask object containing id, completet, and content.
  * @returns {string} - The HTML string for the subtask item.
  */
-function renderCardBigSubHtml(subtask) {
+function renderCardBigSubHtml(subtask, taskId) {
     return `
     <ul class="subtasksItem">
     <li>
-        <input type="checkbox" id="subtask-${subtask.id}" ${subtask.completet ? 'checked' : ''}>
-        <label for="subtask-${subtask.id}">${subtask.content}</label>
+        <input type="checkbox" id="subtask${subtask.id}" ${subtask.completet ? 'checked' : ''} onchange="handleSubtaskChange(${tasks[taskId].id}, ${subtask.id}, this)">
+        <label for="subtask${subtask.id}">${subtask.content}</label>
     </li>
 </ul> `
 }
@@ -110,51 +110,87 @@ function renderCardEditHtml(i) {
     return `
     <div class="titleEdit">
             <p class="cardTextGrey">Title</p>
-            <input class="cardTextBlack inputEdit" type="text" value="${tasks[i].title}">
+            <input id="editedTitle" class="cardTextBlack inputEdit" type="text" value="${tasks[i].title}">
         </div>
         <div class="descriptionEdit">
             <p class="cardTextGrey">Description</p>
             <div class="textareaContainer">
-                <textarea class="cardTextGrey" placeholder="">${tasks[i].description}</textarea>
+                <textarea id="editedDescription" class="cardTextGrey" placeholder="">${tasks[i].description}</textarea>
             </div>
         </div>
         <div class="dueDateEdit">
             <p class="cardTextGrey">Due Date</p>
             <div>
-                <input class="cardTextBlack inputEdit" type="date" value="${tasks[i].dueDate}">
+                <input id="editedDate" class="cardTextBlack inputEdit" type="date" value="${tasks[i].dueDate}">
             </div>
         </div>
         <div class="priorityEdit">
             <p class="cardTextGrey">Priority</p>
-            <div class="prioEditContainer cardTextGrey">
-                <button class="prioEdit">Urgent <img src="assets/img/icons/urgent.svg" alt=""></button>
-                <button class="prioEdit">Medium <img src="assets/img/icons/medium.svg" alt=""></button>
-                <button class="prioEdit">Low <img src="assets/img/icons/low.svg" alt=""></button>
-            </div>
+            <div class="prio-buttons">
+            <button type="button" value="urgent" class="prio-btn prioEdit urgent">Urgent<img src="./assets/img/icons_add_task/urgent.svg" alt=""></button>
+            <button type="button" value="medium" class="prio-btn prioEdit active">Medium<img src="./assets/img/icons_add_task/medium-white.svg" alt=""></button>
+            <button type="button" value="low" class="prio-btn prioEdit low">Low<img src="./assets/img/icons_add_task/low.svg" alt=""></button>
+        </div>
         </div>
         <div class="assignedEdit">
             <p class="cardTextGrey">Assigned to</p>
-            <select id="contactsEdit" class="cardTextBlack inputEdit">
-                <option value="">Du</option>
-                <option value="">Benjamin Blümchen</option>
-                <option value="">Karl Heinz</option>
-            </select>
+                            <div class="dropdown-container">
+                                <div onclick="showDropdown()" id="dropDownContact" class="select-btn">
+                                    <input class="select-btn-input" type="text" value="Select contacts to assign">
+                                    <span class="arrow-down">
+                                        <img src="./assets/img/icons_add_task/chevron.svg" alt="">
+                                    </span>
+                                </div>
+                                <ul id="listContacts" class="list-items">
+                                </ul>
+                                <div class="selected-contacts-div selectedContactsContainer">
+                                </div>
+                            </div>
         </div>
         <div id="profileBadgesEdit" class="profileBadgesEdit boardFlex">
         </div>
-        <div class="subtaskEdit">
-            <p class="cardTextGrey">Suptasks</p>
-            <div>
-            <input class="cardTextBlack inputEdit imgInput" type="text">
-            <ul id="subtaskEditList" class="subtasksEditList">
-            </ul>
-            </div>
-        </div>
+        <div class="form-group">
+                            <p class="cardTextGrey">Subtasks</p>
+                            <div class="subtask-input-container">
+                                <input class="form-input subtask-input" type="text" placeholder="Add new subtask">
+                                <div class="subtask-btn add">
+                                    <img src="./assets/img/icons_add_task/add.svg" alt="">
+                                </div>
+                                <div class="subtask-btn check-cancel-div">
+                                    <div class="subtask-cancel">
+                                        <img src="./assets/img/icons_add_task/subtask-close.svg" alt="">
+                                    </div>
+                                    <div class="subtask-divider"></div>
+                                    <div class="subtask-check">
+                                        <img src="./assets/img/icons_add_task/subtask-check.svg" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="display-subtasks-container">
+                                <ul id="subtaskList" class="subtasks-list">
+                                </ul>
+                            </div>
+                        </div>
     </div>
     <div class="footerCardEdit boardFlex">
         <div class="okBtnContainer">
-            <button class="addBtn">Ok<img src="assets/img/icons/check.svg" alt=""></button>
+            <button onclick="saveEdit(${i})" class="addBtn">Ok<img src="assets/img/icons/check.svg" alt=""></button>
         </div>
     </div>
    `
+}
+
+function renderSubtaskEditHtml(subtask,i){
+    return`
+    <li id="subtaskListItem" class="subtask-list-item">
+        <div class="li-text">
+            ${subtask.content}
+        </div>
+        <div class="subtask-edit-icon-div">
+            <img  id="editSubtask${subtask.id}" src="./assets/img/icons_add_task/subtask-edit.svg" alt="">
+            <div class="subtask-divider-2"></div>
+            <img src="./assets/img/icons_add_task/subtask-delete.svg" alt="">
+        </div>
+    </li>
+    `
 }

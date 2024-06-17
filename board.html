@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join Board</title>
     <link id="favicon" rel="shortcut icon" href="./assets/img/favicon/logo_black.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles/addTask.css">
     <link rel="stylesheet" href="styles/board.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="styles/desktopHeader.css">
     <link rel="stylesheet" href="styles/desktopNav.css">
     <link rel="stylesheet" href="styles/boardDialogs.css">
+
     <script src="js/board.js"></script>
     <script src="js/desktopHeader.js"></script>
     <script src="js/desktopNav.js"></script>
@@ -22,6 +24,7 @@
 <body class="body" onload="initBoard()">
     <div w3-include-html="./assets/templates/desktopHeader.html"></div>
     <div w3-include-html="./assets/templates/desktopNav.html"></div>
+
 
     <section class="board boardFlex">
         <div class="boardHeader boardFlex">
@@ -37,10 +40,10 @@
                         <button onclick="getSearchKeyword()" class="searchIcon"><img src="assets/img/icons/search.svg"
                                 alt=""></button>
                     </div>
-                    <button class="addBtn">Add task +</button>
+                    <button onclick="openDialogTasks()" class="addBtn">Add task +</button>
                 </div>
             </div>
-        </div>
+        </div> 
         <div class="statuses boardFlex">
             <div class="statusItem">
                 <div class="statusHeader boardFlex">
@@ -97,6 +100,20 @@
             </div>
         </div>
     </div>
+
+    <div id="dialogContainerAddTask"  onclick="closeDialogTask(event)"  class="dialogContainer">
+        <div id="dialogTask" class="dialogTask">
+            <div class="containerCloseBtn">
+                <span onclick="closeDialogTaskBtn()"  class="closeBtn closeEdit">
+                    <img src="assets/img/icons/close.svg" alt="">
+                </span>
+            </div>
+            <div w3-include-html="addTask.html" class="dialogAddTask">
+                
+            </div>
+        </div>
+    </div>
+    <script src="js/addTask.js"></script>
 </body>
 
 </html>
