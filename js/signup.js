@@ -2,6 +2,18 @@
 
 
 
+let containerPassword = document.getElementById('password__container');
+let feedbackPassword = document.getElementById('form__wrongPassword__message');
+
+const userColors = [
+    '#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', '#00BEE8', '#1FD7C1', '#FF745E', '#FFA35E', '#FC71FF',
+    '#FFC701', '#0038FF', '#C3FF2B', '#FFE62B', '#FF4646', '#FFBB2B',
+]
+
+
+
+
+
 
 /**
  * 
@@ -9,11 +21,10 @@
  * 
 */
 function initSignUp() {
-    // includeHTML();
     changePasswordIcon('password');
     changePasswordIcon('password__confirm');
     disableSignupButtonIfFormIsEmpty();
-    logInIsCorrected();
+    deleteMessageThatPasswordsDontMatch();
 }
 
 
@@ -136,7 +147,7 @@ function signUpSubmit(event) {
 
 
 
-// should be async function
+// should be async function if server is involved
 function signUp() {
     const name = document.getElementById('name').value
     const email = document.getElementById('email').value
@@ -144,48 +155,63 @@ function signUp() {
     const passwordConfirm = document.getElementById('password__confirm').value
     const passwordsMatching = checkIfPasswordsAreMatching(password, passwordConfirm);
 
+    
+
+
+    // check if password and passwordConfirm matching.
     if (!passwordsMatching) {
         wrongPassword();
     }
 
-
     if (passwordsMatching) {
-        // check if password and passwordConfirm matching.
-        // if NOT passwordsMatching -> show text like in login wrong password
-        // if YES, creat newUser (see below)
-        //  - write function to get the id
-        //  - write function for initials
-        //  - creat array with 15 colors and pick one random for the newUser
         //  - save newUser to firebase-database AND to global variable contacts
 
-        logInIsCorrected();
+        deleteMessageThatPasswordsDontMatch();
+
+        const date = new Date();
+        const newUserID = date.getTime();
+        const newUserColor = userColors[randomUserColors()];
+        const newUserInitials = createUserInitials(name);
 
         const newUser = {
             name : name,
             email : email,
             password : password,
             phone: '',
-            color: '',  // random please
-            initials: '',  // write a function for this
-            id: '', // write a function for this
+            color: newUserColor,
+            initials: newUserInitials,
+            id: newUserID,
         }
 
+        users.push(newUser);
+        console.log(users);
+        clearSignUpForm();
 
-        // if everythign is fine:
-        // clearSignUpForm();
+
+        // successfullSignUp();
         // redirectToLogin();
     
     }
 }
 
 
+function successfullSignUp() {
+    // let sign slide up and show for 1-2 sec
+    // than redirect to login.html
+    
+}
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////
+
 function checkIfPasswordsAreMatching(password, passwordConfirm) {
     const check = password === passwordConfirm;
     return check;
-
-    // if not than show 'Ups! Your passwords don't match!
 }
-
 
 
 function clearSignUpForm() {
@@ -196,46 +222,33 @@ function clearSignUpForm() {
 }
 
 
-
-/* Temprary for testing..... */
-let containerPassword = document.getElementById('password__container');
-let feedbackPassword = document.getElementById('form__wrongPassword__message');
-
-
 function wrongPassword() {
     containerPassword.classList.add('wrongPassword');
     feedbackPassword.innerHTML = `Ups! Your passwords don't match!`;
 }
 
-function logInIsCorrected() {
+function deleteMessageThatPasswordsDontMatch() {
     containerPassword.classList.remove('wrongPassword');
     feedbackPassword.innerHTML = '';
 }
 
 
-/* .... new featur until here*/
+
+function randomUserColors() {
+    const amount = userColors.length;
+    const randomColor = Math.floor(Math.random() * (amount + 1));
+    return randomColor;
+}
+
+
+function createUserInitials(name) {
+    const names = name.split(' ');
+    const firstNameInitial = names[0].charAt(0).toUpperCase();
+    const lastNameInitial = names.length > 1 ? names[names.length - 1].charAt(0).toUpperCase() : '';
+    return firstNameInitial + lastNameInitial;
+}
 
 
 
-
-
-
-
-
-
-
-// let containerPassword = document.getElementById('password__container');
-// let feedbackPassword = document.getElementById('form__wrongPassword__message');
-
-
-// function wrongPassword() {
-//     containerPassword.classList.add('wrongPassword');
-//     feedbackPassword.innerHTML = 'Wrong password Ups! Try again.';
-// }
-
-// function logInIsCorrected() {
-//     containerPassword.classList.remove('wrongPassword');
-//     feedbackPassword.innerHTML = '';
-// }
 
 
