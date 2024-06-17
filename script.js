@@ -78,7 +78,7 @@ async function includeHTML() {
 function backToLogin() {
     setTimeout(function () {
         window.location.href = "login.html";
-    }, 1000);
+    }, 100);
 }
 
 
