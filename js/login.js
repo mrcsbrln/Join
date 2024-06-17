@@ -1,15 +1,8 @@
 "use strict";
 
 
-/* ####################################################################################################################################    */
-/* ---------  Still to implement --------- */
-/* ####################################################################################################################################    */
-/* 
-/* 
-/* 
-/* 
-/* 
-/**/
+// reset data in firebase realtime database using this
+// https://meik-behr.developerakademie.net/m10_join_database/index.html
 
 
 
@@ -194,7 +187,6 @@ function checkIfCheckBoxIsClicked(checkbox) {
 
 
 
-
 async function loadData(path="") {
 	let response = await fetch(BASE_URL + path + ".json");
 	let responseToJson = await response.json();
@@ -203,7 +195,7 @@ async function loadData(path="") {
 
 
 async function checkLoginValues(email, password) {
-    const datas = await loadData("/contacts");
+    const datas = await loadData("/users");
     const matchingContact = datas.find(data => data.email === email);
     if (matchingContact) {
         if (matchingContact.password === password) {
@@ -396,7 +388,7 @@ function checkForCurrentUserLogin() {
             const userJSON = JSON.parse(userString);
             return true;
             // console.log('Current user found in Session Storage:', userJSON.name);
-            redirectToSummary();
+            // redirectToSummary();
         } catch (error) {
             console.error('Error parsing JSON from Session Storage', error);
             return false;
@@ -408,3 +400,4 @@ function checkForCurrentUserLogin() {
         // redirectToLogin();
     }
 }
+

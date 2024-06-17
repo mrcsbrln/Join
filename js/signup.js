@@ -1,6 +1,12 @@
 "use strict";
 
 
+// reset data in firebase realtime database using this
+// https://meik-behr.developerakademie.net/m10_join_database/index.html
+
+
+
+
 
 let containerPassword = document.getElementById('password__container');
 let feedbackPassword = document.getElementById('form__wrongPassword__message');
@@ -164,7 +170,6 @@ function signUp() {
     }
 
     if (passwordsMatching) {
-        //  - save newUser to firebase-database AND to global variable contacts
 
         deleteMessageThatPasswordsDontMatch();
 
@@ -183,26 +188,29 @@ function signUp() {
             id: newUserID,
         }
 
+
+        // here: push to global variable - later we should push it to the database!
         users.push(newUser);
-        console.log(users);
+
+        putData("/users", users);
+        
         clearSignUpForm();
-
-
-        // successfullSignUp();
-        // redirectToLogin();
+        successfullSignUp();
+        setTimeout(redirectToLogin, 1750);
     
     }
 }
 
 
 function successfullSignUp() {
-    // let sign slide up and show for 1-2 sec
-    // than redirect to login.html
-    
+    const element = document.getElementById('signup__overlay');
+    element.classList.remove('d-none');
 }
 
 
-
+function redirectToLogin() {
+    window.location.href = 'login.html';
+}
 
 
 
@@ -252,3 +260,23 @@ function createUserInitials(name) {
 
 
 
+/* ####################################################################################################################################    */
+/* ---------  PUT DATA TO DATABASE --------- */
+/* ####################################################################################################################################    */
+
+
+const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
+
+// putData("/users", users);
+
+async function putData(path="", data={}) {
+	let response = await fetch(BASE_URL + path + ".json", {
+		method: "PUT",
+		header: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data),
+	});
+	let responseToJson = await response.json();
+	return responseToJson;
+}
