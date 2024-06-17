@@ -3,7 +3,10 @@ const subtasks = [];
 let filteredContacts = contacts;
 
 function initAddTask() {
-    includeHTML().then(highlightAddTask);
+    includeHTML().then(() => {
+        highlightAddTask();
+        updateHeaderProfileInitials()
+        })
     filterContacts();
     showMenu();
     changeSvgOnHover();
@@ -187,7 +190,6 @@ function pushSubtask() {
         subtasks.push(subtaskInput.value);
         renderSubtasks();
         subtaskInput.value = '';
-        console.log(subtasks);
     })
 }
 
