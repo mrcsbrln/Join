@@ -2,11 +2,16 @@
     position: relative;
     top: 0px;
     left: 0px;
-    transform: translateX(1000%);
     transition: transform 125ms ease-in-out;
     display: flex;
     border-radius: 30px;
 
+}
+.pop-up-close{
+    transform: translateX(1000%);
+}
+.pop-up-open {
+    transform: translateX(0);
 }
 
 .pop-up-banner {
@@ -36,13 +41,14 @@
 
 .pop-up-banner-content img {
     position: absolute;
-    top: 154px;
-    left: 45.5px;
+    top: -78px;
+    left: 0;
     height: 66.48px;
     width: 55.6px;
 }
 
 .pop-up-banner-content div {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -53,6 +59,7 @@
     height: 3px;
     background-color: rgba(41, 171, 226, 1);
     border-radius: 10px;
+    margin-top: 8px;
 }
 
 .pop-up-content {
@@ -115,8 +122,6 @@ input::placeholder {
 
 .input {
     position: relative;
-    width: 422px;
-    height: 50px;
     padding: 13px 21px;
     border-radius: 10px;
     border: 1px solid rgba(209, 209, 209, 1);
@@ -127,8 +132,6 @@ input::placeholder {
 }
 
 .input input {
-    width: 380px;
-    height: 24px;
     font-size: 20px;
     border: 0px;
 }
@@ -156,7 +159,6 @@ button {
     display: flex;
     top: 400px;
     right: 106px;
-    height: 57px;
     width: 364px;
     gap: 24px;
 }
@@ -187,6 +189,7 @@ button {
 
 .delete-btn {
     padding-inline: 24px;
+    display: flex !important;
 }
 
 .delete-btn:hover {

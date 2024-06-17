@@ -1,9 +1,25 @@
 function openSubMenu() {
-    document.getElementById('sub-menu-modal').classList.remove('d-none');
+    let subMenu = document.getElementById('sub-menu');
+    let subModal = document.getElementById('sub-menu-modal');
+    subModal.classList.remove('d-none');
+    subMenu.classList.remove('d-none');
+    setTimeout(() => {
+        subMenu.classList.remove('sub-menu-close');
+        subMenu.classList.add('sub-menu-open');
+    }, 10);
+
 }
 function closeSubMenu() {
-    document.getElementById('sub-menu-modal').classList.add('d-none');
+    let subMenu = document.getElementById('sub-menu');
+    let subModal = document.getElementById('sub-menu-modal');
+    subMenu.classList.remove('sub-menu-open');
+    subMenu.classList.add('sub-menu-close');
+    setTimeout(() => {
+        subModal.classList.add('d-none');
+        subMenu.classList.add('d-none');
+    }, 100);
 }
+
 window.onclick = function (event) {
     const subMenu = document.getElementById('sub-menu-modal');
     if (event.target === subMenu) {
@@ -30,3 +46,7 @@ function updateHeaderProfileInitials() {
     }
 }
 
+function LogOut() {
+    sessionStorage.removeItem('currentUser');
+    backToLogin()
+} 

@@ -37,6 +37,9 @@
 
 
     <div class="main-container">
+        <div onclick="closeDisplayedContact()" class="back-arrow">
+            <img src="./assets/img/help_img/go_back_arrow.svg" alt="">
+        </div>
         <div class="title-container">
             <h1>Contacts</h1>
             <div class="title-separator"></div>
@@ -46,18 +49,35 @@
         <div id="contact-created" class="contact-created d-flex-center">
             Contact succesfully created
         </div>
+        <div onclick="openContactsSubMenu()" class="d-flex-center contact-sub-menu-btn">
+            <img src="./assets/img/contacts_img/contacts_sub_menu.svg" alt="">
+        </div>
     </div>
 
+    <!-- <div id="contact-sub-menu-modal" class="sub-menu-bg d-none">
+        <div id="contact-sub-menu" class="contact-sub-menu d-none">
+            <div onclick="editContact()" class="contact-options-btns">
+                <img src="./assets/img/contacts_img/edit_contact.svg" alt="">
+                <p>Edit</p>
+            </div>
+            <div onclick="deleteContact()" class="contact-options-btns">
+                <img src="./assets/img/contacts_img/delete_contact.svg" alt="">
+                <p>Delete</p>
+            </div>
+        </div>
+    </div> -->
+
+
     <div id="modal" class="modal d-flex-center d-none">
-        <div id="add-contact" class="pop-up-container d-none">
+        <div id="add-contact" class="pop-up-container pop-up-close d-none">
             <div class="pop-up-banner">
                 <div class="pop-up-banner-content">
-                    <img src="./assets/img/contacts_img/banner_logo.svg" alt="">
                     <div>
+                        <img src="./assets/img/contacts_img/banner_logo.svg" alt="">
                         <h1>Add contact</h1>
                         <p>Tasks are better with a team!</p>
+                        <span></span>
                     </div>
-                    <span></span>
                 </div>
             </div>
             <div class="pop-up-content">
@@ -106,7 +126,7 @@
                 </div>
             </div>
         </div>
-        <div id="edit-contact" class="pop-up-container d-none"></div>
+        <div id="edit-contact" class="pop-up-container pop-up-close d-none"></div>
 
     </div>
 

@@ -23,7 +23,7 @@ function contactsSeparatorHtml(letter) {
 function displayContactHtml(contact) {
     return `
     <div class="contact-header">
-    <div class="contact-img d-flex-center" style="background-color: ${contact['color']};">
+    <div class="contact-img contact-img-mobile d-flex-center" style="background-color: ${contact['color']};">
     ${contact['initials']}</div>
     <div class="contact-name">
         <h2>${contact['name']}</h2>
@@ -50,6 +50,18 @@ function displayContactHtml(contact) {
         <div>${contact['phone']}</div>
     </div>
 </div>
+ <div id="contact-sub-menu-modal" class="sub-menu-bg d-none">
+        <div id="contact-sub-menu" class="contact-sub-menu d-none">
+            <div onclick="editContact(${contact['id']})" class="contact-options-btns">
+                <img src="./assets/img/contacts_img/edit_contact.svg" alt="">
+                <p>Edit</p>
+            </div>
+            <div onclick="deleteContact(${contact['id']})" class="contact-options-btns">
+                <img src="./assets/img/contacts_img/delete_contact.svg" alt="">
+                <p>Delete</p>
+            </div>
+        </div>
+    </div>
     `;
 }
 
@@ -57,9 +69,11 @@ function editContactHtml(contact) {
     return `
             <div class="pop-up-banner">
                 <div class="pop-up-banner-content">
+                <div>
                     <img src="./assets/img/contacts_img/banner_logo.svg" alt="">
                     <h1>Edit contact</h1>
                     <span></span>
+                    </div>
                 </div>
             </div>
             <div class="pop-up-content">

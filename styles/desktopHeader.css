@@ -1,4 +1,5 @@
 header {
+    top:0;
     z-index: 2;
     position: fixed;
     background-color: rgba(255, 255, 255, 1);
@@ -109,6 +110,7 @@ body.sub-menu-bg-open {
     padding: 10px;
     background-color: rgba(42, 54, 71, 1);
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    transition: transform 125ms ease-in-out;
 }
 
 .sub-menu a {
@@ -131,9 +133,11 @@ body.sub-menu-bg-open {
 .sub-menu a div {
     position: relative;
 }
+
 .help-link {
     display: none;
 }
+
 .header-logo {
     height: 56px;
     display: none;
@@ -143,17 +147,70 @@ body.sub-menu-bg-open {
     .help-link {
         display: block;
     }
+
     .help-icon {
         display: none;
     }
+
     .header-slogan {
         display: none;
     }
+
     .header-logo {
         display: block;
     }
+
     header {
         padding: 20px 40px 20px 40px;
     }
 
+}
+
+@media (max-width: 768px) {
+
+    .sub-menu-close {
+        transform: translateX(200%);
+    }
+
+    .sub-menu-open {
+        transform: translateX(0);
+    }
+    header {
+        padding: 20px 36px;
+        height: 80px;
+    }
+    
+    .sub-menu {
+        top: 60px;
+        right: 10px;
+    }
+
+    .header-logo {
+        height: 39px;
+    }
+
+    .header-icons {
+        height: 40px;
+    }
+
+    .profile-icon {
+        height: 40px;
+        width: 40px;
+    }
+
+    .profile-name {
+        height: 32px;
+        width: 32px;
+        font-size: 14px;
+    }
+
+    .guest-font-size {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 425px) {
+    header {
+        padding: 20px 16px;
+    }
 }
