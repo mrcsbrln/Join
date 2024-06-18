@@ -331,6 +331,10 @@ button{
     display: none !important;
 }
 
+.show {
+    display: flex !important;
+}
+
 .cardContainer.highlightDragArea {
     outline-color: #ababab;
 }

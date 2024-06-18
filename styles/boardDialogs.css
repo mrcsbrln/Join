@@ -274,16 +274,11 @@
 .imgDelete:hover {
     filter: brightness(0) saturate(100%) invert(50%) sepia(100%) saturate(600%) hue-rotate(180deg); 
 }
-.imgDelete p:hover {
-font-weight: 700;
-}
+
 .imgEdit:hover {
     filter: brightness(0) saturate(100%) invert(50%) sepia(100%) saturate(600%) hue-rotate(180deg); 
 }
 
-.imgEdit p:hover {
-    font-weight: 700;
-    }
 
 .custom-scroll {
     overflow-y: auto;

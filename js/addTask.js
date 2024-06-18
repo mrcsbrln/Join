@@ -1,6 +1,7 @@
 const selectedContacts = [];
 const subtasks = [];
 let filteredContacts = contacts;
+let tempTasks = [];
 
 function initAddTask() {
     includeHTML().then(() => {
@@ -16,6 +17,7 @@ function initAddTask() {
     styleSubtaskInput();
     pushSubtask();
     renderContacts();
+    submitTask();
 }
 
 function showMenu() {
@@ -49,7 +51,7 @@ function renderContacts() {
     filteredContacts.forEach(item => {
         const isSelected = selectedContacts.includes(item);
         assignedToList.innerHTML += `
-            <li class="list-item assigned-to ${isSelected ? 'checked' : ''}">
+            <li class="list-item assigned-to ${isSelected ? 'checked' : ''}" data-id="${item.id}">
                 <div class="list-item-name">
                     <div class="cicle" style="background-color: ${item.color}">${item.initials}</div>
                     <span>${item.name}</span>
@@ -259,8 +261,64 @@ function confirmSubtaskEdit() {
         confirmSubtaskEditBtn.addEventListener('click', () => {
             const index = item.getAttribute('data-index');
             const input = item.querySelector('.edit-subtask-input');
-            subtasks[index] = input.value;
-            renderSubtasks();
+            if (input.value !== '') {
+                subtasks[index] = input.value;
+                renderSubtasks();
+            }
         });
     });
+}
+
+function saveTask() {
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
+    const dueDate = document.getElementById('due-date-input').value;
+    const category = document.getElementById('category-displayed').textContent;
+    const priorityBtns = document.querySelectorAll('.prio-btn');
+    let priority;
+
+    priorityBtns.forEach(item => {
+        if (item.classList.contains('active')) {
+            priority = item.id
+        }
+    })
+
+    const assignedTo = selectedContacts.map(item => item.id);
+    const newSubtasks = subtasks.map((item, index) => ({
+        id: index,
+        content: subtasks,
+        completet: false,
+    }));
+
+    const newTask = {
+        id: tempTasks.length,
+        title: title,
+        description: description,
+        category: category,
+        status: 'toDo',
+        dueDate: dueDate,
+        priority: priority,
+        subTasks: newSubtasks,
+        assignedTo: assignedTo
+    }
+
+    tempTasks.push(newTask);
+    console.log(newTask);
+    console.log(tempTasks);
+    clearTask();
+}
+
+function submitTask() {
+    document.querySelector('form').addEventListener('submit', event => {
+        event.preventDefault();
+        saveTask();
+    });
+}
+
+function clearTask() {
+    document.querySelector('form').reset();
+    selectedContacts.length = 0;
+    subtasks.length = 0;
+    renderSelectedContactsBelow();
+    renderSubtasks();
 }

@@ -71,6 +71,7 @@ h1 {
     padding: 12px 21px;
     border: 1px solid #D1D1D1;
     font-family: inherit;
+    font-size: 16px;
     height: 48px;
     cursor: pointer;
     width: 440px;
@@ -380,6 +381,7 @@ textarea {
     border-radius: 10px;
     border: 1px solid #D1D1D1;
     font-family: inherit;
+    font-size: 16px;
     cursor: pointer;
     width: 440px;
     resize: none;
@@ -400,6 +402,7 @@ textarea:focus {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 16px;
     gap: 8px;
     background-color: white;
     border-radius: 10px;
@@ -428,7 +431,7 @@ textarea:focus {
 }
 
 .form-bottom {
-    padding: 96px 32px;
+    padding: 72px 0 120px 64px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -483,6 +486,11 @@ textarea:focus {
 
     .form-col-right {
         padding: 8px 16px 8px 64px;
+    }
+
+    .form-bottom {
+        max-width: 504px;
+        padding: 72px 0 120px 64px;
     }
 }
 
