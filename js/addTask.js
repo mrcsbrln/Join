@@ -189,9 +189,11 @@ function pushSubtask() {
     const subtaskInput = document.querySelector('.subtask-input');
     const subtaskBtnCheck = document.querySelector('.subtask-check');
     subtaskBtnCheck.addEventListener('click', () => {
-        subtasks.push(subtaskInput.value);
-        renderSubtasks();
-        subtaskInput.value = '';
+        if (subtaskInput.value !== '') {
+            subtasks.push(subtaskInput.value);
+            renderSubtasks();
+            subtaskInput.value = '';
+        }
     })
 }
 
@@ -317,8 +319,12 @@ function submitTask() {
 
 function clearTask() {
     document.querySelector('form').reset();
+    document.querySelectorAll('checked').forEach(item => {
+        item.classList.remove('checked');
+    });
     selectedContacts.length = 0;
     subtasks.length = 0;
     renderSelectedContactsBelow();
+    renderContacts();
     renderSubtasks();
 }
