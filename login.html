@@ -33,7 +33,7 @@
                 </nav>
             </header>
 
-            <main>
+            <main class="main">
 
                 <div class="logIn__container">
 
@@ -73,8 +73,18 @@
             </main>
 
             <footer class="login__footer">
-                <a href="./privacyPolicy.html">Privacy policy</a>
-                <a href="./legalNotice.html">Legal notice</a>
+
+                <nav class="login__nav-mobile">
+                    <p>Not a Join User?</p> 
+                    <a href="#">
+                        <div class="login__signUp-mobile" onclick="redirectToSignUp()">Sign Up</div>
+                    </a>
+                </nav>
+
+                <div class="footer__legacys">
+                    <a href="./privacyPolicy.html">Privacy policy</a>
+                    <a href="./legalNotice.html">Legal notice</a>
+                </div>
             </footer>
 
             <div id="overlay" class="overlay__container">
