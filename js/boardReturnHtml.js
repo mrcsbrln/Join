@@ -126,9 +126,9 @@ function renderCardEditHtml(i) {
         </div>
         <div class="priorityEdit">
             <p class="cardTextGrey">Priority</p>
-            <div class="prio-buttons">
+            <div class="prio-buttons prioBtn">
             <button type="button" value="urgent" class="prio-btn prioEdit urgent">Urgent<img src="./assets/img/icons_add_task/urgent.svg" alt=""></button>
-            <button type="button" value="medium" class="prio-btn prioEdit active">Medium<img src="./assets/img/icons_add_task/medium-white.svg" alt=""></button>
+            <button type="button" value="medium" class="prio-btn prioEdit medium">Medium<img src="./assets/img/icons_add_task/medium-white.svg" alt=""></button>
             <button type="button" value="low" class="prio-btn prioEdit low">Low<img src="./assets/img/icons_add_task/low.svg" alt=""></button>
         </div>
         </div>
@@ -136,7 +136,7 @@ function renderCardEditHtml(i) {
             <p class="cardTextGrey">Assigned to</p>
                             <div class="dropdown-container">
                                 <div onclick="showDropdown()" id="dropDownContact" class="select-btn">
-                                    <input class="select-btn-input" type="text" value="Select contacts to assign">
+                                    <input onkeyup="filterContactEdit()" id="searchContacts" class="select-btn-input selectBtnIn" type="text" Placeholder="Select contacts to assign">
                                     <span class="arrow-down">
                                         <img src="./assets/img/icons_add_task/chevron.svg" alt="">
                                     </span>
@@ -150,26 +150,27 @@ function renderCardEditHtml(i) {
         <div id="profileBadgesEdit" class="profileBadgesEdit boardFlex">
         </div>
         <div class="form-group">
-                            <p class="cardTextGrey">Subtasks</p>
-                            <div class="subtask-input-container">
-                                <input class="form-input subtask-input" type="text" placeholder="Add new subtask">
-                                <div class="subtask-btn add">
-                                    <img src="./assets/img/icons_add_task/add.svg" alt="">
-                                </div>
-                                <div class="subtask-btn check-cancel-div">
-                                    <div class="subtask-cancel">
-                                        <img src="./assets/img/icons_add_task/subtask-close.svg" alt="">
-                                    </div>
-                                    <div class="subtask-divider"></div>
-                                    <div class="subtask-check">
-                                        <img src="./assets/img/icons_add_task/subtask-check.svg" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="display-subtasks-container">
-                                <ul id="subtaskList" class="subtasks-list">
-                                </ul>
-                            </div>
+                          <p class="cardTextGrey">Subtasks</p>
+    <div class="subtask-input-container">
+        <input onclick="styleSubtaskInputEdit()" id="subtaskInput" class="form-input subtask-input subtaskInputEdit" type="text" placeholder="Add new subtask">
+        <div id="addSubtaskBtn" class="subtask-btn add" onclick="hideInputTools()">
+            <img onclick="styleSubtaskInputEdit()"  src="./assets/img/icons_add_task/add.svg" alt="">
+        </div>
+        <div id="cancelDiv" class="subtask-btn check-cancel-div">
+            <div onclick="emptyInput()" id="subtaskCancel" class="subtask-cancel" >
+                <img onclick="emptyInput()" src="./assets/img/icons_add_task/subtask-close.svg" alt="">
+            </div>
+            <div class="subtask-divider"></div>
+            <div onclick="pushSubtaskEdit()" class="subtask-check subtaskChekEdit">
+                <img src="./assets/img/icons_add_task/subtask-check.svg" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="display-subtasks-container">
+        <ul id="subtaskList" class="subtasks-list">
+        
+        </ul>
+    </div>
                         </div>
     </div>
     <div class="footerCardEdit boardFlex">
