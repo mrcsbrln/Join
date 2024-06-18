@@ -25,7 +25,7 @@
 
     <div id="contacts-container" class="contacts-container">
         <div class="add-contact-btn-container d-flex-center">
-            <div onclick="openPopUpWindow('add-contact')" class="add-contact-btn d-flex-center">
+            <div onclick="openPopUpWindow('add-contact', 'modal', 'pop-up-open', 'pop-up-close')" class="add-contact-btn d-flex-center">
                 <p>
                     <b>Add new contact</b>
                 </p>
@@ -36,8 +36,8 @@
     </div>
 
 
-    <div class="main-container">
-        <div onclick="closeDisplayedContact()" class="back-arrow">
+    <div id="main-container" class="main-container">
+        <div onclick="closeMobileContact()" class="back-arrow">
             <img src="./assets/img/help_img/go_back_arrow.svg" alt="">
         </div>
         <div class="title-container">
@@ -46,27 +46,13 @@
             <p>Better with a team</p>
         </div>
         <div id="contact-displayed" class="contact-displayed"></div>
-        <div id="contact-created" class="contact-created d-flex-center">
+        <div id="toast-msg" class="toast-msg d-flex-center toast-msg-slide-out">
             Contact succesfully created
         </div>
-        <div onclick="openContactsSubMenu()" class="d-flex-center contact-sub-menu-btn">
+        <div onclick="openPopUpWindow('contact-sub-menu', 'mobile-modal', 'sub-menu-open', 'sub-menu-close')" class="d-flex-center contact-sub-menu-btn">
             <img src="./assets/img/contacts_img/contacts_sub_menu.svg" alt="">
         </div>
     </div>
-
-    <!-- <div id="contact-sub-menu-modal" class="sub-menu-bg d-none">
-        <div id="contact-sub-menu" class="contact-sub-menu d-none">
-            <div onclick="editContact()" class="contact-options-btns">
-                <img src="./assets/img/contacts_img/edit_contact.svg" alt="">
-                <p>Edit</p>
-            </div>
-            <div onclick="deleteContact()" class="contact-options-btns">
-                <img src="./assets/img/contacts_img/delete_contact.svg" alt="">
-                <p>Delete</p>
-            </div>
-        </div>
-    </div> -->
-
 
     <div id="modal" class="modal d-flex-center d-none">
         <div id="add-contact" class="pop-up-container pop-up-close d-none">
@@ -81,7 +67,7 @@
                 </div>
             </div>
             <div class="pop-up-content">
-                <div onclick="closePopUpWindow('add-contact')" class="close-pop-up d-flex-center">
+                <div onclick="closePopUpWindow('add-contact', 'modal', 'pop-up-open', 'pop-up-close')" class="close-pop-up d-flex-center">
                     <img src="./assets/img/contacts_img/close_pop_up.svg" alt="">
                 </div>
                 <div class="contact-img pop-up-img d-flex-center ">
@@ -111,7 +97,7 @@
                     </form>
                 </div>
                 <div class="pop-up-btns">
-                    <button onclick="closePopUpWindow('add-contact')" class="cancel-btn">
+                    <button onclick="closePopUpWindow('add-contact', 'modal', 'pop-up-open', 'pop-up-close')" class="cancel-btn">
                         <p>Cancel</p>
                         <div class="icon-container">
                             <img src="./assets/img/contacts_img/close_pop_up.svg" alt="">

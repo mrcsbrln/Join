@@ -5,7 +5,7 @@ let mycontacts = [];
 let highestId = 0;
 
 function initContacts() {
-    includeHTML().then(() => {highlightContacts()});
+    includeHTML().then(() => { highlightContacts() });
     readData().then(() => {
         updateHeaderProfileInitials();
         renderContacts();
@@ -70,11 +70,12 @@ async function renderContacts() {
 
 
 function slideContact(container) {
-    container.style.transform = 'translateX(100%)';
-    container.style.opacity = '0';
+    container.classList.remove('contact-slide-in');
+    container.classList.add('contact-slide-out');
     setTimeout(() => {
-        container.style.transform = 'translateX(0)';
-        container.style.opacity = '1';
+        container.classList.remove('contact-slide-out');
+        container.classList.add('contact-slide-in');
+
     }, 75);
 }
 
@@ -92,30 +93,46 @@ function filterNullValues(array) {
     return array.filter(item => item !== null);
 }
 
+function createUserInitials(name) {
+    const names = name.split(' ');
+    const firstNameInitial = names[0].charAt(0).toUpperCase();
+    const lastNameInitial = names.length > 1 ? names[names.length - 1].charAt(0).toUpperCase() : '';
+    return firstNameInitial + lastNameInitial;
+}
+
 async function displayContact(id) {
-    try {
-        const contact = mycontacts.find(contact => contact.id === id);
-        if (contact) {
-            const contactDetailsContainer = document.getElementById('contact-displayed');
-            contactDetailsContainer.innerHTML = displayContactHtml(contact);
+    const contact = mycontacts.find(contact => contact.id === id);
+    if (contact) {
+        const contactDetailsContainer = document.getElementById('contact-displayed');
+        contactDetailsContainer.innerHTML = displayContactHtml(contact);
+
+
+        if (window.innerWidth <= 768) {
+            openMobileContact();
+        } else {
             selectedContact(id);
             slideContact(contactDetailsContainer);
-        } else {
-            console.error(`Contact with ID ${id} not found.`);
         }
-    } catch (error) {
-        console.error('Error displaying contact:', error);
     }
 }
 
+function openMobileContact() {
+    document.getElementById('main-container').style.display = 'flex';
+}
+
+function closeMobileContact() {
+    document.getElementById('main-container').style.display = 'none';
+}
+
 function slideToastMsg() {
-    let container = document.getElementById('contact-created')
-    container.style.transform = 'translateX(2000%)';
+    let container = document.getElementById('toast-msg')
     setTimeout(() => {
-        container.style.transform = 'translateX(0)';
+        container.classList.remove('toast-msg-slide-out');
+        container.classList.add('toast-msg-slide-in');
     }, 500);
     setTimeout(() => {
-        container.style.transform = 'translateX(2000%)';
+        container.classList.remove('toast-msg-slide-in');
+        container.classList.add('toast-msg-slide-out');
     }, 2000);
 
 }
@@ -129,7 +146,7 @@ async function addContact() {
         const name = document.getElementById('new-name').value;
         const email = document.getElementById('new-email').value;
         const phone = document.getElementById('new-phone').value;
-        const initials = name.split(' ').map(word => word[0]).join('').toUpperCase();
+        const initials = createUserInitials(name);
 
         // Increment highestId for the new contact
         highestId += 1;
@@ -159,7 +176,7 @@ async function addContact() {
         // Reload contacts and update the UI
         await renderContacts();
         await displayContact(newContact.id);
-        closePopUpWindow('add-contact');
+        closePopUpWindow('add-contact', 'modal', 'pop-up-open', 'pop-up-close');
         scrollToContact(newContact.id);
         slideToastMsg();
     } catch (error) {
@@ -177,7 +194,7 @@ function editContact(id) {
     editContactContainer.innerHTML = editContactHtml(contact);
 
     // Open the pop-up window
-    openPopUpWindow('edit-contact');
+    openPopUpWindow('edit-contact', 'modal', 'pop-up-open', 'pop-up-close');
 }
 
 async function updateContact(id) {
@@ -186,7 +203,7 @@ async function updateContact(id) {
         const name = document.getElementById('edit-name').value;
         const email = document.getElementById('edit-email').value;
         const phone = document.getElementById('edit-phone').value;
-        const initials = name.split(' ').map(word => word[0]).join('').toUpperCase();
+        const initials = createUserInitials(name);
 
         // Find the contact in the array
         const contact = mycontacts.find(contact => contact.id === id);
@@ -218,7 +235,7 @@ async function updateContact(id) {
         // Reload contacts and update the UI
         await renderContacts();
         await displayContact(id);
-        closePopUpWindow('edit-contact');
+        closePopUpWindow('edit-contact', 'modal', 'pop-up-open', 'pop-up-close');
     } catch (error) {
         console.error('Error updating contact:', error);
     }
@@ -231,17 +248,21 @@ async function deleteContact(id) {
 
         // Hide the contact display container
         const container = document.getElementById('contact-displayed');
-        container.style.transform = 'translateX(100%)';
-        container.style.opacity = '0';
 
-
+        if (window.innerWidth <= 768) {
+            container.classList.remove('contact-slide-out');
+            closeMobileContact();
+        } else {
+            container.classList.remove('contact-slide-in');
+            container.classList.add('contact-slide-out');
+        }
 
         // Clear the content of the contact display container
         setTimeout(() => {
             container.innerHTML = '';
         }, 75);
 
-        closePopUpWindow('edit-contact')
+        closePopUpWindow('edit-contact', 'modal', 'pop-up-open', 'pop-up-close');
 
         // Send a DELETE request to remove the contact from the server
         await fetch(`${BASE_URL}/contacts/${id}.json`, {
@@ -298,32 +319,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-function openPopUpWindow(windowId) {
-    let popUpWindow = document.getElementById(windowId);
-    let modal = document.getElementById('modal');
-    modal.classList.remove('d-none');
-    popUpWindow.classList.remove('d-none');
-    setTimeout(() => {
-        popUpWindow.classList.remove('pop-up-close');
-        popUpWindow.classList.add('pop-up-open');
-    }, 10);
-}
-
-function closePopUpWindow(windowId) {
-    let popUpWindow = document.getElementById(windowId);
-    let modal = document.getElementById('modal');
-    popUpWindow.classList.remove('pop-up-open');
-    popUpWindow.classList.add('pop-up-close');
-    setTimeout(() => {
-        modal.classList.add('d-none');
-        popUpWindow.classList.add('d-none');
-    }, 110);
-    clearInputs();
-
-}
-
-
-
 function clearInputs() {
     const inputs = document.querySelectorAll('.input input');
     inputs.forEach(function (input) {
@@ -339,53 +334,74 @@ function randomColors() {
     }
     return color;
 }
+
+function openPopUpWindow(windowId, modalId, classOpen, classClose) {
+    let popUpWindow = document.getElementById(windowId);
+    let modal = document.getElementById(modalId);
+    modal.classList.remove('d-none');
+    popUpWindow.classList.remove('d-none');
+    setTimeout(() => {
+        popUpWindow.classList.remove(classClose);
+        popUpWindow.classList.add(classOpen);
+    }, 10);
+}
+
+function closePopUpWindow(windowId, modalId, classOpen, classClose) {
+    let popUpWindow = document.getElementById(windowId);
+    let modal = document.getElementById(modalId);
+    popUpWindow.classList.remove(classOpen);
+    popUpWindow.classList.add(classClose);
+    setTimeout(() => {
+        modal.classList.add('d-none');
+        popUpWindow.classList.add('d-none');
+    }, 110);
+    clearInputs();
+
+}
+
 function closeModalOnClick(event) {
     const modal = document.getElementById('modal');
+    const mobileModal = document.getElementById('mobile-modal');
     const addContactContent = document.getElementById('add-contact');
     const editContactContent = document.getElementById('edit-contact');
+    const subMenuContent = document.getElementById('contact-sub-menu');
 
     if (event.target === modal) {
         if (!addContactContent.classList.contains('d-none')) {
-            closePopUpWindow('add-contact');
+            closePopUpWindow('add-contact', 'modal', 'pop-up-open', 'pop-up-close');
         }
         if (!editContactContent.classList.contains('d-none')) {
-            closePopUpWindow('edit-contact');
+            closePopUpWindow('edit-contact', 'modal', 'pop-up-open', 'pop-up-close');
         }
     }
-}
-
-function openContactSubMenu() {
-    let subMenu = document.getElementById('contact-sub-menu');
-    let subModal = document.getElementById('contact-sub-menu-modal');
-    subModal.classList.remove('d-none');
-    subMenu.classList.remove('d-none');
-    setTimeout(() => {
-        subMenu.classList.remove('sub-menu-close');
-        subMenu.classList.add('sub-menu-open');
-    }, 10);
+    if (event.target === mobileModal) {
+        if (!subMenuContent.classList.contains('d-none')) {
+            closePopUpWindow('contact-sub-menu', 'mobile-modal', 'sub-menu-open', 'sub-menu-close');
+        }
+    }
 
 }
-function closeContactSubMenu() {
-    let subMenu = document.getElementById('contact-sub-menu');
-    let subModal = document.getElementById('contact-sub-menu-modal');
-    subMenu.classList.remove('sub-menu-open');
-    subMenu.classList.add('sub-menu-close');
-    setTimeout(() => {
-        subModal.classList.add('d-none');
-        subMenu.classList.add('d-none');
-    }, 100);
-}
 
-window.onclick = function (event) {
-    const subMenu = document.getElementById('sub-menu-modal');
-    if (event.target === subMenu) {
-        closeContactSubMenu() ;
+
+function deselectContactOnMobile() {
+    const selectedContact = document.querySelectorAll('.contact');
+    if (window.innerWidth <= 768) {
+        selectedContact.forEach(contactElement => {
+            contactElement.classList.remove('contact-selected');
+        })
     }
 }
 
+function adjustMainContainerDisplay() {
+    const mainContainer = document.getElementById('main-container');
+    if (window.innerWidth > 768) {
+        mainContainer.style.display = 'flex';
+    } else {
+        mainContainer.style.display = 'none';
+    }
+}
 
 window.addEventListener('click', closeModalOnClick);
-
-
-
+window.addEventListener('resize', deselectContactOnMobile);
+window.addEventListener('resize', adjustMainContainerDisplay);
 

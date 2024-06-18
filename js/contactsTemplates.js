@@ -28,9 +28,11 @@ function displayContactHtml(contact) {
     <div class="contact-name">
         <h2>${contact['name']}</h2>
         <div class="contact-btns">
+        <div>
             <div onclick="editContact(${contact['id']})" class="edit-contact">
                 <img src="./assets/img/contacts_img/edit_contact.svg" alt="">
                 <p>Edit</p>
+            </div>
             </div>
             <div onclick="deleteContact(${contact['id']})" class="delete-contact">
                 <img src="./assets/img/contacts_img/delete_contact.svg" alt="">
@@ -50,7 +52,8 @@ function displayContactHtml(contact) {
         <div>${contact['phone']}</div>
     </div>
 </div>
- <div id="contact-sub-menu-modal" class="sub-menu-bg d-none">
+
+ <div id="mobile-modal" class="sub-menu-bg d-none">
         <div id="contact-sub-menu" class="contact-sub-menu d-none">
             <div onclick="editContact(${contact['id']})" class="contact-options-btns">
                 <img src="./assets/img/contacts_img/edit_contact.svg" alt="">
@@ -77,7 +80,7 @@ function editContactHtml(contact) {
                 </div>
             </div>
             <div class="pop-up-content">
-                <div onclick="closePopUpWindow('edit-contact')" class="close-pop-up d-flex-center">
+                <div onclick="closePopUpWindow('edit-contact', 'modal', 'pop-up-open', 'pop-up-close')" class="close-pop-up d-flex-center">
                     <img src="./assets/img/contacts_img/close_pop_up.svg" alt="">
                 </div>
                 <div class="contact-img d-flex-center pop-up-img" style="background-color: ${contact['color']};">${contact['initials']}</div>

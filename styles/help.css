@@ -65,3 +65,35 @@ h3 {
 .dots div {
     padding-left: 10px;
 }
+
+@media (max-width: 1024px) {
+    .text-content {
+        padding: 144px 40px 96px 40px;
+    }
+    .back-arrow {
+        top: 160px;
+        right: 40px;
+    }
+}
+@media (max-width: 768px) {
+    .text-content {
+        padding: 128px 40px 80px 40px;
+    }
+    .back-arrow {
+        top: 128px;
+        right: 40px;
+    }
+    h1 {
+        font-size: 47px;
+        margin-bottom: 32px;
+    }
+}
+@media (max-width: 425px) {
+    .text-content {
+        padding: 128px 16px 80px 16px;
+    }
+    .back-arrow {
+        top: 128px;
+        right: 16px;
+    }
+}
