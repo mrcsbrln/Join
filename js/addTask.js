@@ -2,6 +2,14 @@ const selectedContacts = [];
 const subtasks = [];
 let filteredContacts = contacts;
 let tempTasks = [];
+const svgMappings = {
+    'urgent': './assets/img/icons_add_task/urgent.svg',
+    'urgent-active': './assets/img/icons_add_task/urgent-white.svg',
+    'medium': './assets/img/icons_add_task/medium.svg',
+    'medium-active': './assets/img/icons_add_task/medium-white.svg',
+    'low': './assets/img/icons_add_task/low.svg',
+    'low-active': './assets/img/icons_add_task/low-white.svg'
+};
 
 function initAddTask() {
     includeHTML().then(() => {
@@ -18,6 +26,7 @@ function initAddTask() {
     pushSubtask();
     renderContacts();
     submitTask();
+    closeContactListOnOutsideClick();
 }
 
 function showMenu() {
@@ -102,15 +111,6 @@ function renderSelectedContactsBelow() {
 
 function changePrioBtn() {
     const buttons = document.querySelectorAll('.prio-btn');
-    const svgMappings = {
-        'urgent': './assets/img/icons_add_task/urgent.svg',
-        'urgent-active': './assets/img/icons_add_task/urgent-white.svg',
-        'medium': './assets/img/icons_add_task/medium.svg',
-        'medium-active': './assets/img/icons_add_task/medium-white.svg',
-        'low': './assets/img/icons_add_task/low.svg',
-        'low-active': './assets/img/icons_add_task/low-white.svg'
-    };
-
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             buttons.forEach(btn => {
@@ -221,7 +221,9 @@ function editSubTask() {
 
     subtaskListItems.forEach(item => {
         const editSubtaskBtn = item.querySelector('.edit-subtask-btn');
-        editSubtaskBtn.addEventListener('click', () => {
+
+        // Function to handle subtask editing
+        const handleEdit = () => {
             let input = item.querySelector('.edit-subtask-input');
             if (!input) {
                 let liText = item.querySelector('.li-text');
@@ -237,8 +239,14 @@ function editSubTask() {
                 deleteSubtask();
                 confirmSubtaskEdit();
             }
-        })
-    })
+        };
+
+        // Add click event listener to edit button
+        editSubtaskBtn.addEventListener('click', handleEdit);
+
+        // Add double click event listener to the list item
+        item.addEventListener('dblclick', handleEdit);
+    });
 }
 
 function deleteSubtask() {
@@ -319,6 +327,67 @@ function clearTask() {
     document.querySelector('form').reset();
     selectedContacts.length = 0;
     subtasks.length = 0;
-    renderSelectedContactsBelow();
+    deselectListItems();
     renderSubtasks();
+    selectMediumPriority();
+    resetCategory();
+}
+
+function deselectListItems() {
+    const listItems = document.querySelectorAll('.list-item.assigned-to');
+
+    listItems.forEach((item, i) => {
+        if (item.classList.contains('checked')) {
+            const img = item.querySelector('.checkbox');
+            item.classList.remove('checked');
+            img.classList.remove('checked');
+            img.src = './assets/img/icons_add_task/checkbox.svg'; // Change the image to the unchecked state
+
+            // Remove the contact from the selectedContacts array
+            const contact = filteredContacts[i];
+            const index = selectedContacts.indexOf(contact);
+            if (index !== -1) {
+                selectedContacts.splice(index, 1);
+            }
+        }
+    });
+    closeContactList ();
+    renderSelectedContactsBelow(); // Update the display of selected contacts
+}
+
+
+function selectMediumPriority() {
+    const buttons = document.querySelectorAll('.prio-btn');
+    buttons.forEach(button => {
+        const prio = button.id;
+        const img = button.querySelector('img');
+        if (prio === 'medium') {
+            button.classList.add('active');
+            img.src = svgMappings['medium-active'];
+        } else {
+            button.classList.remove('active');
+            img.src = svgMappings[prio];
+        }
+    });
+}
+
+function resetCategory() {
+    const categoryDisplayed = document.getElementById('category-displayed');
+    categoryDisplayed.textContent = "Select task category";
+}
+
+function closeContactList () {
+    document.getElementById('select-btn').classList.remove('show-menu');
+}
+
+function closeContactListOnOutsideClick() {
+    document.addEventListener('click', function(event) {
+        const selectBtnContainer = document.getElementById('select-btn');
+        const listItemsContainer = document.querySelector('.list-items');
+
+        // Check if the click is outside both the select-btn and list-items containers
+        if (!selectBtnContainer.contains(event.target) && !listItemsContainer.contains(event.target)) {
+            closeContactList();
+        }
+    });
 }

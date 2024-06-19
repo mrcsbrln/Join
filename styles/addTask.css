@@ -19,7 +19,7 @@ h1 {
     /* position: sticky;
     top: 96px; */
     background-color: #F6F7F8;
-    padding: 0 64px;
+    padding-left: 96px;
 }
 
 .add-task-container {
@@ -36,7 +36,7 @@ h1 {
 .form-container {
     display: flex;
     flex-direction: column;
-    padding: 64px 0 0 0;
+    padding-top: 110px;
 }
 
 .form-col-container {
@@ -53,17 +53,18 @@ h1 {
 
 .form-col-left {
     border-right: 1px solid #D1D1D1;
-    padding: 8px 16px 8px 64px;
+    padding: 0px 48px 0px 96px;
+    margin-top: 48px;
 }
 
 .form-col-right {
-    padding: 8px 0 8px 16px;
+    padding: 48px 0px 0px 48px;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
 }
 
 .form-input {
@@ -71,7 +72,7 @@ h1 {
     padding: 12px 21px;
     border: 1px solid #D1D1D1;
     font-family: inherit;
-    font-size: 16px;
+    font-size: 20px;
     height: 48px;
     cursor: pointer;
     width: 440px;
@@ -96,13 +97,14 @@ h1 {
     border: 1px solid #D1D1D1;
     border-radius: 10px;
     background-color: #fff;
+    font-size: 20px;
 }
 
 .select-btn-input {
     border: unset;
     width: 100%;
     height: 100%;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 .select-btn-input:focus {
@@ -135,6 +137,8 @@ h1 {
     border-top: none;
     display: none;
     z-index: 2;
+    font-size: 20px;
+    
 }
 
 .select-btn.show-menu {
@@ -151,8 +155,8 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0px 16px;
-    height: 48px;
+    padding: 7px 16px;
+    height: 56px;
     transition: 125ms;
 }
 
@@ -181,9 +185,10 @@ h1 {
     background-color: #9747FF;
     color: #fff;
     border-radius: 50%;
-    border: 1px solid #fff;
-    width: 40px;
-    height: 40px;
+    border: 2px solid #fff;
+    width: 42px;
+    height: 42px;
+    font-size: 12px;
 }
 
 .list-item.checked {
@@ -381,7 +386,7 @@ textarea {
     border-radius: 10px;
     border: 1px solid #D1D1D1;
     font-family: inherit;
-    font-size: 16px;
+    font-size: 20px;
     cursor: pointer;
     width: 440px;
     resize: none;
@@ -394,7 +399,7 @@ textarea:focus {
 
 .prio-buttons {
     display: flex;
-    gap: 4px;
+    gap: 16px;
 }
 
 .prio-btn {
@@ -402,7 +407,7 @@ textarea:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 16px;
+    font-size: 20px;
     gap: 8px;
     background-color: white;
     border-radius: 10px;
@@ -420,6 +425,8 @@ textarea:focus {
     color: white;
     outline: none;
     box-shadow: none;
+    font-weight: 700;
+    font-size: 21px;
 }
 
 .prio-btn.active.urgent {
@@ -431,15 +438,16 @@ textarea:focus {
 }
 
 .form-bottom {
-    padding: 72px 0 120px 64px;
+    padding: 146px 0 20px 96px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    font-size: 20px;
 }
 
 .form-actions {
     display: flex;
-    gap: 8px;
+    gap: 16px;
 }
 
 .required {
@@ -453,13 +461,16 @@ textarea:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 6px;
     cursor: pointer;
+    font-size: 20px;
+    background-color: white;
 }
 
 .create-btn {
     background-color: #2A3647;
     color: white;
+    font-weight: 700;
 }
 
 .clear-btn:hover {
@@ -475,6 +486,9 @@ textarea:focus {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
+label {
+    font-size: 20px;
+}
 @media screen and (max-width: 1239px) {
     .form-col-container {
         justify-content: flex-start;
