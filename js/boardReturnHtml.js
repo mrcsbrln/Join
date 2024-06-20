@@ -4,10 +4,11 @@
  * @returns {string} The HTML snippet for the task card.
  */
 function renderCardHtml(task) {
+    let color = (task.category === 'User Story') ? 'Blue' : 'Green';
     const completedSubtasks = task.subTasks.filter(subtask => subtask.completet).length;
     return `
     <div draggable="true" ondragstart="startDragging(${task.id})" id="taskCard${task.id}"onclick="openDialog(); renderCardBig(${task.id})" class="taskCard">
-        <label class="category">${task.category}</label>
+        <label class="category${color}">${task.category}</label>
         <p class="titelCard">${task.title}</p>
         <p class="descriptionCard">${task.description}</p>
         <div>
@@ -36,9 +37,7 @@ function renderCardHtml(task) {
 function renderCardBigTop(i) {
     document.getElementById('dialogContent').innerHTML = `
     <div class="taskCardBig">
-        <div class="taskCardBigHeader">
-            <label class="categoryBig">${tasks[i].category}</label>
-        </div>
+       
         <p class="titelCardBig">${tasks[i].title}</p>
         <p class="descriptionCardBig cardTextBlack">${tasks[i].description}</p>
         <div class="dateContainer boardFlex">
@@ -100,6 +99,20 @@ function renderCardBigSubToHtml(contact) {
     </li>`
 }
 
+function renderCardBigHeaderHtml(i, color) {
+    return `
+     <label class="categoryBig${color}">${tasks[i].category}</label>
+                <span onclick="closeDialogBtn()" class="closeBtn closeEdit">
+                    <img src="assets/img/icons/close.svg" alt="">
+                </span>
+    `}
+
+    function renderCardEditHeaderHtml() {return `   
+               <span onclick="closeDialogBtn()" class="closeBtn closeEdit">
+                   <img src="assets/img/icons/close.svg" alt="">
+               </span>
+   `}
+
 /**
  * Generates HTML for editing task details in the dialog box.
  * 
@@ -151,7 +164,7 @@ function renderCardEditHtml(i) {
         </div>
         <div class="form-group">
                           <p class="cardTextGrey">Subtasks</p>
-    <div class="subtask-input-container">
+    <div class="subtask-input-container subtaskContainer">
         <input onclick="styleSubtaskInputEdit()" id="subtaskInput" class="form-input subtask-input subtaskInputEdit" type="text" placeholder="Add new subtask">
         <div id="addSubtaskBtn" class="subtask-btn add" onclick="hideInputTools()">
             <img onclick="styleSubtaskInputEdit()"  src="./assets/img/icons_add_task/add.svg" alt="">
@@ -181,8 +194,8 @@ function renderCardEditHtml(i) {
    `
 }
 
-function renderSubtaskEditHtml(subtask,i){
-    return`
+function renderSubtaskEditHtml(subtask, i) {
+    return `
     <li id="subtaskListItem" class="subtask-list-item">
         <div class="li-text">
             ${subtask.content}

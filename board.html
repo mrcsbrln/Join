@@ -7,12 +7,11 @@
     <title>Join Board</title>
     <link id="favicon" rel="shortcut icon" href="./assets/img/favicon/logo_black.png" type="image/x-icon">
     <link rel="stylesheet" href="styles/addTask.css">
-    <link rel="stylesheet" href="styles/board.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="styles/desktopHeader.css">
     <link rel="stylesheet" href="styles/desktopNav.css">
     <link rel="stylesheet" href="styles/boardDialogs.css">
-
+    <link rel="stylesheet" href="styles/board.css">
     <script src="js/board.js"></script>
     <script src="js/desktopHeader.js"></script>
     <script src="js/desktopNav.js"></script>
@@ -29,8 +28,9 @@
     <section class="board boardFlex">
         <div class="boardHeader boardFlex">
             <div class="containerTools boardFlex">
-                <div>
+                <div class="headTitleBtnContainer">
                     <h1>Board</h1>
+                    <img class="addBtnSmall" onclick="openDialogTasks()" src="assets/img/icons/plus add task mobile.svg" alt="">
                 </div>
                 <div class="tools boardFlex">
                     <div class="searchContainer">
@@ -40,7 +40,7 @@
                         <button onclick="getSearchKeyword()" class="searchIcon"><img src="assets/img/icons/search.svg"
                                 alt=""></button>
                     </div>
-                    <button onclick="openDialogTasks()" class="addBtn">Add task +</button>
+                    <button onclick="openDialogTasks()" class="addBtn"><span class="addBtnText">Add task</span> <span>+</span></button>
                 </div>
             </div>
         </div> 
@@ -52,7 +52,7 @@
                 <div class="taskBoard">
                     <div id="emptyTaskTodo" class="emptyTask">No tasks To do</div>
                 </div>
-                <div id="cardContainertoDo" class="cardContainer" ondrop="drop('toDo')" ondragover="allowDrop(event)">
+                <div id="cardContainertoDo" class="cardContainer " ondrop="drop('toDo')" ondragover="allowDrop(event)">
                 </div>
             </div>
             <div class="statusItem">
@@ -89,10 +89,8 @@
 
     <div id="dialogContainer" onclick="closeDialog(event)" class="dialogContainer">
         <div id="dialog" class="dialog">
-            <div class="containerCloseBtn">
-                <span onclick="closeDialogBtn()" class="closeBtn closeEdit">
-                    <img src="assets/img/icons/close.svg" alt="">
-                </span>
+            <div id="containerCloseBtn" class="containerCloseBtn">
+                
             </div>
             <div class="custom-scroll">
                 <div id="dialogContent" class="dialogContent ">
@@ -113,6 +111,7 @@
             </div>
         </div>
     </div>
+    <script src="js/addTaskTemplates.js"></script>
 </body>
 
 </html>
