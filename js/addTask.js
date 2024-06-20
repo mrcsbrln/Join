@@ -293,7 +293,7 @@ function saveTask() {
     }));
 
     const newTask = {
-        id: tempTasks.length,
+        id: Date.now(),
         title: title,
         description: description,
         category: category,
