@@ -407,10 +407,7 @@ textarea:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-<<<<<<< HEAD
-=======
     font-size: 20px;
->>>>>>> 6f67665b087c8ed9598c0bf43ee2a0136a7e9a02
     gap: 8px;
     background-color: white;
     border-radius: 10px;
