@@ -1,7 +1,7 @@
-// const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
-const BASE_URL = "https://join-database-6441e-default-rtdb.europe-west1.firebasedatabase.app/";
+const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
+// const BASE_URL = "https://join-database-6441e-default-rtdb.europe-west1.firebasedatabase.app/";
 
-let mycontacts = [];
+let mycontacts = contacts;
 let highestId = 0;
 
 function initContacts() {

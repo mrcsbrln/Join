@@ -99,7 +99,7 @@ function editContactHtml(contact) {
                             </div>
                         </div>
                         <div class="input">
-                            <input id="edit-phone" type="number" placeholder="Phone" value="${contact['phone']}" required>
+                            <input id="edit-phone" type="phone" placeholder="Phone" value="${contact['phone']}" required>
                             <div class="icon-container">
                                 <img src="./assets/img/contacts_img/phone_icon.svg" alt="">
                             </div>
