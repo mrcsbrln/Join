@@ -20,17 +20,8 @@ html {
   scroll-behavior: smooth;
   display: inline-block;
   overflow-x: hidden;
-  min-height: 100dvh;
 }
 
-body {
-  min-height: 100%;
-  width: 100%;
-  font-family: "inter", sans-serif;
-  overflow: visible;
-  direction: ltr;
-  background-color: #F6F7F8;
-}
 
 .d-none {
   display: none !important;
@@ -81,20 +72,11 @@ a:hover {
 
 
 body {
-    height: 100dvh;
-    min-height: 100dvh;
-    width: 100dvw;
-    max-width: 100dvw;
     font-family: "inter", sans-serif;
     overflow: visible;
     direction: ltr;
     background-color: #F6F7F8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
-
-
 
 
 
@@ -103,36 +85,156 @@ body {
 /* ----------------------------------------------------------------- */
 
 
-.header {
-    /* position: absolute;
-    top: 0;
-    left: 0;
-    right: 0; */
-    /* height: calc(122px + 80px); */
-    height: 30%;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    align-self: flex-end;
-}
 
 
-.main {
-    font-family: "inter", sans-serif;
-}
 
 
 .content__container {
+    font-family: "inter", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1440px;
+    width: 100vw;
+    height: 100dvh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.header {
+    height: 25%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: flex-end;
+}
+
+
+.header__logo__container {
+    position: absolute;
+    top: 80px;
+    left: 77px;
+    z-index: 100;
+}
+
+
+@media (max-height: 1000px) {
+
+    .header__logo__container {
+        top: 40px;
+        left: 38px;
+    }
+
+    .logIn__container {
+        margin-top: 11%;
+    }
+}
+
+
+
+
+.header__logo {
+    width: 100px;
+    height: 122px;
+}
+
+
+.header__logo-mobile {
+    width: 100px;
+    height: 122px;
+}
+
+
+.login__nav {
+    height: 49px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 35px;
+    padding-top: calc(67px + 49px / 2);
+    padding-right: 122px;
+}
+
+
+.login__nav p {
+    width: 153px;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+
+.login__signUp {
+    color: white;
+    width: 91px;
+    height: 49px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19.2px;    
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #2A3647;
+    transition: color var(--transTime) ease-in-out, background-color var(--transTime) ease-in-out, box-shadow var(--transTime) ease-in-out;
+}
+
+
+.login__signUp:hover {
+    color: #FFFFFF;
+    background-color: #29ABE2;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+
+
+
+.logIn__container {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    max-width: 1440px;
-    height: 100%;
-    /* max-height: 1024px; */
+    width: 90%;
+    height: 70%;
+    max-width: 652px;
+    max-height: 493px;
+    border-radius: 30px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+    /* margin-top: 33%; */
 }
+
+
+.logIn__container h1 {
+    width: 315px;
+    height: 73px;
+    font-weight: 700;
+    font-size: 61px;
+    line-height: 73.2px;
+    text-align: center;
+}
+
+
+.logIn__separator {
+    width: 150px;
+    height: 3px;
+    margin-top: 14px;
+    margin-bottom: 32px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .login__footer {
@@ -153,11 +255,6 @@ body {
 /* ----------------------------------------------------------------- */
 
 
-
-.header__logo {
-    width: 100px;
-    height: 122px;
-}
 
 
 .overlay__container {
@@ -210,13 +307,6 @@ body {
 
 
 
-.header img {
-    position: absolute;
-    top: 80px;
-    left: 78px;
-}
-
-
 
 .login__footer a {
     color: #A8A8A8;
@@ -250,78 +340,7 @@ body {
 
 
 
-.logIn__container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 652px;
-    height: 493px;
-    border-radius: 30px;
-    background-color: #FFFFFF;
-    box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
-}
 
-
-.logIn__container h1 {
-    width: 315px;
-    height: 73px;
-    font-weight: 700;
-    font-size: 61px;
-    line-height: 73.2px;
-    text-align: center;
-}
-
-
-.logIn__separator {
-    width: 150px;
-    height: 3px;
-    margin-top: 14px;
-    margin-bottom: 32px;
-}
-
-
-
-
-.login__nav {
-    height: 49px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 35px;
-    padding-top: calc(67px + 49px / 2);
-    padding-right: 122px;
-}
-
-
-.login__nav p {
-    width: 153px;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
-}
-
-
-.login__signUp {
-    color: white;
-    width: 91px;
-    height: 49px;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 19.2px;    
-    padding: 15px;
-    border-radius: 8px;
-    background-color: #2A3647;
-    transition: color var(--transTime) ease-in-out, background-color var(--transTime) ease-in-out, box-shadow var(--transTime) ease-in-out;
-}
-
-
-.login__signUp:hover {
-    color: #FFFFFF;
-    background-color: #29ABE2;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
 
 
 
@@ -623,6 +642,10 @@ body {
 
 @media (max-width: 600px) {
 
+    .main {
+        margin-top: 35%;
+    }
+
     .login__nav-mobile {
         display: flex;
     }
@@ -686,7 +709,87 @@ body {
 
 
 
+@media (max-width: 500px) and (min-height: 600px) {
 
+    .logIn__container {
+        margin-top: 33%;
+    }
+
+    .header__logo__container {
+        top: 30px;
+        left: 38px;
+    }
+
+    .logIn__container h1 {
+        height: 56px;
+        font-size: 47px;
+        margin-top: 32px;
+    }
+
+    .logIn__separator {
+        margin-top: 16px;
+        margin-bottom: 16px;
+    }
+
+    .inputField__container-margin32 {
+        margin-bottom: 16px;
+    }
+
+    .header__logo {
+        width: 50px;
+        height: 61px;
+    }
+
+    .logIn__container {
+        max-height: 60%;
+        width: 90%;
+    }
+
+    @keyframes animation_logo {
+        from {
+            inset: 50% 0 0 50%;
+            transform: translate(-50%, -50%);
+            height: 334px;
+            width: 274px;
+        }
+    
+        to {
+            height: 61px;
+            width: 50px;
+            top: 30px;
+            left: 38px;
+            transform: none;
+        }
+    }
+
+    .logIn__form {
+        width: auto;
+    }
+
+    .check-box {
+        margin-left: 44px;
+        margin-top: 8px;
+        margin-bottom: 16px;
+    }
+
+    .btn__logIn {
+        height: 38px;
+    }
+
+    .btn__guest {
+        height: 38px;
+    }
+
+    .login__nav-mobile {
+        margin-top: 16px;
+    }
+
+    .login__signUp-mobile {
+        height: 38px;
+        padding: 8px;
+    }
+
+}
 
 
 
