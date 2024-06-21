@@ -123,8 +123,10 @@ body {
 
 
 .header__logo {
+    opacity: 0;
     width: 100px;
     height: 122px;
+    animation: fadeIn 200ms ease-in-out 1900ms forwards;
 }
 
 
@@ -831,105 +833,56 @@ body {
 /* ----------------------------------------------------------------- */
 /* Overlay and animation : mobile Version */
 
-/* 
+
 @media (max-width: 800px) and (min-height: 600px) {
 
     .overlay__container {
-        position: absolute;
-        min-height: 100%;
-        min-width: 100%;
         background-color: #2a3647;
-        opacity: 1;
-        animation: animation_overlay 2000ms ease-in-out 750ms forwards;
-
     }
 
     .overlay__logo {
-        position: absolute;
-        inset: 50% 0 0 50%;
-        width: 65px;
-        height: 75px;
-        background-image: url('../assets/img/icons_login/logo.svg');
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center center;
-        transform: translate(-50%, -50%);
-        animation: fadeIn 3s forwards;
-    }
-
-    .overlay__logo-mobile {
-        position: absolute;
-        inset: 50% 0 0 50%;
-        width: 65px;
-        height: 75px;
         background-image: url('../assets/img/icons_login/logomobile.svg');
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center center;
-        transform: translate(-50%, -50%);
-        animation: fadeOut 3s forwards;
+        animation: animation_logo 1200ms ease-in-out 750ms forwards, fadeOut 1600ms ease-in-out 750ms forwards;
+    }
+
+    .header__logo {
+        opacity: 0;
+        animation: fadeIn 200ms ease-in-out 1800ms  forwards ;
     }
 
 
-
-
-    .logo__container {
-        position: relative;
-        top: 35px;
-        left: 35px;
-        animation: animation_logo 1200ms ease-in-out 750ms forwards;
-    }
-
-
-
-    @keyframes animation_logo {
-        from {
-            top: 40%;
-    left: 40%;
-    transform: translate(-40%, -40%) scale(1.5);
-        }
-    
-        to {
-            top: 35px;
-            left: 35px;
-            transform: translate(0, 0) scale(1);
-        }
-    }
-
-
-    @keyframes fadeOut {
-        0% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 0;
-        }
-    }
-    
-    @keyframes fadeIn {
-        0% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 1;
-        }
-    }
-
-
-    @keyframes animation_overlay {
-        to {
-            background-color: transparent;
-        }
-    }
-
-
-} */
+}
 
 
 /* ----------------------------------------------------------------- */
 
+@keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+}
 
+@keyframes scaleImg {
+    0% {
+        transform: scale(0.9);
+    }
 
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+}
 
 
 
