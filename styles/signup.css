@@ -94,18 +94,36 @@ body {
     align-items: center;
 }
 
-.main {
-    font-family: "inter", sans-serif;
-}
 
 .content__container {
-    position: relative;
+    font-family: "inter", sans-serif;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    width: 100%;
     max-width: 1440px;
-    height: 100%;
+    width: 100vw;
+    height: 100dvh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.header {
+    position: relative;
+    height: 20%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: flex-end;
+
+}
+
+.header__logo__container {
+    position: absolute;
+    top: 80px;
+    left: 77px;
+    z-index: 100;
 }
 
 
@@ -115,22 +133,12 @@ body {
 }
 
 
-.header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: calc(122px + 80px);
-    display: flex;
-    justify-content: space-between;
-}
 
-
-.header img {
+/* .header img {
     position: absolute;
     top: 80px;
     left: 78px;
-}
+} */
 
 
 .signUp__footer {
@@ -471,3 +479,211 @@ body {
 .inputField__container:has(input:focus) {
     border-color: #29ABE2;
 }
+
+
+/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   */
+/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   */
+
+/* MEDIA QUERRIES   */
+
+/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   */
+/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   */
+
+
+
+@media (max-width: 1024px) {
+
+    .header {
+        height: 20vh;
+    }
+
+ 
+    .header__logo {
+        width: auto;
+        height: clamp(5rem, 8vh, 8rem);
+    }
+
+    /* .header img {
+        top: clamp(2.3rem, 8vh, 5rem);
+        left: clamp(2.3rem, 8vh, 5rem);
+    } */
+
+    .signUp__container {
+        width: clamp(300px, 90%, 652px);
+    }
+
+    .inputField__container {
+        width: clamp(240px, 90%, 422px);
+        height: 48px;
+    }
+
+
+}
+
+
+
+
+  
+@media (max-width: 992px) {
+
+    .signUp__container {
+        width: clamp(300px, 90%, 652px);
+    }
+
+    .inputField__container {
+        width: clamp(240px, 90%, 422px);
+        height: 48px;
+    }
+
+
+}
+
+
+
+@media (max-width: 600px) {
+
+    .login__footer {
+        height: auto;
+    }
+
+    .login__footer a {
+        padding-bottom: 0px;
+        min-width: 123px;
+        text-align: center;
+    }
+
+    .footer__legacys {
+        padding-bottom: 22px;
+    }
+
+
+
+}
+
+
+
+
+
+@media (max-width: 520px) {
+
+    .check-box {
+        margin-left: 26px;
+    }
+
+    .signUp__btn__container {
+        flex-direction: column;
+        height: 100%;
+        gap: 21px;
+    }
+
+    .btn__signUp {
+        width: 180px;
+        height: 51px;
+        margin-bottom: 32px;
+    }
+
+}
+
+
+
+/* ---------------------------------------------------------------- */
+
+
+@media (max-width: 500px) and (min-height: 600px) {
+
+
+    .header__logo__container {
+        top: 30px;
+        left: 38px;
+        max-height: 60%;
+        width: 90%;
+    }
+
+    .signUp__container h1 {
+        height: 56px;
+        font-size: 47px;
+        margin-top: 32px;
+        
+    }
+
+    .signUp__separator {
+        margin-top: 16px;
+        margin-bottom: 16px;
+    }
+
+    .inputField__container-margin24 {
+        margin-bottom: 16px;
+    }
+
+    .header__logo {
+        width: 50px;
+        height: 61px;
+    }
+
+
+    .signUp__form {
+        width: auto;
+    }
+
+    .check-box {
+        margin-left: 44px;
+        margin-top: 8px;
+        margin-bottom: 16px;
+    }
+
+    .btn__signUp {
+        height: 38px;
+    }
+
+    .footer__legacys {
+        padding-bottom: 0px;
+    }
+
+}
+
+
+
+
+
+
+@media (max-width: 500px) and (min-height: 800px) {
+
+    /* .inputField__container input {
+        width: auto;
+    } */
+
+    .header {
+        height: 15%;
+    }
+
+    .signUp__container {
+        margin-top: 0;
+    }
+
+    .signUp__form {
+        margin-top: 24px;
+    }
+
+    .signUp__container h1  {
+        margin-top: 0;
+    }
+
+    .inputField__container {
+        margin-top: 16px;
+    }
+
+    .signUp__btn__container {
+        margin-top: 16px;
+    }
+
+    .signUp__footer {
+        margin-top: 32px;
+    }
+}
+
+
+
+
+
+
+

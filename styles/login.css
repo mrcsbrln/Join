@@ -609,7 +609,13 @@ body {
 
 
 
+/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   */
+/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   */
 
+/* MEDIA QUERRIES   */
+
+/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   */
+/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   */
 
 
 
@@ -625,7 +631,6 @@ body {
         height: 48px;
     }
 
-
 }
 
 
@@ -635,10 +640,6 @@ body {
 
 
 @media (max-width: 600px) {
-
-    .main {
-        margin-top: 35%;
-    }
 
     .login__nav-mobile {
         display: flex;
@@ -654,6 +655,7 @@ body {
 
     .login__footer {
         height: auto;
+        margin-top: 1rem;
     }
 
     .login__footer a {
