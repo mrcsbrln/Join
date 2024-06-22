@@ -11,54 +11,40 @@ body {
 h1 {
     font-size: 61px;
     font-weight: 700;
-    /* padding: 0 16px; */
 }
 
 .heading {
-    width: 100%;
-    /* position: sticky;
-    top: 96px; */
     background-color: #F6F7F8;
-    padding-left: 96px;
+    padding-left: 64px;
+    padding-bottom: 64px;
 }
 
 .add-task-container {
     margin-top: 96px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    width: calc(100vw - 232px);
+    margin-left: 232px;
     background-color: #F6F7F8;
-    text-align: left;
-    float: right;
 }
 
 .form-container {
     display: flex;
     flex-direction: column;
-    padding-top: 110px;
+    padding-top: 64px;
 }
 
 .form-col-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    gap: 64px;
+    margin: 0 64px 64px 64px;
 }
 
 .form-col-left, .form-col-right {
     display: flex;
     flex-direction: column;
     gap: 16px;
-}
-
-.form-col-left {
-    border-right: 1px solid #D1D1D1;
-    padding: 0px 48px 0px 96px;
-    margin-top: 48px;
-}
-
-.form-col-right {
-    padding: 48px 0px 0px 48px;
+    width: min(440px, 100%);
 }
 
 .form-group {
@@ -75,7 +61,7 @@ h1 {
     font-size: 20px;
     height: 48px;
     cursor: pointer;
-    width: 440px;
+    width: min(440px, 100%);
 }
 
 .form-input:focus {
@@ -86,6 +72,7 @@ h1 {
 .dropdown-container {
     position: relative;
     cursor: pointer;
+    width: min(440px, 100%);
 }
 
 .select-btn {
@@ -222,7 +209,7 @@ h1 {
 
 .subtask-input-container {
     display: flex;
-    width: 440px;
+    width: min(440px, 100%);
     cursor: pointer;
 }
 
@@ -322,7 +309,6 @@ h1 {
 
 .subtask-list-item.subtask-list-item-edit {
     padding: 0;
-    width: 440px;
 }
 
 .subtask-list-item.subtask-list-item-edit:hover {
@@ -388,7 +374,7 @@ textarea {
     font-family: inherit;
     font-size: 20px;
     cursor: pointer;
-    width: 440px;
+    width: min(440px, 100%);
     resize: none;
 }
 
@@ -400,6 +386,7 @@ textarea:focus {
 .prio-buttons {
     display: flex;
     gap: 16px;
+    width: min(440px, 100%);
 }
 
 .prio-btn {
@@ -438,16 +425,17 @@ textarea:focus {
 }
 
 .form-bottom {
-    padding: 146px 0 20px 96px;
+    margin: 0 0 128px 64px;
     display: flex;
-    justify-content: space-between;
     align-items: flex-end;
     font-size: 20px;
+    max-width: 944px;
 }
 
 .form-actions {
     display: flex;
     gap: 16px;
+    margin-left: auto;
 }
 
 .required {
@@ -477,7 +465,6 @@ textarea:focus {
     border: 1px solid #29ABE2;
     color: #29ABE2;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
 }
 
 .create-btn:hover {
@@ -489,28 +476,61 @@ textarea:focus {
 label {
     font-size: 20px;
 }
-@media screen and (max-width: 1239px) {
+@media screen and (max-width: 1304px) {
     .form-col-container {
         justify-content: flex-start;
+        gap: 0;
     }
 
     .form-col-left {
         border-style: none;
     }
 
-    .form-col-right {
-        padding: 8px 16px 8px 64px;
+    .form-col-left, .form-col-right {
+        width: 100%;
     }
 
     .form-bottom {
-        max-width: 504px;
-        padding: 72px 0 120px 64px;
+        max-width: 440px;
     }
 }
 
 @media screen and (max-width: 1024px) {
     .add-task-container {
+        margin-left: 0;
         width: 100%;
-        float: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .form-container {
+        padding-top: 32px;
+    }
+
+    .form-col-container {
+        margin: 0 32px 0 32px;
+    }
+
+    h1 {
+        font-size: 48px;
+    }
+
+    .heading {
+        padding-left: 32px;
+        padding-bottom: 32px;
+    }
+
+    .prio-buttons {
+        flex-direction: column;
+    }
+
+    .prio-btn, .prio-btn.active {
+        font-size: 16px;
+    }
+
+    .form-bottom {
+        margin: 0 32px 128px 32px;
+        flex-wrap: wrap;
+        gap: 16px;
     }
 }
