@@ -394,7 +394,7 @@ function checkForCurrentUserLogin() {
             // redirectToLogin();
         }
     } else {
-        console.warn('No current existing - please log in or sign up');
+        console.warn('No current user existing - please log in or sign up');
         return false;
         // redirectToLogin();
     }
