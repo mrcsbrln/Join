@@ -36,7 +36,7 @@ h1 {
 .form-col-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 64px;
+    gap: 32px;
     margin: 0 64px 64px 64px;
 }
 
@@ -45,6 +45,12 @@ h1 {
     flex-direction: column;
     gap: 16px;
     width: min(440px, 100%);
+}
+
+.form-col-middle {
+    height: 350px;
+    border: 1px solid #D1D1D1;
+    align-self: center;
 }
 
 .form-group {
@@ -490,8 +496,15 @@ label {
         width: 100%;
     }
 
+    .form-col-middle {
+        height: 0;
+        width: 0;
+    }
+
     .form-bottom {
         max-width: 440px;
+        flex-wrap: wrap;
+        gap: 16px;
     }
 }
 
@@ -508,7 +521,7 @@ label {
     }
 
     .form-col-container {
-        margin: 0 32px 0 32px;
+        margin: 0 32px 32px 32px;
     }
 
     h1 {
@@ -524,13 +537,11 @@ label {
         flex-direction: column;
     }
 
-    .prio-btn, .prio-btn.active {
-        font-size: 16px;
-    }
-
     .form-bottom {
         margin: 0 32px 128px 32px;
-        flex-wrap: wrap;
-        gap: 16px;
+    }
+
+    .clear-btn, .create-btn {
+        font-size: 16px;
     }
 }
