@@ -81,11 +81,6 @@ body {
 
 
 
-
-/* ----------------------------------------------------------------- */
-
-
-
 /* ---------------------  CONTENT  ------------------- */
 
 
@@ -393,7 +388,7 @@ body {
 
 
 .form__wrongPassword__container {
-    width: 100%;
+    width: clamp(240px, 422px, 80%);
     margin-top: 8px;
     height: 15.6px;
     content: none;
@@ -466,27 +461,6 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ---------------------  ANIMATION ------------------- */
 
 .overlay__container {
@@ -503,7 +477,6 @@ body {
     inset: 50% 0 0 50%;
     height: 334px;
     width: 274px;
-    /* background-image: url('../assets/img/icons_login/logo.png'); */
     background-image: url('../assets/img/icons_login/logo.svg');
     background-repeat: no-repeat;
     background-size: contain;
@@ -541,30 +514,7 @@ body {
 
 
 
-
-
-
-
-
-
-/* ----------------------------------------------------------------- */
-/* ----------------------------------------------------------------- */
-/* ----------------------------------------------------------------- */
-/* ----------------------------------------------------------------- */
-/* ----------------------------------------------------------------- */
-/* ----------------------------------------------------------------- */
-/* ----------------------------------------------------------------- */
-
-
-
-
-
-
-
-
 /* --------------------   MOBILE ----------------------------- */
-
-
 
 
 
@@ -662,18 +612,7 @@ body {
 
 
 
-
-
-
-/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   */
-/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   */
-
-/* MEDIA QUERRIES   */
-
-/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   */
-/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   */
-
-
+/* ---------------------   MEDIA QUERRIES  --------------------------- */
 
 
 
@@ -703,6 +642,18 @@ body {
     }
 
 }
+
+
+
+@media (max-width: 1024px) and (max-height: 600px) {
+
+    .check-box {
+        margin-bottom: 4px;
+        margin-top: 4px;
+    }
+
+}
+
 
 
 @media (max-width: 900px) {
@@ -840,7 +791,7 @@ body {
     }
 
     .logIn__container {
-        max-height: 60%;
+        height: 60%;
         width: 90%;
     }
 
