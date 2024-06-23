@@ -23,16 +23,17 @@ function initBoard() {
         updateHeaderProfileInitials();
         pushSubtaskEdit();
         filterContacts();
-        showMenu();
         changeSvgOnHover();
         changePrioBtn();
         changeSvgOnHover();
-        categoryMenu();
         styleSubtaskInput();
         pushSubtask();
         renderContacts();
-        submitTask();
         closeContactListOnOutsideClick();
+        showMenu();
+        categoryMenu();
+        preventFormSubmitOnEnter();
+        preventDefaultValidation(); 
     });
 }
 

@@ -14,7 +14,9 @@ function initAddTask() {
     styleSubtaskInput();
     pushSubtask();
     renderContacts();
-    submitTask();
     closeContactListOnOutsideClick();
+    categoryMenu();
+    preventFormSubmitOnEnter();
+    preventDefaultValidation(); 
 }
 
