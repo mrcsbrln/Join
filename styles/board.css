@@ -48,6 +48,9 @@ button{
 
 .tools {
     gap: 24px;
+     position: relative; /* Macht das Element zum Bezugspunkt für die absolute Positionierung des Buttons */
+    display: flex;
+    align-items: center; /* Zentriert den Inhalt des Containers vertikal */
 }
 
 .statuses {
@@ -91,7 +94,8 @@ button{
 }
 
 .taskCard {
-    width: 252px;
+    min-width: 252px;
+    max-width: 252px;
     background-color: #ffffff;
     border-radius: 24px;
     padding: 16px;
@@ -108,13 +112,24 @@ button{
     border-radius: 30px;
 }
 
-.category {
+.flexEnd{
+    justify-content: flex-end;
+}
+.spaceBetween{
+    justify-content: space-between;
+}
+.categoryBlue {
     background-color: #0038FF;
     padding: 4px 16px 4px 16px;
     border-radius: 8px;
     color: white;
 }
-
+.categoryGreen {
+    background-color: #1FD7C1;
+    padding: 4px 16px 4px 16px;
+    border-radius: 8px;
+    color: white;
+}
 .titelCard {
     line-height: 19.2px;
     font-weight: 700;
@@ -205,9 +220,7 @@ button{
     margin: 4px 0;
 }
 
-.subtasks {
-    margin-bottom: 24px;
-}
+
 
 .descriptionCard {
     line-height: 19.2px;
@@ -318,7 +331,15 @@ button{
     line-height: 25.2px;
     color: #ffffff;
     border: 1px solid #2A3647;
+    display: inline-flex; /* Für horizontales Ausrichten */
+    align-items: center; /* Vertikales Zentrieren des Inhalts */
+    justify-content: center; /* Horizontales Zentrieren des Inhalts */
 }
+
+.addBtnSmall{
+    display: none;
+}
+
 
 .seperator {
     height: 32px;
@@ -362,4 +383,110 @@ button{
     background: url('../assets/img/icons/plusInput.svg') no-repeat;
     background-size: 20px 20px;
     background-position: right;
+}
+
+.headTitleBtnContainer {
+    display: flex;
+    justify-content: space-between;
+    
+  
+}
+
+@media (max-width: 1024px) {
+
+    .board{
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+
+   
+     .headTitleBtnContainer{
+        width: 100%;
+     }
+     .containerTools {
+        padding-left: 10px;
+        padding-right: 10px; 
+    }
+}
+
+@media (max-width: 550px) {
+
+    .tools{
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+    .addBtn{
+       display: none;
+    }
+    .addBtnSmall{
+        display: flex;
+     }
+     .searchContainer{
+        width: 100%;
+     }
+     .searchBar{
+        width: 90%;
+     }
+
+     .statuses{
+        padding-left: 10px;
+        padding-right: 10px;
+     }
+     .cardContainer{
+        flex-direction: row;
+        gap: 16px;
+        overflow-x: auto;
+     }
+     .statusItem{
+        width: 100%;
+     }
+     .statusHeader{
+        width: 100%;
+     }
+     .dialog{
+        width: 90% !important;
+        height: 80% !important;
+        padding-top: 20px !important;
+     }
+    
+     .closeBtn{
+        margin-right: 20px !important;
+     }
+    
+
+ 
+    .dialogContent{
+        width: 100%;
+    }
+    .subtaskContainer{
+        width: 100% !important;
+    }
+    .footerCardEdit {   
+        bottom: 10px;
+    }
+}
+
+
+@media (max-width: 450px) {
+
+.descriptionCardBig {
+    font-size: 16px;
+  
+}
+
+.titelCardBig{
+    font-size: 36px !important;
+ }
+ .dialog p, .dialog h1, .dialog span ,.dialog label{
+    font-size: 16px !important;
+}
+.dialogContent p, .dialogContent h1, .dialogContent span ,.dialogContent label, .dialogContent input, .dialogContent textarea{ 
+    font-size: 16px !important;
+}
+.prioEdit{
+    font-size: 16px !important;
+    width: 10px;
+}
 }
