@@ -632,6 +632,25 @@ body {
         height: 61px;
     }
 
+
+    @keyframes animation_logo {
+        from {
+            inset: 50% 0 0 50%;
+            transform: translate(-50%, -50%);
+            height: 334px;
+            width: 274px;
+        }
+    
+        to {
+            height: 61px;
+            width: 50px;
+            top: 56px;
+            left: 66px;
+            transform: none;
+        }
+    }
+
+
     .logIn__container {
         width: clamp(300px, 652px, 80%);
     }
@@ -700,8 +719,27 @@ body {
         height: 91px;
     }
 
+    @keyframes animation_logo {
+        from {
+            inset: 50% 0 0 50%;
+            transform: translate(-50%, -50%);
+            height: 334px;
+            width: 274px;
+        }
+    
+        to {
+            height: 91px;
+            width: 75px;
+            top: 56px;
+            left: 5%;
+            transform: none;
+        }
+    }
+
+
     .login__nav-mobile {
         display: flex;
+        margin-bottom: 8px;
     }
 
     .login__nav {
@@ -713,7 +751,6 @@ body {
     }
 
     .login__footer {
-        height: auto;
         margin-top: 1rem;
     }
 
@@ -724,13 +761,18 @@ body {
     }
 
     .footer__legacys {
-        padding-bottom: 22px;
+        padding-bottom: 8px;
+    }
+
+    .login__signUp-mobile {
+        height: 36px;
+        padding: 9px;
     }
 
 }
 
 
-@media (max-width: 520px) {
+@media (max-width: 600px) {
 
     .check-box {
         margin-left: 26px;
@@ -895,6 +937,28 @@ body {
         width: 37px;
         height: 45px;
     }
+
+
+    @keyframes animation_logo {
+        from {
+            inset: 50% 0 0 50%;
+            transform: translate(-50%, -50%);
+            height: 334px;
+            width: 274px;
+        }
+    
+        to {
+            height: 37px;
+            width: 45px;
+            top: 2%;
+            left: 5%;
+            transform: none;
+        }
+    }
+
+
+
+
 
     .logIn__container {
         overflow-y: auto;

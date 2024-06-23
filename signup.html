@@ -25,12 +25,17 @@
             </header>
 
             <div class="signUp__container">
-                <div class="goback" onclick="goBack()">
-                    <img src="./assets/img/icons_signup/goback.png" alt="back" />
-                </div>
 
-                <h1>Sign Up</h1>
-                <img class="signUp__separator" src="./assets/img/icons_signup/separator.png" alt="separator" />
+                <div class="headline__container">
+
+                    <div class="goback" onclick="goBack()">
+                        <img src="./assets/img/icons_signup/goback.png" alt="back" />
+                    </div>
+
+                    <h1>Sign Up</h1>
+                    <img class="signUp__separator" src="./assets/img/icons_signup/separator.png" alt="separator" />
+                
+                </div>
 
                 <form id="signup" class="signUp__form" onsubmit="signUpSubmit(event)" onkeyup="disableSignupButtonIfFormIsEmpty()">
                     <div class="inputField__container inputField__container-margin24">
@@ -101,7 +106,7 @@
             </footer>
 
             <div id="signup__overlay" class="signup__overlay__container d-none">
-                <div class="signup__overlay__text">You Signed Up successfully</div>
+                <div class="signup__overlay__text"></div>
                 <div class="signup__overlay__img"></div>
             </div>
         </div>
