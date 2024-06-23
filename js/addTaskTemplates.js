@@ -145,6 +145,14 @@ function categoryMenu() {
     selectBtnCategory.addEventListener('click', () => {
         selectBtnCategory.classList.toggle('show-menu');
     });
+
+    document.addEventListener('click', (event) => {
+        if (!selectBtnCategory.contains(event.target) && 
+            !categoryDisplayed.contains(event.target) && 
+            !Array.from(listItems).some(item => item.contains(event.target))) {
+            selectBtnCategory.classList.remove('show-menu');
+        }
+    });
 }
 
 function styleSubtaskInput() {
@@ -169,16 +177,26 @@ function styleSubtaskInput() {
     })
 }
 
+
 function pushSubtask() {
     const subtaskInput = document.querySelector('.subtask-input');
     const subtaskBtnCheck = document.querySelector('.subtask-check');
-    subtaskBtnCheck.addEventListener('click', () => {
+
+    function addSubtask() {
         if (subtaskInput.value !== '') {
             subtasks.push(subtaskInput.value);
             renderSubtasks();
             subtaskInput.value = '';
         }
-    })
+    }
+
+    subtaskBtnCheck.addEventListener('click', addSubtask);
+
+    subtaskInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            addSubtask();
+        }
+    });
 }
 
 function renderSubtasks() {
@@ -302,21 +320,21 @@ function saveTask() {
     clearTask();
 }
 
-function submitTask() {
-    document.querySelector('form').addEventListener('submit', event => {
-        const categoryDisplayed = document.getElementById('category-displayed');
+// function submitTask() {
+//     document.querySelector('form').addEventListener('submit', event => {
+//         const categoryDisplayed = document.getElementById('category-displayed');
         
-        if (!categoryDisplayed.dataset.selected) {
-            alert('Please select a category.');
-            event.preventDefault();
-        } else {
-            // Remove the event.preventDefault() to allow form submission
-            // if all required fields are filled including category
-            // event.preventDefault();
-            saveTask();
-        }
-    });
-}
+//         if (!categoryDisplayed.dataset.selected) {
+//             alert('Please select a category.');
+//             event.preventDefault();
+//         } else {
+//             // Remove the event.preventDefault() to allow form submission
+//             // if all required fields are filled including category
+//             // event.preventDefault();
+//             saveTask();
+//         }
+//     });
+// }
 
 function clearTask() {
     document.querySelector('form').reset();
@@ -392,5 +410,67 @@ function closeContactListOnOutsideClick() {
 
 document.addEventListener('DOMContentLoaded', () => {
     categoryMenu();
-    submitTask();
+    preventFormSubmitOnEnter();
+    preventDefaultValidation(); 
 });
+
+function preventFormSubmitOnEnter() {
+    const form = document.querySelector('form');
+    form.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
+    });
+}
+
+
+
+
+function preventDefaultValidation() {
+    // Get form and relevant elements
+    const form = document.getElementById('add-task-form');
+    const titleInput = document.getElementById('title');
+    const dueDateInput = document.getElementById('due-date-input');
+    const categoryDisplayed = document.getElementById('category-displayed');
+    const categoryContainer = document.getElementById('select-btn');
+    const titleRequiredMsg = document.getElementById('title-required');
+    const dateRequiredMsg = document.getElementById('date-required');
+    const categoryRequiredMsg = document.getElementById('category-required');
+
+    // Add submit event listener to the form
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Reset styles and messages
+        titleInput.classList.remove('field-required');
+        dueDateInput.classList.remove('field-required');
+        categoryRequiredMsg.classList.remove('category-required-border');
+
+        titleRequiredMsg.style.opacity = 0;
+        dateRequiredMsg.style.opacity = 0;
+        categoryRequiredMsg.style.opacity = 0;
+
+        // Check if fields are empty
+        let isValid = true;
+        if (titleInput.value.trim() === '') {
+            titleInput.classList.add('field-required');
+            titleRequiredMsg.style.opacity = 1;
+            isValid = false;
+        }
+        if (dueDateInput.value.trim() === '') {
+            dueDateInput.classList.add('field-required');
+            dateRequiredMsg.style.opacity = 1;
+            isValid = false;
+        }
+        if (categoryDisplayed.textContent === 'Select task category') {
+            categoryContainer.classList.add('category-required-border');
+            categoryRequiredMsg.style.opacity = 1;
+            isValid = false;
+        }
+
+        // Submit the form if valid
+        if (isValid) {
+            this.submit(); // Submit the form
+        }
+    });
+}
