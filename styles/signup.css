@@ -86,7 +86,7 @@ body {
     width: 100dvw;
     max-width: 100dvw;
     font-family: "inter", sans-serif;
-    overflow: visible;
+    overflow-x: hidden;
     direction: ltr;
     background-color: #F6F7F8;
     display: flex;
@@ -101,8 +101,10 @@ body {
     flex-direction: column;
     align-items: center;
     max-width: 1440px;
-    width: 100vw;
-    height: 100dvh;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -134,19 +136,12 @@ body {
 
 
 
-/* .header img {
-    position: absolute;
-    top: 80px;
-    left: 78px;
-} */
-
-
 .signUp__footer {
     position: absolute;
-    bottom: 0;
+    bottom: 16px;
     left: 0;
     right: 0;
-    height: calc(1024px - 949px);
+    /* height: calc(1024px - 949px); */
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -182,7 +177,7 @@ body {
     height: 630px;
     border-radius: 30px;
     background-color: #FFFFFF;
-    padding: 48px 88px;
+    /* padding: 48px 88px; */
     box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
 }
 
@@ -499,7 +494,7 @@ body {
 
  
     .header__logo {
-        width: auto;
+        /* width: auto; */
         height: clamp(5rem, 8vh, 8rem);
     }
 
@@ -567,7 +562,7 @@ body {
 @media (max-width: 520px) {
 
     .check-box {
-        margin-left: 26px;
+        margin-left: 0;
     }
 
     .signUp__btn__container {
@@ -580,6 +575,35 @@ body {
         width: 180px;
         height: 51px;
         margin-bottom: 32px;
+    }
+
+    .signUp__form {
+        width: 100%;
+    }
+
+    .goback {
+        top: 50px;
+        left: 38px;
+    }
+
+    .header {
+        height: 20%;
+    }
+
+    .signUp__container {
+        height: 60%;
+    }
+
+    .signUp__container h1 {
+        margin-top: 24px;
+    }
+
+    .inputField__container input {
+        width: 100%;
+    }
+
+    .signUp__footer a {
+        padding-bottom: 0;
     }
 
 }
@@ -621,12 +645,8 @@ body {
     }
 
 
-    .signUp__form {
-        width: auto;
-    }
-
     .check-box {
-        margin-left: 44px;
+        /* margin-left: 44px; */
         margin-top: 8px;
         margin-bottom: 16px;
     }
@@ -652,9 +672,9 @@ body {
         width: auto;
     } */
 
-    .header {
+    /* .header {
         height: 15%;
-    }
+    } */
 
     .signUp__container {
         margin-top: 0;

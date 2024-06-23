@@ -73,7 +73,7 @@ a:hover {
 
 body {
     font-family: "inter", sans-serif;
-    overflow: visible;
+    overflow-x: hidden;
     direction: ltr;
     background-color: #F6F7F8;
 }
@@ -86,7 +86,7 @@ body {
 
 
 
-
+/* ---------------------  CONTENT  ------------------- */
 
 
 .content__container {
@@ -94,13 +94,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 1440px;
     width: 100vw;
+    max-width: 1440px;
     height: 100dvh;
+    max-height: 100%;
     margin-left: auto;
     margin-right: auto;
 }
 
+
+
+/* ---------------------  HEADER  ------------------- */
 
 .header {
     height: 25%;
@@ -118,8 +122,6 @@ body {
     left: 77px;
     z-index: 100;
 }
-
-
 
 
 .header__logo {
@@ -155,6 +157,11 @@ body {
 }
 
 
+
+
+/* ---------------------  FORM ------------------- */
+
+
 .login__signUp {
     color: white;
     width: 91px;
@@ -176,8 +183,6 @@ body {
 }
 
 
-
-
 .logIn__container {
     position: relative;
     display: flex;
@@ -191,7 +196,6 @@ body {
     border-radius: 30px;
     background-color: #FFFFFF;
     box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
-    /* margin-top: 33%; */
 }
 
 
@@ -211,192 +215,6 @@ body {
     margin-top: 14px;
     margin-bottom: 32px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.login__footer {
-    /* position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0; */
-    /* height: calc(1024px - 949px); */
-    height: 30%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /* gap: 24px; */
-}
-
-
-/* ----------------------------------------------------------------- */
-
-
-
-
-.overlay__container {
-    position: absolute;
-    inset: 0 0 0 0;
-    background-color: #F6F7F8;
-    opacity: 1;
-    animation: animation_overlay 2000ms ease-in-out 750ms forwards;
-
-}
-
-.overlay__logo {
-    position: relative;
-    inset: 50% 0 0 50%;
-    height: 334px;
-    width: 274px;
-    /* background-image: url('../assets/img/icons_login/logo.png'); */
-    background-image: url('../assets/img/icons_login/logo.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center center;
-    transform: translate(-50%, -50%);
-    animation: animation_logo 1200ms ease-in-out 750ms forwards;
-}
-
-
-@keyframes animation_logo {
-    from {
-        inset: 50% 0 0 50%;
-        transform: translate(-50%, -50%);
-        height: 334px;
-        width: 274px;
-    }
-
-    to {
-        height: 122px;
-        width: 100px;
-        top: 80px;
-        left: 77px;
-        transform: none;
-    }
-}
-
-
-@keyframes animation_overlay {
-    to {
-        background-color: transparent;
-    }
-}
-
-
-
-
-.login__footer a {
-    color: #A8A8A8;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19.2px;
-    padding-bottom: 40px;
-    min-width: 123px;
-    text-align: center;
-}
-
-
-.login__footer a:hover {
-    color: #29abe2;
-    font-weight: 700;
-}
-
-
-.footer__legacys {
-    /* position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0; */
-    height: calc(1024px - 949px);
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-.login__nav-mobile {
-    height: 49px;
-    display: none;
-    justify-content: space-between;
-    align-items: center;
-    gap: 35px;
-    margin-bottom: 27px;
-    /* padding-top: calc(67px + 49px / 2); */
-    /* padding-right: 122px; */
-}
-
-
-.login__nav-mobile p {
-    width: 153px;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
-}
-
-
-.login__signUp-mobile {
-    color: white;
-    width: 104px;
-    height: 49px;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 19.2px;    
-    padding: 15px;
-    border-radius: 8px;
-    background-color: #2A3647;
-    transition: color var(--transTime) ease-in-out, background-color var(--transTime) ease-in-out, box-shadow var(--transTime) ease-in-out;
-}
-
-
-.login__signUp-mobile:hover {
-    color: #FFFFFF;
-    background-color: #29ABE2;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .logIn__form {
     display: flex;
@@ -516,11 +334,11 @@ body {
 
 .check-box {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
     gap: 8px;
     margin-bottom: 32px;
-    margin-right: 204px;
+    width: clamp(240px, 422px, 80%);
     margin-top: 20.4px;
 }
 
@@ -600,12 +418,250 @@ body {
 }
 
 
-.main {
+
+
+
+/* ---------------------  FOOTER ------------------- */
+
+
+
+
+.login__footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.login__footer a {
+    color: #A8A8A8;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19.2px;
+    padding-bottom: 40px;
+    min-width: 123px;
+    text-align: center;
+}
+
+
+.login__footer a:hover {
+    color: #29abe2;
+    font-weight: 700;
+}
+
+
+.footer__legacys {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: 100%;
+    align-items: center;
+    gap: 24px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ---------------------  ANIMATION ------------------- */
+
+.overlay__container {
+    position: absolute;
+    inset: 0 0 0 0;
+    background-color: #F6F7F8;
+    opacity: 1;
+    animation: animation_overlay 2000ms ease-in-out 750ms forwards;
+
+}
+
+.overlay__logo {
+    position: relative;
+    inset: 50% 0 0 50%;
+    height: 334px;
+    width: 274px;
+    /* background-image: url('../assets/img/icons_login/logo.png'); */
+    background-image: url('../assets/img/icons_login/logo.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    transform: translate(-50%, -50%);
+    animation: animation_logo 1200ms ease-in-out 750ms forwards;
+}
+
+
+@keyframes animation_logo {
+    from {
+        inset: 50% 0 0 50%;
+        transform: translate(-50%, -50%);
+        height: 334px;
+        width: 274px;
+    }
+
+    to {
+        height: 122px;
+        width: 100px;
+        top: 80px;
+        left: 77px;
+        transform: none;
+    }
+}
+
+
+@keyframes animation_overlay {
+    to {
+        background-color: transparent;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ----------------------------------------------------------------- */
+/* ----------------------------------------------------------------- */
+/* ----------------------------------------------------------------- */
+/* ----------------------------------------------------------------- */
+/* ----------------------------------------------------------------- */
+/* ----------------------------------------------------------------- */
+/* ----------------------------------------------------------------- */
+
+
+
+
+
+
+
+
+/* --------------------   MOBILE ----------------------------- */
+
+
+
+
+
+.login__nav-mobile {
+    height: 49px;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    gap: 35px;
+    margin-bottom: 27px;
+}
+
+
+.login__nav-mobile p {
+    width: 153px;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+
+.login__signUp-mobile {
+    color: white;
+    width: 104px;
+    height: 49px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19.2px;    
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #2A3647;
+    transition: color var(--transTime) ease-in-out, background-color var(--transTime) ease-in-out, box-shadow var(--transTime) ease-in-out;
+}
+
+
+.login__signUp-mobile:hover {
+    color: #FFFFFF;
+    background-color: #29ABE2;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ------------ Overlay and animation : mobile Version ------------- */
+
+
+@media (max-width: 800px) and (min-height: 600px) {
+
+    .overlay__container {
+        background-color: #2a3647;
+    }
+
+    .overlay__logo {
+        background-image: url('../assets/img/icons_login/logomobile.svg');
+        animation: animation_logo 1200ms ease-in-out 750ms forwards, fadeOut 1600ms ease-in-out 750ms forwards;
+    }
+
+    .header__logo {
+        opacity: 0;
+        animation: fadeIn 200ms ease-in-out 1800ms  forwards ;
+    }
+
+
+}
+
+
+@keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+}
+
+@keyframes scaleImg {
+    0% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+}
+
+
+
+
+
 
 
 
@@ -618,6 +674,35 @@ body {
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   */
 
 
+
+
+
+@media (max-width: 1024px) and (max-height: 850px) {
+
+    .header {
+        height: 20%;
+    }
+
+    .header__logo__container {
+        top: 56px;
+        left: 66px;
+    }
+
+    .header__logo {
+        width: 50px;
+        height: 61px;
+    }
+
+    .logIn__container {
+        width: clamp(300px, 652px, 80%);
+    }
+
+    .inputField__container {
+        width: clamp(240px, 422px, 80%);
+        height: 48px;
+    }
+
+}
 
 
 @media (max-width: 900px) {
@@ -634,12 +719,35 @@ body {
 }
 
 
+@media (max-width: 800px) {
+    .header__logo__container {
+        top: 56px;
+        left: 5%;
+    }
 
-
+    .header__logo {
+        width: 75px;
+        height: 91px;
+    }
+}
 
 
 
 @media (max-width: 600px) {
+
+    .header {
+        height: 20%;
+    }
+
+    .header__logo__container {
+        top: 56px;
+        left: 5%;
+    }
+
+    .header__logo {
+        width: 75px;
+        height: 91px;
+    }
 
     .login__nav-mobile {
         display: flex;
@@ -668,15 +776,7 @@ body {
         padding-bottom: 22px;
     }
 
-
-
 }
-
-
-
-
-
-
 
 
 @media (max-width: 520px) {
@@ -701,15 +801,18 @@ body {
         height: 51px;
         margin-bottom: 32px;
     }
+
+    .login__nav-mobile {
+        gap: 16px;
+    }
 }
+
+
+/* ------------------------------------- */
 
 
 
 @media (max-width: 500px) and (min-height: 600px) {
-
-    /* .logIn__container {
-        margin-top: 33%;
-    } */
 
     .header__logo__container {
         top: 30px;
@@ -758,10 +861,6 @@ body {
         }
     }
 
-    .logIn__form {
-        width: auto;
-    }
-
     .check-box {
         margin-left: 44px;
         margin-top: 8px;
@@ -790,7 +889,6 @@ body {
     }
 
 }
-
 
 
 
@@ -831,75 +929,63 @@ body {
 
 
 
+@media (max-width: 360px) and (max-height: 600px) {
 
-/* ----------------------------------------------------------------- */
-/* Overlay and animation : mobile Version */
-
-
-@media (max-width: 800px) and (min-height: 600px) {
-
-    .overlay__container {
-        background-color: #2a3647;
+    .header {
+        height: 15%;
     }
 
-    .overlay__logo {
-        background-image: url('../assets/img/icons_login/logomobile.svg');
-        animation: animation_logo 1200ms ease-in-out 750ms forwards, fadeOut 1600ms ease-in-out 750ms forwards;
+    .header__logo__container {
+        top: 2%;
+        left: 5%;
     }
 
     .header__logo {
-        opacity: 0;
-        animation: fadeIn 200ms ease-in-out 1800ms  forwards ;
+        width: 37px;
+        height: 45px;
     }
 
+    .logIn__container {
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-top: 5rem;
+    }
+
+    
+    .logIn__container h1 {
+        font-weight: 700;
+        font-size: 30px;
+        line-height: 18px;
+        text-align: center;
+        padding-top: 8px;
+    }
+
+    .logIn__separator {
+        width: 150px;
+        height: 3px;
+        margin-top: 4px;
+        margin-bottom: 12px;
+    }
+
+    .inputField__container-margin32 {
+        margin-bottom: 12px;
+    }
+
+    .logIn__btn__container {
+        width: 20%;
+    }
+
+    .btn__logIn,
+    .btn__guest {
+        height: 32px;
+    }
+
+    .login__footer {
+        padding-top: 2rem;
+        position: sticky;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
 
 }
-
-
-/* ----------------------------------------------------------------- */
-
-@keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-}
-
-@keyframes scaleImg {
-    0% {
-        transform: scale(0.9);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes fadeOut {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-}
-
-
-
-
-
-
-
-
-
-/* 
-Mobiletelefone wo es nicht gut aussieht:
-
-Nest Hub
-Galaxy Z Fold 5
-Surface Duo 
-
-*/
 
