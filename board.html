@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="styles/desktopNav.css">
     <link rel="stylesheet" href="styles/boardDialogs.css">
     <link rel="stylesheet" href="styles/board.css">
+    <link rel="stylesheet" href="styles/boardAddTask.css">
     <script src="js/board.js"></script>
     <script src="js/desktopHeader.js"></script>
     <script src="js/desktopNav.js"></script>
@@ -101,9 +102,9 @@
     </div>
 
     <div id="dialogContainerAddTask"  onclick="closeDialogTask(event)"  class="dialogContainer">
-        <div id="dialogTask" class="dialogTask">
-            <div class="containerCloseBtn">
-                <span onclick="closeDialogTaskBtn()"  class="closeBtn closeEdit">
+        <div id="dialogTask" class="dialogTask add-task-board-container">
+            <div class="add-task-board-x-btn d-flex-center">
+                <span onclick="closeDialogTaskBtn()">
                     <img src="assets/img/icons/close.svg" alt="">
                 </span>
             </div>

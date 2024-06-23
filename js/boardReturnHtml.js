@@ -123,7 +123,8 @@ function renderCardEditHtml(i) {
     return `
     <div class="titleEdit">
             <p class="cardTextGrey">Title</p>
-            <input id="editedTitle" class="cardTextBlack inputEdit" type="text" value="${tasks[i].title}">
+            <input id="editedTitle" class="cardTextBlack inputEdit margin-bottom-4" type="text" value="${tasks[i].title}">
+            <div id="edit-task-title-required" class="field-required-msg margin-edit-task-inputs">This field is required</div>
         </div>
         <div class="descriptionEdit">
             <p class="cardTextGrey">Description</p>
@@ -134,7 +135,8 @@ function renderCardEditHtml(i) {
         <div class="dueDateEdit">
             <p class="cardTextGrey">Due Date</p>
             <div>
-                <input id="editedDate" class="cardTextBlack inputEdit" type="date" value="${tasks[i].dueDate}">
+                <input id="editedDate" class="cardTextBlack inputEdit margin-bottom-4" type="date" value="${tasks[i].dueDate}">
+                <div id="edit-task-duo-date-required" class="field-required-msg margin-edit-task-inputs">This field is required</div>
             </div>
         </div>
         <div class="priorityEdit">
@@ -188,7 +190,7 @@ function renderCardEditHtml(i) {
     </div>
     <div class="footerCardEdit boardFlex">
         <div class="okBtnContainer">
-            <button onclick="saveEdit(${i})" class="addBtn">Ok<img src="assets/img/icons/check.svg" alt=""></button>
+            <button onclick="saveEditValidation(${i})" class="addBtn">Ok<img src="assets/img/icons/check.svg" alt=""></button>
         </div>
     </div>
    `
