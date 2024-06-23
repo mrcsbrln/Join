@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./styles/addTask.css">
     <link rel="stylesheet" href="./styles/desktopHeader.css">
     <link rel="stylesheet" href="./styles.css">
-    <link rel="stylesheet" href="./styles/addTaskTemporary.css">
+    <link rel="stylesheet" href="./styles/addTask2.css">
 </head>
 <body onload="initAddTask()">
     <div w3-include-html="./assets/templates/desktopHeader.html"></div>
@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <label class="margin-top-16" for="dropdown-container">Assigned to</label>
                             <div class="dropdown-container">
-                                <div id="select-btn" class="select-btn">
+                                <div id="contacts-list" class="select-btn">
                                     <input class="select-btn-input back-placeholder" type="text" placeholder="Select contacts to assign">
                                     <span class="arrow-down">
                                         <img src="./assets/img/icons_add_task/chevron.svg" alt="">
@@ -67,7 +67,7 @@
                         <div class="form-group">
                             <label for="category-selected">Category<span class="required">*</span></label>
                             <div class="dropdown-container">
-                                <div id="select-btn" class="select-btn category">
+                                <div id="category-container" class="select-btn category">
                                     <span id="category-displayed" class="btn-text">Select task category</span>
                                     <span class="arrow-down">
                                         <img src="./assets/img/icons_add_task/chevron.svg" alt="">

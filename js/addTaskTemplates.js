@@ -128,6 +128,7 @@ function changeSvgOnHover() {
     });
 }
 
+
 function categoryMenu() {
     const selectBtnCategory = document.querySelector('.select-btn.category');
     const categoryDisplayed = document.getElementById('category-displayed');
@@ -320,21 +321,6 @@ function saveTask() {
     clearTask();
 }
 
-// function submitTask() {
-//     document.querySelector('form').addEventListener('submit', event => {
-//         const categoryDisplayed = document.getElementById('category-displayed');
-        
-//         if (!categoryDisplayed.dataset.selected) {
-//             alert('Please select a category.');
-//             event.preventDefault();
-//         } else {
-//             // Remove the event.preventDefault() to allow form submission
-//             // if all required fields are filled including category
-//             // event.preventDefault();
-//             saveTask();
-//         }
-//     });
-// }
 
 function clearTask() {
     document.querySelector('form').reset();
@@ -393,26 +379,21 @@ function resetCategory() {
 }
 
 function closeContactList () {
-    document.getElementById('select-btn').classList.remove('show-menu');
+    document.getElementById('contacts-list').classList.remove('show-menu');
 }
 
 function closeContactListOnOutsideClick() {
     document.addEventListener('click', function(event) {
-        const selectBtnContainer = document.getElementById('select-btn');
+        const selectBtnContainer = document.getElementById('contacts-list');
         const listItemsContainer = document.querySelector('.list-items');
 
-        // Check if the click is outside both the select-btn and list-items containers
         if (!selectBtnContainer.contains(event.target) && !listItemsContainer.contains(event.target)) {
             closeContactList();
         }
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    categoryMenu();
-    preventFormSubmitOnEnter();
-    preventDefaultValidation(); 
-});
+
 
 function preventFormSubmitOnEnter() {
     const form = document.querySelector('form');
@@ -431,40 +412,71 @@ function preventDefaultValidation() {
     const form = document.getElementById('add-task-form');
     const titleInput = document.getElementById('title');
     const dueDateInput = document.getElementById('due-date-input');
+    const categoryContainer = document.getElementById('category-container');
     const categoryDisplayed = document.getElementById('category-displayed');
-    const categoryContainer = document.getElementById('select-btn');
     const titleRequiredMsg = document.getElementById('title-required');
     const dateRequiredMsg = document.getElementById('date-required');
     const categoryRequiredMsg = document.getElementById('category-required');
+
+    // Flags to track interaction
+    let titleClicked = false;
+    let dueDateClicked = false;
+    let categoryClicked = false;
+
+    // Function to reset styles and messages
+    function resetValidationMessages() {
+        if (titleClicked) {
+            titleInput.classList.remove('field-required');
+            titleRequiredMsg.style.opacity = '0';
+        }
+        if (dueDateClicked) {
+            dueDateInput.classList.remove('field-required');
+            dateRequiredMsg.style.opacity = '0';
+        }
+        if (categoryClicked) {
+            categoryContainer.classList.remove('category-required-border');
+            categoryRequiredMsg.style.opacity = '0';
+        }
+    }
+
+    // Add click event listeners to reset validation messages
+    titleInput.addEventListener('click', () => {
+        titleClicked = true;
+        resetValidationMessages();
+    });
+
+    dueDateInput.addEventListener('click', () => {
+        dueDateClicked = true;
+        resetValidationMessages();
+    });
+
+    categoryContainer.addEventListener('click', () => {
+        categoryClicked = true;
+        resetValidationMessages();
+    });
 
     // Add submit event listener to the form
     form.addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent default form submission
 
-        // Reset styles and messages
-        titleInput.classList.remove('field-required');
-        dueDateInput.classList.remove('field-required');
-        categoryRequiredMsg.classList.remove('category-required-border');
-
-        titleRequiredMsg.style.opacity = 0;
-        dateRequiredMsg.style.opacity = 0;
-        categoryRequiredMsg.style.opacity = 0;
+        // Reset styles and messages before validation
+        resetValidationMessages();
 
         // Check if fields are empty
         let isValid = true;
         if (titleInput.value.trim() === '') {
             titleInput.classList.add('field-required');
-            titleRequiredMsg.style.opacity = 1;
+            titleRequiredMsg.style.opacity = '1';
             isValid = false;
         }
         if (dueDateInput.value.trim() === '') {
             dueDateInput.classList.add('field-required');
-            dateRequiredMsg.style.opacity = 1;
+            dateRequiredMsg.style.opacity = '1';
             isValid = false;
         }
         if (categoryDisplayed.textContent === 'Select task category') {
             categoryContainer.classList.add('category-required-border');
-            categoryRequiredMsg.style.opacity = 1;
+            categoryRequiredMsg.style.opacity = '1';
             isValid = false;
         }
 
