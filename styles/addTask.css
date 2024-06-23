@@ -482,7 +482,8 @@ textarea:focus {
 label {
     font-size: 20px;
 }
-@media screen and (max-width: 1304px) {
+
+@media screen and (max-width: 1369px) {
     .form-col-container {
         justify-content: flex-start;
         gap: 0;
@@ -506,18 +507,25 @@ label {
         flex-wrap: wrap;
         gap: 16px;
     }
+
+    .required-p {
+        flex: 1;
+    }
 }
 
 @media screen and (max-width: 1024px) {
     .add-task-container {
         margin-left: 0;
-        width: 100%;
     }
 }
 
 @media (max-width: 576px) {
+    .form-input {
+        font-size: 16px;
+    }
+
     .form-container {
-        padding-top: 32px;
+        margin-top: 48px;
     }
 
     .form-col-container {
@@ -533,15 +541,21 @@ label {
         padding-bottom: 32px;
     }
 
-    .prio-buttons {
-        flex-direction: column;
+    textarea, .select-btn, .prio-btn, .prio-btn.active, .create-btn, .form-bottom {
+        font-size: 16px;
     }
 
     .form-bottom {
         margin: 0 32px 128px 32px;
     }
+}
 
-    .clear-btn, .create-btn {
-        font-size: 16px;
+@media (max-width: 427px) {
+    .prio-buttons {
+        flex-direction: column;
+    }
+
+    .clear-btn {
+        display: none;   
     }
 }
