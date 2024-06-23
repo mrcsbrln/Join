@@ -520,10 +520,6 @@ label {
 }
 
 @media (max-width: 576px) {
-    .form-input {
-        font-size: 16px;
-    }
-
     .form-container {
         margin-top: 48px;
     }
@@ -541,7 +537,7 @@ label {
         padding-bottom: 32px;
     }
 
-    textarea, .select-btn, .prio-btn, .prio-btn.active, .create-btn, .form-bottom {
+    .form-input, textarea, .select-btn-input, .prio-btn, .prio-btn.active, .clear-btn, .create-btn, .form-bottom, .btn-text {
         font-size: 16px;
     }
 
