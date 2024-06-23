@@ -23,14 +23,15 @@ function initBoard() {
         updateHeaderProfileInitials();
         pushSubtaskEdit();
         filterContacts();
+        showMenu();
         changeSvgOnHover();
         changePrioBtn();
         changeSvgOnHover();
+        categoryMenu();
         styleSubtaskInput();
         pushSubtask();
         renderContacts();
         closeContactListOnOutsideClick();
-        showMenu();
         categoryMenu();
         preventFormSubmitOnEnter();
         preventDefaultValidation(); 
@@ -600,3 +601,52 @@ function changeProgressBar(i) {
     });
 }
 
+function saveEditValidation(i) {
+    var editedTitle = document.getElementById('editedTitle');
+    var editedDate = document.getElementById('editedDate');
+    var titleRequired = document.getElementById('edit-task-title-required');
+    var dateRequired = document.getElementById('edit-task-duo-date-required');
+
+    // Check if editedTitle input is empty and has red border
+    if (editedTitle.value.trim() === '') {
+        editedTitle.style.border = '1px solid red';
+        titleRequired.style.opacity = 1;
+        
+        // Add event listener to remove red border and opacity on click or when typing starts
+        editedTitle.addEventListener('input', function() {
+            if (editedTitle.value.trim() !== '') {
+                editedTitle.style.border = '1px solid grey';
+                titleRequired.style.opacity = 0;
+                // Remove event listener after updating style once
+                editedTitle.removeEventListener('input', arguments.callee);
+            }
+        });
+    } else {
+        editedTitle.style.border = '1px solid grey';
+        titleRequired.style.opacity = 0;
+    }
+
+    // Check if editedDate input is empty and has red border
+    if (editedDate.value.trim() === '') {
+        editedDate.style.border = '1px solid red';
+        dateRequired.style.opacity = 1;
+        
+        // Add event listener to remove red border and opacity on click or when typing starts
+        editedDate.addEventListener('input', function() {
+            if (editedDate.value.trim() !== '') {
+                editedDate.style.border = '1px solid grey';
+                dateRequired.style.opacity = 0;
+                // Remove event listener after updating style once
+                editedDate.removeEventListener('input', arguments.callee);
+            }
+        });
+    } else {
+        editedDate.style.border = '1px solid grey';
+        dateRequired.style.opacity = 0;
+    }
+
+    // Check if both fields are filled
+    if (editedTitle.value.trim() !== '' && editedDate.value.trim() !== '') {
+        saveEdit(i);
+    }
+}
