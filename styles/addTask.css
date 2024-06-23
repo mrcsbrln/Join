@@ -15,8 +15,8 @@ h1 {
 
 .heading {
     background-color: #F6F7F8;
-    padding-left: 64px;
-    padding-bottom: 64px;
+    padding-left: 96px;
+    padding-bottom: 48px;
 }
 
 .add-task-container {
@@ -30,14 +30,14 @@ h1 {
 .form-container {
     display: flex;
     flex-direction: column;
-    padding-top: 64px;
+    margin-top: 110px;
 }
 
 .form-col-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 32px;
-    margin: 0 64px 64px 64px;
+    gap: 48px;
+    margin: 0 64px 146px 96px;
 }
 
 .form-col-left, .form-col-right {
@@ -48,8 +48,8 @@ h1 {
 }
 
 .form-col-middle {
-    height: 350px;
-    border: 1px solid #D1D1D1;
+    height: 424px;
+    border-left: 1px solid #D1D1D1;
     align-self: center;
 }
 
@@ -431,11 +431,11 @@ textarea:focus {
 }
 
 .form-bottom {
-    margin: 0 0 128px 64px;
+    margin: 0 0 128px 96px;
     display: flex;
     align-items: flex-end;
     font-size: 20px;
-    max-width: 944px;
+    max-width: 976px;
 }
 
 .form-actions {
