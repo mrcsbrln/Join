@@ -88,17 +88,18 @@ main {
 
 
 .main__container {
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* justify-content: center; */
-    /* height: 100vh; */
     max-width: 1440px;
     width: 100%;
     background-color: #F6F7F8;
     padding-top: 96px;
     padding-bottom: 80px;
     padding-left: 40px;
+    /* test*/
+    height: 100vh;
 }
 
 
@@ -286,7 +287,8 @@ main {
 
 
 
-.summary__greeting__formula {
+.summary__greeting__formula,
+.summary__greeting__formula-mobile {
     font-size: 47px;
     font-weight: 500;
     line-height: 56.4px;
@@ -295,7 +297,8 @@ main {
 }
 
 
-.summary__greeting__name {
+.summary__greeting__name,
+.summary__greeting__name-mobile {
     font-size: 64px;
     font-weight: 700;
     line-height: 76.8px;
@@ -318,6 +321,40 @@ main {
 
 
 
+/* ----------- Greeting Animation Mobile -------------*/
+
+.summary__overlay__container {
+    position: absolute;
+    inset: 0 0 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    opacity: 1;
+    z-index: 1;
+    background: #f6f7f8;
+    animation: fadeOut 600ms ease-in 1200ms;
+}
+
+
+.summary__greeting__container-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+
+@keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+}
 
 
 

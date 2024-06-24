@@ -15,11 +15,34 @@ function initSummary() {
 
     updateGreetingText();
 
+    mobileGreetingAnimation();
+
     // checks if a currentUser is existing in session storage. 
     // if true, nothing happens. 
     // if false, the user gets rediurected to the login.html
     checkForCurrentUser() ? '' : redirectToLogin();
+
 }
+
+
+
+function mobileGreetingAnimation() {
+
+
+
+  // check, if already greeted!
+  // if YES, dont show greeting again!
+  // if NO, show greeting below! & set greeting to yes!
+
+  const container = document.getElementById('overlay');
+  setTimeout(function () {
+    container.style.display = "none";
+  }, 1500);
+}
+
+
+
+
 
 
 
@@ -131,11 +154,17 @@ currentUser = loadCurrentUser();
  */
 function updateGreetingText() {
     const userName = document.getElementById('user__name');
+    const userNameMobile = document.getElementById('user__name-mobile');
     const greetingText = document.getElementById('greeting__text');
+    const greetingTextMobile = document.getElementById('greeting__text-mobile');
     clearText(greetingText);
+    clearText(greetingTextMobile);
     clearText(userName);
+    clearText(userNameMobile);
     setGreetingText(greetingText);
+    setGreetingText(greetingTextMobile);
     setCurrentUserName(userName);
+    setCurrentUserName(userNameMobile);
 }
 
 
