@@ -417,3 +417,42 @@ let tasks = [
 		"assignedTo" : [3,4,8],
 	},
 ]
+
+
+
+
+
+/* ####################################################################################################################################    */
+/* ---------  load tasks-datas from firebase realtime database  --------- */
+/* ####################################################################################################################################    */
+/* Paths:
+await loadData("/contacts");
+await loadData("/tasks");
+await loadData("/users");
+*/
+
+async function loadData(path="") {
+	let response = await fetch(BASE_URL + path + ".json");
+	let responseToJson = await response.json();
+	return responseToJson;
+}
+
+
+
+/* ####################################################################################################################################    */
+/* ---------  LOAD DATA FROM FIREBASE --------- */
+/* ####################################################################################################################################    */
+/* Paths:
+await loadData("/contacts");
+await loadData("/tasks");
+await loadData("/users");
+*/
+
+async function loadData(path="") {
+	let response = await fetch(BASE_URL + path + ".json");
+	let responseToJson = await response.json();
+	return responseToJson;
+}
+
+
+

@@ -19,9 +19,7 @@ const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.ap
  * 
  */
 async function initLogin() {
-
     checkForCurrentUserLogin();
-
     changeOfDisplayNoneAfterAnimation();
 
     // check if a currentUser exists in local storage (remember me was checked!)
@@ -31,8 +29,6 @@ async function initLogin() {
     changePasswordIcon();
     disableLoginButtonIfFormIsEmpty();
     logInIsCorrected();
-
-
 }
 
 
