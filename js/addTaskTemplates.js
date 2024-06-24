@@ -1,5 +1,7 @@
+const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
 const selectedContacts = [];
 const subtasks = [];
+let newTask = {};
 let filteredContacts = contacts;
 let tempTasks = [];
 const svgMappings = {
@@ -303,7 +305,7 @@ function saveTask() {
         completet: false,
     }));
 
-    const newTask = {
+    newTask = {
         id: Date.now(),
         title: title,
         description: description,
@@ -319,6 +321,7 @@ function saveTask() {
     console.log(newTask);
     console.log(tempTasks);
     clearTask();
+    putData();
 }
 
 
@@ -482,17 +485,18 @@ function preventDefaultValidation() {
 
         // Submit the form if valid
         if (isValid) {
-            this.submit(); // Submit the form
+            saveTask();
         }
     });
 }
 
-// async function putData() {
-//     await fetch(`${BASE_URL}/tasks/${}.json`, {
-//         method: 'PUT',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(newContact)
-//     });
-// }
+
+async function putData() {
+    await fetch(`${BASE_URL}/tasks/${newTask.id}.json`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newTask)
+    });
+}
