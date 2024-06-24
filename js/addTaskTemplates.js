@@ -304,7 +304,7 @@ function saveTask() {
     }));
 
     const newTask = {
-        id: tempTasks.length,
+        id: Date.now(),
         title: title,
         description: description,
         category: category,
@@ -486,3 +486,13 @@ function preventDefaultValidation() {
         }
     });
 }
+
+// async function putData() {
+//     await fetch(`${BASE_URL}/tasks/${}.json`, {
+//         method: 'PUT',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(newContact)
+//     });
+// }
