@@ -166,8 +166,71 @@ function redirectToSummary() {
 
 
 
+/* ####################################################################################################################################    */
+/* ---------  load tasks-datas from firebase realtime database  --------- */
+/* ####################################################################################################################################    */
 
 
+
+
+// function for fetching data from firebase
+// while not existing we will take the data provided in script.js
+// object called tasks
+// else we will load data from firebase realtime database starting with calling getDataFromFirebase()
+
+// this const should be declared in script.js - but some memeber have it in their .js, we need to fix this
+const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
+
+
+// starts the fetch prozess. After data are fetched, the summary will get rendered with this fetched data. So the 'than' is mandatory
+getDataFromFirebase().then(renderSummary);
+
+async function getDataFromFirebase() {
+    tasks = await checkIfDatabaseIsEmpty("/tasks");
+}
+
+
+async function checkIfDatabaseIsEmpty(path="") {
+	let result = await loadData(path);
+	if (!result) {
+		console.warn("Datenbank bzw. angegebener Pfad innerhalb der Datenbank ist leer");
+		return tasksDummy;
+	} else {
+		return result;
+	}
+}
+
+
+async function loadData(path="") {
+	let response = await fetch(BASE_URL + path + ".json");
+	let responseToJson = await response.json();
+	return responseToJson;
+}
+
+
+
+
+
+
+
+/* ####################################################################################################################################    */
+/* ---------  PUT DATA TO DATABASE --------- */
+/* ####################################################################################################################################    */
+
+
+// putData("/users", users);
+
+async function putData(path="", data={}) {
+	let response = await fetch(BASE_URL + path + ".json", {
+		method: "PUT",
+		header: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data),
+	});
+	let responseToJson = await response.json();
+	return responseToJson;
+}
 
 
 
