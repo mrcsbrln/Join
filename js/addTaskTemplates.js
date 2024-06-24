@@ -1,9 +1,36 @@
+/**
+ * @constant {string} BASE_URL - The base URL for the Firebase database.
+ */
 const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
+
+/**
+ * @constant {Array} selectedContacts - Array to store selected contacts.
+ */
 const selectedContacts = [];
+
+/**
+ * @constant {Array} subtasks - Array to store subtasks.
+ */
 const subtasks = [];
+
+/**
+ * @constant {Object} newTask - Object to store the new task.
+ */
 let newTask = {};
+
+/**
+ * @constant {Array} filteredContacts - Array to store filtered contacts.
+ */
 let filteredContacts = contacts;
+
+/**
+ * @constant {Array} tempTasks - Array to store temporary tasks.
+ */
 let tempTasks = [];
+
+/**
+ * @constant {Object} svgMappings - Object to map priority levels to their corresponding SVG file paths.
+ */
 const svgMappings = {
     'urgent': './assets/img/icons_add_task/urgent.svg',
     'urgent-active': './assets/img/icons_add_task/urgent-white.svg',
@@ -13,30 +40,40 @@ const svgMappings = {
     'low-active': './assets/img/icons_add_task/low-white.svg'
 };
 
+/**
+ * Show the menu for select buttons.
+ */
 function showMenu() {
     const selectBtns = document.querySelectorAll('.select-btn');
 
     selectBtns.forEach(selectBtn => {
         selectBtn.addEventListener('click', () => {
             selectBtn.classList.toggle('show-menu');
-        })
-    })
+        });
+    });
+
     selectBtns.forEach(selectBtn => {
         selectBtn.addEventListener('focus', () => {
             selectBtn.classList.toggle('show-menu');
-        })
-    })
+        });
+    });
 }
 
+/**
+ * Filter contacts based on user input.
+ */
 function filterContacts() {
     const selectBtnInput = document.querySelector('.select-btn-input');
     selectBtnInput.addEventListener('input', () => {
         let filterValue = selectBtnInput.value.toLowerCase();
         filteredContacts = contacts.filter(contact => contact.name.toLowerCase().startsWith(filterValue));
         renderContacts();
-    })
+    });
 }
 
+/**
+ * Render the list of filtered contacts.
+ */
 function renderContacts() {
     const assignedToList = document.querySelector('.list-items');
     assignedToList.innerHTML = '';
@@ -56,6 +93,9 @@ function renderContacts() {
     selectListItems();
 }
 
+/**
+ * Add event listeners to list items for selection.
+ */
 function selectListItems() {
     const listItems = document.querySelectorAll('.list-item.assigned-to');
 
@@ -83,6 +123,9 @@ function selectListItems() {
     });
 }
 
+/**
+ * Render the selected contacts below the input field.
+ */
 function renderSelectedContactsBelow() {
     const selectedContactsDiv = document.querySelector('.selected-contacts-div');
     selectedContactsDiv.innerHTML = '';
@@ -90,9 +133,12 @@ function renderSelectedContactsBelow() {
         selectedContactsDiv.innerHTML += `
             <div class="cicle" style="background-color: ${item.color}">${item.initials}</div>
         `;
-    })
+    });
 }
 
+/**
+ * Add event listeners to priority buttons to change their state.
+ */
 function changePrioBtn() {
     const buttons = document.querySelectorAll('.prio-btn');
     buttons.forEach(button => {
@@ -117,6 +163,9 @@ function changePrioBtn() {
     });
 }
 
+/**
+ * Change the SVG icon on hover for the clear button.
+ */
 function changeSvgOnHover() {
     const clearBtn = document.getElementById('clear-btn');
     const cancelIcon = document.getElementById('cancel-icon');
@@ -130,7 +179,9 @@ function changeSvgOnHover() {
     });
 }
 
-
+/**
+ * Show and handle the category menu.
+ */
 function categoryMenu() {
     const selectBtnCategory = document.querySelector('.select-btn.category');
     const categoryDisplayed = document.getElementById('category-displayed');
@@ -141,7 +192,7 @@ function categoryMenu() {
             let selectedItemText = item.getAttribute('data-value');
             selectBtnCategory.classList.remove('show-menu');
             categoryDisplayed.textContent = selectedItemText;
-            categoryDisplayed.dataset.selected = selectedItemText;  // Save selected category in dataset
+            categoryDisplayed.dataset.selected = selectedItemText;
         });
     });
 
@@ -158,6 +209,9 @@ function categoryMenu() {
     });
 }
 
+/**
+ * Style the subtask input and buttons.
+ */
 function styleSubtaskInput() {
     const subtaskInput = document.querySelector('.subtask-input');
     const subtaskBtnAdd = document.querySelector('.subtask-btn.add');
@@ -167,20 +221,22 @@ function styleSubtaskInput() {
     subtaskBtnAdd.addEventListener('click', () => {
         subtaskBtnAdd.style.display = 'none';
         subtaskBtnCheckCancel.style.display = 'flex';
-    })
+    });
 
     subtaskInput.addEventListener('focus', () => {
         subtaskBtnAdd.style.display = 'none';
         subtaskBtnCheckCancel.style.display = 'flex';
-    })
+    });
 
     subtaskCancelBtn.addEventListener('click', () => {
         subtaskBtnAdd.style.display = 'flex';
         subtaskBtnCheckCancel.style.display = 'none';
-    })
+    });
 }
 
-
+/**
+ * Add a subtask to the list of subtasks.
+ */
 function pushSubtask() {
     const subtaskInput = document.querySelector('.subtask-input');
     const subtaskBtnCheck = document.querySelector('.subtask-check');
@@ -202,6 +258,9 @@ function pushSubtask() {
     });
 }
 
+/**
+ * Render the list of subtasks.
+ */
 function renderSubtasks() {
     const subtasksList = document.querySelector('.subtasks-list');
     subtasksList.innerHTML = '';
@@ -218,18 +277,20 @@ function renderSubtasks() {
                 </div>
             </li>
         `;
-    })
+    });
     editSubTask();
     deleteSubtask();
 }
 
+/**
+ * Edit a subtask in the list.
+ */
 function editSubTask() {
     const subtaskListItems = document.querySelectorAll('.subtask-list-item');
 
     subtaskListItems.forEach(item => {
         const editSubtaskBtn = item.querySelector('.edit-subtask-btn');
 
-        // Function to handle subtask editing
         const handleEdit = () => {
             let input = item.querySelector('.edit-subtask-input');
             if (!input) {
@@ -248,26 +309,30 @@ function editSubTask() {
             }
         };
 
-        // Add click event listener to edit button
         editSubtaskBtn.addEventListener('click', handleEdit);
 
-        // Add double click event listener to the list item
         item.addEventListener('dblclick', handleEdit);
     });
 }
 
+/**
+ * Delete a subtask from the list.
+ */
 function deleteSubtask() {
     const subtaskListItems = document.querySelectorAll('.subtask-list-item');
-    
+
     subtaskListItems.forEach((item, index) => {
         const deleteSubtaskBtn = item.querySelector('.delete-subtask-btn');
         deleteSubtaskBtn.addEventListener('click', () => {
             subtasks.splice(index, 1);
             renderSubtasks();
-        })
+        });
     });
 }
 
+/**
+ * Confirm and save the edited subtask.
+ */
 function confirmSubtaskEdit() {
     const subtaskListItemsEdit = document.querySelectorAll('.subtask-list-item-edit');
 
@@ -284,6 +349,9 @@ function confirmSubtaskEdit() {
     });
 }
 
+/**
+ * Save the task and push it to the database.
+ */
 function saveTask() {
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
@@ -294,15 +362,15 @@ function saveTask() {
 
     priorityBtns.forEach(item => {
         if (item.classList.contains('active')) {
-            priority = item.id
+            priority = item.id;
         }
-    })
+    });
 
     const assignedTo = selectedContacts.map(item => item.id);
     const newSubtasks = subtasks.map((item, index) => ({
         id: index,
-        content: subtasks,
-        completet: false,
+        content: item,
+        completed: false,
     }));
 
     newTask = {
@@ -314,8 +382,8 @@ function saveTask() {
         dueDate: dueDate,
         priority: priority,
         subTasks: newSubtasks,
-        assignedTo: assignedTo
-    }
+        assignedTo: assignedTo,
+    };
 
     tempTasks.push(newTask);
     console.log(newTask);
@@ -324,10 +392,12 @@ function saveTask() {
     putData();
 }
 
-
+/**
+ * Clear the task form and reset all fields.
+ */
 function clearTask() {
     document.querySelector('form').reset();
-    document.querySelectorAll('checked').forEach(item => {
+    document.querySelectorAll('.checked').forEach(item => {
         item.classList.remove('checked');
     });
     selectedContacts.length = 0;
@@ -338,6 +408,9 @@ function clearTask() {
     resetCategory();
 }
 
+/**
+ * Deselect all list items and update the display.
+ */
 function deselectListItems() {
     const listItems = document.querySelectorAll('.list-item.assigned-to');
 
@@ -346,9 +419,8 @@ function deselectListItems() {
             const img = item.querySelector('.checkbox');
             item.classList.remove('checked');
             img.classList.remove('checked');
-            img.src = './assets/img/icons_add_task/checkbox.svg'; // Change the image to the unchecked state
+            img.src = './assets/img/icons_add_task/checkbox.svg';
 
-            // Remove the contact from the selectedContacts array
             const contact = filteredContacts[i];
             const index = selectedContacts.indexOf(contact);
             if (index !== -1) {
@@ -356,11 +428,13 @@ function deselectListItems() {
             }
         }
     });
-    closeContactList ();
-    renderSelectedContactsBelow(); // Update the display of selected contacts
+    closeContactList();
+    renderSelectedContactsBelow();
 }
 
-
+/**
+ * Set the medium priority button as active.
+ */
 function selectMediumPriority() {
     const buttons = document.querySelectorAll('.prio-btn');
     buttons.forEach(button => {
@@ -376,15 +450,24 @@ function selectMediumPriority() {
     });
 }
 
+/**
+ * Reset the category display to the default text.
+ */
 function resetCategory() {
     const categoryDisplayed = document.getElementById('category-displayed');
     categoryDisplayed.textContent = "Select task category";
 }
 
-function closeContactList () {
+/**
+ * Close the contact list menu.
+ */
+function closeContactList() {
     document.getElementById('contacts-list').classList.remove('show-menu');
 }
 
+/**
+ * Close the contact list when clicking outside of it.
+ */
 function closeContactListOnOutsideClick() {
     document.addEventListener('click', function(event) {
         const selectBtnContainer = document.getElementById('contacts-list');
@@ -396,8 +479,9 @@ function closeContactListOnOutsideClick() {
     });
 }
 
-
-
+/**
+ * Prevent form submission when pressing Enter key.
+ */
 function preventFormSubmitOnEnter() {
     const form = document.querySelector('form');
     form.addEventListener('keydown', (event) => {
@@ -407,11 +491,10 @@ function preventFormSubmitOnEnter() {
     });
 }
 
-
-
-
+/**
+ * Validate the form fields and show error messages.
+ */
 function preventDefaultValidation() {
-    // Get form and relevant elements
     const form = document.getElementById('add-task-form');
     const titleInput = document.getElementById('title');
     const dueDateInput = document.getElementById('due-date-input');
@@ -421,12 +504,10 @@ function preventDefaultValidation() {
     const dateRequiredMsg = document.getElementById('date-required');
     const categoryRequiredMsg = document.getElementById('category-required');
 
-    // Flags to track interaction
     let titleClicked = false;
     let dueDateClicked = false;
     let categoryClicked = false;
 
-    // Function to reset styles and messages
     function resetValidationMessages() {
         if (titleClicked) {
             titleInput.classList.remove('field-required');
@@ -442,7 +523,6 @@ function preventDefaultValidation() {
         }
     }
 
-    // Add click event listeners to reset validation messages
     titleInput.addEventListener('click', () => {
         titleClicked = true;
         resetValidationMessages();
@@ -458,14 +538,11 @@ function preventDefaultValidation() {
         resetValidationMessages();
     });
 
-    // Add submit event listener to the form
     form.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault();
 
-        // Reset styles and messages before validation
         resetValidationMessages();
 
-        // Check if fields are empty
         let isValid = true;
         if (titleInput.value.trim() === '') {
             titleInput.classList.add('field-required');
@@ -483,14 +560,15 @@ function preventDefaultValidation() {
             isValid = false;
         }
 
-        // Submit the form if valid
         if (isValid) {
             saveTask();
         }
     });
 }
 
-
+/**
+ * Send the new task data to the Firebase database.
+ */
 async function putData() {
     await fetch(`${BASE_URL}/tasks/${newTask.id}.json`, {
         method: 'PUT',
