@@ -33,10 +33,7 @@ function setGreetingAnimation() {
   // if NO, show greeting below! & set greeting to yes!
 
   if (window.innerWidth < 1220) {
-    console.log('Width ', window.innerWidth);
-    console.log(containerMobile.classList);
     containerMobile.classList.remove("d-none");
-    
     setTimeout(function () {
       containerMobile.classList.add("d-none");
     }, 1800);
