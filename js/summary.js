@@ -14,9 +14,8 @@ function initSummary() {
     })
 
     updateGreetingText();
-
-    mobileGreetingAnimation();
-
+    setGreetingAnimation();
+    
     // checks if a currentUser is existing in session storage. 
     // if true, nothing happens. 
     // if false, the user gets rediurected to the login.html
@@ -26,23 +25,25 @@ function initSummary() {
 
 
 
-function mobileGreetingAnimation() {
-
-
+function setGreetingAnimation() {
+  const containerMobile = document.getElementById('overlay');
 
   // check, if already greeted!
   // if YES, dont show greeting again!
   // if NO, show greeting below! & set greeting to yes!
 
-  const container = document.getElementById('overlay');
-  setTimeout(function () {
-    container.style.display = "none";
-  }, 1500);
+  if (window.innerWidth < 1220) {
+    console.log('Width ', window.innerWidth);
+    console.log(containerMobile.classList);
+    containerMobile.classList.remove("d-none");
+    
+    setTimeout(function () {
+      containerMobile.classList.add("d-none");
+    }, 1800);
+    
+  }
+  
 }
-
-
-
-
 
 
 
