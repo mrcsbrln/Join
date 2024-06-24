@@ -423,29 +423,13 @@ let tasks = [
 
 
 /* ####################################################################################################################################    */
-/* ---------  load tasks-datas from firebase realtime database  --------- */
-/* ####################################################################################################################################    */
-/* Paths:
-await loadData("/contacts");
-await loadData("/tasks");
-await loadData("/users");
-*/
-
-async function loadData(path="") {
-	let response = await fetch(BASE_URL + path + ".json");
-	let responseToJson = await response.json();
-	return responseToJson;
-}
-
-
-
-/* ####################################################################################################################################    */
 /* ---------  LOAD DATA FROM FIREBASE --------- */
 /* ####################################################################################################################################    */
 /* Paths:
 await loadData("/contacts");
 await loadData("/tasks");
 await loadData("/users");
+const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
 */
 
 async function loadData(path="") {
@@ -455,4 +439,30 @@ async function loadData(path="") {
 }
 
 
+
+
+
+
+/* ####################################################################################################################################    */
+/* ---------  PUT DATA TO DATABASE --------- */
+/* ####################################################################################################################################    */
+/* Paths:
+await loadData("/contacts");
+await loadData("/tasks");
+await loadData("/users");
+const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
+*/
+
+
+async function putData(path="", data={}) {
+	let response = await fetch(BASE_URL + path + ".json", {
+		method: "PUT",
+		header: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data),
+	});
+	let responseToJson = await response.json();
+	return responseToJson;
+}
 
