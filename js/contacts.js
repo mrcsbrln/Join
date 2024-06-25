@@ -1,5 +1,5 @@
-const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
-// const BASE_URL = "https://join-database-6441e-default-rtdb.europe-west1.firebasedatabase.app/";
+const teamBASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
+// const myBASE_URL = "https://join-database-6441e-default-rtdb.europe-west1.firebasedatabase.app/";
 
 let mycontacts = contacts;
 let highestId = 0;
@@ -13,8 +13,9 @@ function initContacts() {
 }
 
 async function loadData(path = "") {
-    let response = await fetch(BASE_URL + path + ".json");
+    let response = await fetch(teamBASE_URL + path + ".json");
     let responseToJson = await response.json();
+    console.log(responseToJson);
     return responseToJson;
 }
 
@@ -165,7 +166,7 @@ async function addContact() {
         mycontacts.push(newContact);
 
         // Save the new contact to the database
-        await fetch(`${BASE_URL}/contacts/${newContact.id}.json`, {
+        await fetch(`${teamBASE_URL}/contacts/${newContact.id}.json`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -224,7 +225,7 @@ async function updateContact(id) {
         };
 
         // Save the updated contact fields to the database using PATCH
-        await fetch(`${BASE_URL}/contacts/${id}.json`, {
+        await fetch(`${teamBASE_URL}/contacts/${id}.json`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -265,7 +266,7 @@ async function deleteContact(id) {
         closePopUpWindow('edit-contact', 'modal', 'pop-up-open', 'pop-up-close');
 
         // Send a DELETE request to remove the contact from the server
-        await fetch(`${BASE_URL}/contacts/${id}.json`, {
+        await fetch(`${teamBASE_URL}/contacts/${id}.json`, {
             method: 'DELETE'
         });
 

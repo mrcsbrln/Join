@@ -148,8 +148,8 @@ function categoryMenu() {
     });
 
     document.addEventListener('click', (event) => {
-        if (!selectBtnCategory.contains(event.target) && 
-            !categoryDisplayed.contains(event.target) && 
+        if (!selectBtnCategory.contains(event.target) &&
+            !categoryDisplayed.contains(event.target) &&
             !Array.from(listItems).some(item => item.contains(event.target))) {
             selectBtnCategory.classList.remove('show-menu');
         }
@@ -256,7 +256,7 @@ function editSubTask() {
 
 function deleteSubtask() {
     const subtaskListItems = document.querySelectorAll('.subtask-list-item');
-    
+
     subtaskListItems.forEach((item, index) => {
         const deleteSubtaskBtn = item.querySelector('.delete-subtask-btn');
         deleteSubtaskBtn.addEventListener('click', () => {
@@ -353,7 +353,7 @@ function deselectListItems() {
             }
         }
     });
-    closeContactList ();
+    closeContactList();
     renderSelectedContactsBelow(); // Update the display of selected contacts
 }
 
@@ -378,12 +378,12 @@ function resetCategory() {
     categoryDisplayed.textContent = "Select task category";
 }
 
-function closeContactList () {
+function closeContactList() {
     document.getElementById('contacts-list').classList.remove('show-menu');
 }
 
 function closeContactListOnOutsideClick() {
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         const selectBtnContainer = document.getElementById('contacts-list');
         const listItemsContainer = document.querySelector('.list-items');
 
@@ -403,6 +403,7 @@ function preventFormSubmitOnEnter() {
         }
     });
 }
+
 
 
 
@@ -456,7 +457,7 @@ function preventDefaultValidation() {
     });
 
     // Add submit event listener to the form
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent default form submission
 
         // Reset styles and messages before validation
@@ -482,7 +483,7 @@ function preventDefaultValidation() {
 
         // Submit the form if valid
         if (isValid) {
-            this.submit(); // Submit the form
+            saveTask(); // Submit the form
         }
     });
 }
