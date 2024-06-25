@@ -150,11 +150,13 @@
     font-weight: 700;
     color: #2A3647;
     margin: 24px 0 24px 0;
-    line-break: anywhere;
+    overflow-wrap: break-word;
+    word-break: word-wrap;
 }
 
 .descriptionCard {
-    line-break: anywhere;
+    word-break: word-wrap;
+    overflow-wrap: break-word;
 }
 
 .titelCard {
@@ -167,7 +169,8 @@
     font-size: 20px;
     color: #000;
     margin: 0 0 24px 0;
-    line-break: anywhere;
+    word-break: word-wrap;
+    overflow-wrap: break-word;
 }
 
 .footerCardBig img {
@@ -339,4 +342,10 @@
 .custom-scroll::-webkit-scrollbar-button:single-button:vertical:increment {
     background-image: url('../assets/img/contacts_img/scroll_down.svg');
     background-position: center top;
+}
+
+@media (max-width: 427px) {
+    .prioBtn {
+        flex-direction: row;
+    }
 }

@@ -1,4 +1,4 @@
-button{
+button {
     cursor: pointer;
 }
 
@@ -18,11 +18,11 @@ button{
     padding-left: 232px;
 }
 
-.imgDelete{
+.imgDelete {
     cursor: pointer;
 }
 
-.imgEdit{
+.imgEdit {
     cursor: pointer;
 }
 
@@ -48,9 +48,11 @@ button{
 
 .tools {
     gap: 24px;
-     position: relative; /* Macht das Element zum Bezugspunkt für die absolute Positionierung des Buttons */
+    position: relative;
+    /* Macht das Element zum Bezugspunkt für die absolute Positionierung des Buttons */
     display: flex;
-    align-items: center; /* Zentriert den Inhalt des Containers vertikal */
+    align-items: center;
+    /* Zentriert den Inhalt des Containers vertikal */
 }
 
 .statuses {
@@ -66,6 +68,7 @@ button{
     align-items: center;
     justify-content: space-between;
     width: 244px;
+    margin-bottom: 18px;
     font-weight: 700;
     line-height: 24px;
     font-size: 20px;
@@ -112,24 +115,28 @@ button{
     border-radius: 30px;
 }
 
-.flexEnd{
+.flexEnd {
     justify-content: flex-end;
 }
-.spaceBetween{
+
+.spaceBetween {
     justify-content: space-between;
 }
+
 .categoryBlue {
     background-color: #0038FF;
     padding: 4px 16px 4px 16px;
     border-radius: 8px;
     color: white;
 }
+
 .categoryGreen {
     background-color: #1FD7C1;
     padding: 4px 16px 4px 16px;
     border-radius: 8px;
     color: white;
 }
+
 .titelCard {
     line-height: 19.2px;
     font-weight: 700;
@@ -331,12 +338,15 @@ button{
     line-height: 25.2px;
     color: #ffffff;
     border: 1px solid #2A3647;
-    display: inline-flex; /* Für horizontales Ausrichten */
-    align-items: center; /* Vertikales Zentrieren des Inhalts */
-    justify-content: center; /* Horizontales Zentrieren des Inhalts */
+    display: inline-flex;
+    /* Für horizontales Ausrichten */
+    align-items: center;
+    /* Vertikales Zentrieren des Inhalts */
+    justify-content: center;
+    /* Horizontales Zentrieren des Inhalts */
 }
 
-.addBtnSmall{
+.addBtnSmall {
     display: none;
 }
 
@@ -388,105 +398,142 @@ button{
 .headTitleBtnContainer {
     display: flex;
     justify-content: space-between;
-    
- 
+
+
 }
 
 @media (max-width: 1024px) {
 
-    .board{
+    .board {
         padding-left: 0;
     }
 }
 
 @media (max-width: 768px) {
 
-   
-     .headTitleBtnContainer{
+
+    .headTitleBtnContainer {
         width: 100%;
-     }
-     .containerTools {
+    }
+
+    .containerTools {
         padding-left: 10px;
-        padding-right: 10px; 
+        padding-right: 10px;
     }
 }
 
 @media (max-width: 550px) {
-
-    .tools{
+    .titelCardBig{
+        font-size: 40px;
+    }
+    .tools {
         flex-direction: column-reverse;
         width: 100%;
     }
-    .addBtn{
-       display: none;
-    }
-    .addBtnSmall{
-        display: flex;
-     }
-     .searchContainer{
-        width: 100%;
-     }
-     .searchBar{
-        width: 90%;
-     }
 
-     .statuses{
+    .addBtn {
+        display: none;
+    }
+
+    .addBtnSmall {
+        display: flex;
+    }
+
+    .searchContainer {
+        width: 100%;
+    }
+
+    .searchBar {
+        width: 90%;
+    }
+
+    .statuses {
         padding-left: 10px;
         padding-right: 10px;
-     }
-     .cardContainer{
+    }
+
+    .cardContainer {
         flex-direction: row;
         gap: 16px;
         overflow-x: auto;
-     }
-     .statusItem{
+    }
+
+    .statusItem {
         width: 100%;
-     }
-     .statusHeader{
+    }
+
+    .statusHeader {
         width: 100%;
-     }
-     .dialog{
+    }
+
+    .dialog {
         width: 90% !important;
         height: 80% !important;
         padding-top: 20px !important;
-     }
-    
-     .closeBtn{
-        margin-right: 20px !important;
-     }
-    
+    }
 
- 
-    .dialogContent{
+    .closeBtn {
+        margin-right: 20px !important;
+    }
+
+
+
+    .dialogContent {
         width: 100%;
     }
-    .subtaskContainer{
+
+    .subtaskContainer {
         width: 100% !important;
     }
-    .footerCardEdit {   
+
+    .footerCardEdit {
         bottom: 10px;
+    }
+
+    .taskCardBig{
+        margin-left: 24px;
     }
 }
 
 
 @media (max-width: 450px) {
 
-.descriptionCardBig {
-    font-size: 16px;
-  
-}
+    .descriptionCardBig {
+        font-size: 16px;
 
-.titelCardBig{
-    font-size: 36px !important;
- }
- .dialog p, .dialog h1, .dialog span ,.dialog label{
-    font-size: 16px !important;
-}
-.dialogContent p, .dialogContent h1, .dialogContent span ,.dialogContent label, .dialogContent input, .dialogContent textarea{ 
-    font-size: 16px !important;
-}
-.prioEdit{
-    font-size: 16px !important;
-    width: 10px;
-}
+    }
+
+    .titelCardBig {
+        font-size: 36px !important;
+    }
+
+    .dialog p,
+    .dialog h1,
+
+    .dialog label {
+        font-size: 16px;
+    }
+
+ 
+    .dialogContent label,
+    .dialogContent input,
+    .dialogContent input::placeholder,
+    .dialogContent textarea 
+    .listItems,
+    .cardTextGrey,
+    .cardTextBlack{
+        font-size: 16px !important;
+    }
+
+    .prioEdit {
+        width: 10px;
+        height: 25px;
+    }
+
+    .prioEdit img{
+        width: 15px;
+    }
+    .prioBtnText{
+        font-size: 12px!important;
+    }
 }

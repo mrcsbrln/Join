@@ -4,6 +4,7 @@ let actSubtasks = [];
 let actAssignedTo = [];
 let taskEditAsiggnedTo = [];
 let actTaskPrio = "";
+let actStatus = "";
 let svgMappingsEdit = {
     'urgent': 'assets/img/icons_add_task/urgent.svg',
     'urgent-active': 'assets/img/icons_add_task/urgent-white.svg',
@@ -16,26 +17,32 @@ let svgMappingsEdit = {
 /**
  * init function to render all Cards and highlight the boards Button on the Side Navigation
  */
-function initBoard() {
+async function initBoard() {
+
+    await includeHTML();
+    let taskData = await loadData("/tasks")
+    tasks = taskData;
+    highlightBoard();
+    console.log(taskData);
     renderCards();
-    includeHTML().then(() => {
-        highlightBoard();
-        updateHeaderProfileInitials();
-        pushSubtaskEdit();
-        filterContacts();
-        showMenu();
-        changeSvgOnHover();
-        changePrioBtn();
-        changeSvgOnHover();
-        categoryMenu();
-        styleSubtaskInput();
-        pushSubtask();
-        renderContacts();
-        closeContactListOnOutsideClick();
-        categoryMenu();
-        preventFormSubmitOnEnter();
-        preventDefaultValidation(); 
-    });
+    highlightBoard();
+    updateHeaderProfileInitials();
+    pushSubtaskEdit();
+
+    showMenu();
+    changeSvgOnHover();
+    changePrioBtn();
+    changeSvgOnHover();
+    categoryMenu();
+    styleSubtaskInput();
+    pushSubtask();
+    renderContacts();
+    closeContactListOnOutsideClick();
+    categoryMenu();
+    preventFormSubmitOnEnter();
+    preventDefaultValidation();
+    filterContacts();
+
 }
 
 /**
@@ -46,9 +53,10 @@ function openDialog() {
     document.documentElement.classList.add('overflowHidden');
 }
 
-function openDialogTasks() {
+function openDialogTasks(status) {
     document.getElementById('dialogContainerAddTask').classList.add('open');
     document.documentElement.classList.add('overflowHidden');
+    actStatus = status;
 }
 
 /**
@@ -110,6 +118,7 @@ function searchTasks(keyword) {
  */
 function renderCards(filteredTasks = null) {
     const statuses = ["toDo", "inProgress", "awaitingFeedback", "done"];
+
     statuses.forEach(status => {
         const container = document.getElementById(`cardContainer${status}`);
         container.innerHTML = '';
@@ -196,17 +205,28 @@ function renderCardBigHeader(i) {
  * @param {number} i - The index of the task.
  */
 function renderCardBigSubTo(i) {
+    // Sicherstellen, dass tasks[i].assignedTo ein Array ist oder ein leeres Array verwenden
+    const assignedToArray = Array.isArray(tasks[i]?.assignedTo) ? tasks[i].assignedTo : [];
+
+    // Leeren der bisherigen Zuordnungen
     actAssignedTo = [];
-    badgeContainer = document.getElementById('badgeContainer');
+    const badgeContainer = document.getElementById('badgeContainer');
     badgeContainer.innerHTML = '';
-    tasks[i].assignedTo.forEach(id => {
-        let contact = contacts[id];
-        actAssignedTo.push({
-            color: contact.color,
-            initials: contact.initials,
-            name: contact.name
-        });
-        badgeContainer.innerHTML += renderCardBigSubToHtml(contact);
+
+    // Durchlaufen des assignedTo-Arrays und Rendering der Badges
+    assignedToArray.forEach(id => {
+        // Überprüfen, ob die ID im contacts-Objekt existiert
+        if (contacts[id]) {
+            const contact = contacts[id];
+            actAssignedTo.push({
+                color: contact.color,
+                initials: contact.initials,
+                name: contact.name
+            });
+            badgeContainer.innerHTML += renderCardBigSubToHtml(contact);
+        } else {
+            console.warn(`Contact with ID ${id} not found in contacts array.`);
+        }
     });
 }
 
@@ -217,6 +237,9 @@ function renderCardBigSubTo(i) {
 function renderCardBigSubtask(i) {
     let subtasksHtml = '';
     actSubtasks = [];
+  if(tasks[i].subTasks === undefined){
+    tasks[i].subTasks = [];
+    }  
     tasks[i].subTasks.forEach(subtask => {
         actSubtasks.push({
             id: subtask.id,
@@ -244,15 +267,38 @@ function updateTaskDisplay() {
 }
 
 function saveEdit(i) {
+    // Update the specific task object with new values from the form
     tasks[i].assignedTo = taskEditAsiggnedTo;
     tasks[i].title = document.getElementById('editedTitle').value;
     tasks[i].description = document.getElementById('editedDescription').value;
     tasks[i].dueDate = document.getElementById('editedDate').value;
     tasks[i].subTasks = actSubtasks;
     tasks[i].priority = actTaskPrio;
+
+    // Reset temporary variables and update UI
     actSubtasks = [];
     closeDialogBtn();
     renderCards();
+
+    // Send updated task to the server
+    putDataEdit(`/tasks/${tasks[i].id}`, tasks[i])
+}
+
+async function putDataEdit(path = "", data = {}) {
+    try {
+        const response = await fetch(`${BASE_URL}${path}.json`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        const responseToJson = await response.json();
+        return responseToJson;
+    } catch (error) {
+   
+        throw error;
+    }
 }
 
 function deleteTask(i) {
@@ -555,6 +601,7 @@ function allowDrop(ev) {
 function drop(status) {
     const taskIndex = tasks.findIndex(task => task.id === draggedItemId);
     tasks[taskIndex].status = status;
+    putDataEdit(`/tasks/${tasks[taskIndex].id}`, tasks[taskIndex])
     removeHighlight();
     renderCards();
 }
@@ -585,35 +632,41 @@ function removeHighlight() {
  * Updates the progress bar width based on completed and total subtasks.
  * @param {number} id - The ID of the task.
  */
-function changeProgressBar(i) {
-    tasks.forEach((task, index) => {
-        if (task.id == i) {
-            const completedSubtasks = tasks[index].subTasks.filter(subtask => subtask.completet).length;
-            const totalSubtasks = tasks[index].subTasks.length;
+async function changeProgressBar(i) {
+    tasks.forEach(async (task, index) => {
+        if (task.id == i && task.subTasks) {
+            const completedSubtasks = task.subTasks.filter(subtask => subtask.completet).length;
+            const totalSubtasks = task.subTasks.length;
 
             let percent = 0;
             if (totalSubtasks !== 0) {
                 percent = (completedSubtasks / totalSubtasks) * 100;
             }
             document.getElementById(`progressBar${i}`).style.width = percent + '%';
-        }
 
+            // Update data in the database
+            try {
+                await putData(`/tasks/${task.id}`, task);
+            } catch (error) {
+                console.error('Error updating task in database:', error);
+            }
+        }
     });
 }
 
 function saveEditValidation(i) {
-    var editedTitle = document.getElementById('editedTitle');
-    var editedDate = document.getElementById('editedDate');
-    var titleRequired = document.getElementById('edit-task-title-required');
-    var dateRequired = document.getElementById('edit-task-duo-date-required');
+    const editedTitle = document.getElementById('editedTitle');
+    const editedDate = document.getElementById('editedDate');
+    const titleRequired = document.getElementById('edit-task-title-required');
+    const dateRequired = document.getElementById('edit-task-duo-date-required');
 
     // Check if editedTitle input is empty and has red border
     if (editedTitle.value.trim() === '') {
         editedTitle.style.border = '1px solid red';
         titleRequired.style.opacity = 1;
-        
+
         // Add event listener to remove red border and opacity on click or when typing starts
-        editedTitle.addEventListener('input', function() {
+        editedTitle.addEventListener('input', function () {
             if (editedTitle.value.trim() !== '') {
                 editedTitle.style.border = '1px solid grey';
                 titleRequired.style.opacity = 0;
@@ -630,9 +683,9 @@ function saveEditValidation(i) {
     if (editedDate.value.trim() === '') {
         editedDate.style.border = '1px solid red';
         dateRequired.style.opacity = 1;
-        
+
         // Add event listener to remove red border and opacity on click or when typing starts
-        editedDate.addEventListener('input', function() {
+        editedDate.addEventListener('input', function () {
             if (editedDate.value.trim() !== '') {
                 editedDate.style.border = '1px solid grey';
                 dateRequired.style.opacity = 0;
