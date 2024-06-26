@@ -4,10 +4,18 @@
  * @returns {string} The HTML snippet for the task card.
  */
 function renderCardHtml(task) {
+    // Fallback-Farbe für die Kategorie
     let color = (task.category === 'User Story') ? 'Blue' : 'Green';
-    const completedSubtasks = task.subTasks.filter(subtask => subtask.completet).length;
+
+    // Berechnen der abgeschlossenen Subtasks
+    const completedSubtasks = task.subTasks ? task.subTasks.filter(subtask => subtask.completet).length : 0;
+
+    // Sicherstellen, dass task.assignedTo ein Array ist
+    const assignedToArray = Array.isArray(task.assignedTo) ? task.assignedTo : [];
+
+    // Rendern der HTML-Struktur
     return `
-    <div draggable="true" ondragstart="startDragging(${task.id})" id="taskCard${task.id}"onclick="openDialog(); renderCardBig(${task.id})" class="taskCard">
+    <div draggable="true" ondragstart="startDragging(${task.id})" id="taskCard${task.id}" onclick="openDialog(); renderCardBig(${task.id})" class="taskCard">
         <label class="category${color}">${task.category}</label>
         <p class="titelCard">${task.title}</p>
         <p class="descriptionCard">${task.description}</p>
@@ -16,11 +24,18 @@ function renderCardHtml(task) {
                 <div class="progressBarContainer">
                     <div id="progressBar${task.id}" class="progressBar"></div>
                 </div>
-                <p class="amountSubtasks">${completedSubtasks}/${task.subTasks.length}</p>
+                <p class="amountSubtasks">${completedSubtasks}/${task.subTasks ? task.subTasks.length : 0}</p>
             </div>
             <div class="footerCard boardFlex">
                 <div class="profileBadges">
-                    ${task.assignedTo.map(id => renderBadge(contacts[id])).join('')}
+                    ${assignedToArray.map(id => {
+                        // Überprüfen, ob die ID im contacts-Array existiert
+                        if (contacts[id]) {
+                            return renderBadge(contacts[id]);
+                        } else {
+                            return ''; // Leerer String, wenn der Kontakt nicht gefunden wird
+                        }
+                    }).join('')}
                 </div>
                 <div class="prioImg">
                     <img src="assets/img/icons/${task.priority}.svg" alt="">
@@ -107,7 +122,8 @@ function renderCardBigHeaderHtml(i, color) {
                 </span>
     `}
 
-    function renderCardEditHeaderHtml() {return `   
+function renderCardEditHeaderHtml() {
+    return `   
                <span onclick="closeDialogBtn()" class="closeBtn closeEdit">
                    <img src="assets/img/icons/close.svg" alt="">
                </span>

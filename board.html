@@ -14,11 +14,9 @@
     <link rel="stylesheet" href="styles/boardDialogs.css">
     <link rel="stylesheet" href="styles/board.css">
     <link rel="stylesheet" href="styles/boardAddTask.css">
-    <script src="js/board.js"></script>
-    <script src="js/desktopHeader.js"></script>
-    <script src="js/desktopNav.js"></script>
     <script src="script.js"></script>
-    <script src="js/boardReturnHtml.js"></script>
+
+
 
 </head>
 
@@ -32,7 +30,8 @@
             <div class="containerTools boardFlex">
                 <div class="headTitleBtnContainer">
                     <h1>Board</h1>
-                    <img class="addBtnSmall" onclick="openDialogTasks()" src="assets/img/icons/plus add task mobile.svg" alt="">
+                    <img class="addBtnSmall" onclick="openDialogTasks('toDo')"
+                        src="assets/img/icons/plus add task mobile.svg" alt="">
                 </div>
                 <div class="tools boardFlex">
                     <div class="searchContainer">
@@ -42,14 +41,15 @@
                         <button onclick="getSearchKeyword()" class="searchIcon"><img src="assets/img/icons/search.svg"
                                 alt=""></button>
                     </div>
-                    <button onclick="openDialogTasks()" class="addBtn"><span class="addBtnText">Add task</span> <span>+</span></button>
+                    <button onclick="openDialogTasks('toDo')" class="addBtn"><span class="addBtnText">Add task</span>
+                        <span>+</span></button>
                 </div>
             </div>
-        </div> 
+        </div>
         <div class="statuses boardFlex">
             <div class="statusItem">
                 <div class="statusHeader boardFlex">
-                    <p>To do</p><img src="assets/img/icons/plusButton.svg" alt="">
+                    <p>To do</p><img onclick="openDialogTasks('toDo')" src="assets/img/icons/plusButton.svg" alt="">
                 </div>
                 <div class="taskBoard">
                     <div id="emptyTaskTodo" class="emptyTask">No tasks To do</div>
@@ -59,7 +59,8 @@
             </div>
             <div class="statusItem">
                 <div class="statusHeader boardFlex">
-                    <p>In progress</p><img src="assets/img/icons/plusButton.svg" alt="">
+                    <p>In progress</p><img onclick="openDialogTasks('inProgress')" src="assets/img/icons/plusButton.svg"
+                        alt="">
                 </div>
                 <div class="taskBoard">
                     <div id="emptyTaskInProgress" class="emptyTask">No tasks in Progress</div>
@@ -69,7 +70,8 @@
             </div>
             <div class="statusItem">
                 <div class="statusHeader boardFlex">
-                    <p>Await feedback</p><img src="assets/img/icons/plusButton.svg" alt="">
+                    <p>Await feedback</p><img onclick="openDialogTasks('awaitingFeedback')"
+                        src="assets/img/icons/plusButton.svg" alt="">
                 </div>
                 <div class="taskBoard">
                     <div id="emptyTaskAwait" class="emptyTask">No tasks await feedback</div>
@@ -79,7 +81,7 @@
             </div>
             <div class="statusItem">
                 <div class="statusHeader boardFlex">
-                    <p>Done</p><img src="assets/img/icons/plusButton.svg" alt="">
+                    <p>Done</p><img onclick="openDialogTasks('done')" src="assets/img/icons/plusButton.svg" alt="">
                 </div>
                 <div class="taskBoard">
                     <div id="emptyTaskDone" class="emptyTask">No tasks done</div>
@@ -92,7 +94,7 @@
     <div id="dialogContainer" onclick="closeDialog(event)" class="dialogContainer">
         <div id="dialog" class="dialog">
             <div id="containerCloseBtn" class="containerCloseBtn">
-                
+
             </div>
             <div class="custom-scroll">
                 <div id="dialogContent" class="dialogContent ">
@@ -101,7 +103,7 @@
         </div>
     </div>
 
-    <div id="dialogContainerAddTask"  onclick="closeDialogTask(event)"  class="dialogContainer">
+    <div id="dialogContainerAddTask" onclick="closeDialogTask(event)" class="dialogContainer">
         <div id="dialogTask" class="dialogTask add-task-board-container">
             <div class="add-task-board-x-btn d-flex-center">
                 <span onclick="closeDialogTaskBtn()">
@@ -109,11 +111,17 @@
                 </span>
             </div>
             <div w3-include-html="assets/templates/addTaskTemplate.html" class="dialogAddTask">
-                
+
             </div>
         </div>
     </div>
+
+
     <script src="js/addTaskTemplates.js"></script>
+    <script src="js/board.js"></script>
+    <script src="js/desktopHeader.js"></script>
+    <script src="js/desktopNav.js"></script>
+    <script src="js/boardReturnHtml.js"></script>
 </body>
 
 </html>
