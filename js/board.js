@@ -699,20 +699,18 @@ function saveEditValidation(i) {
     const titleRequired = document.getElementById('edit-task-title-required');
     const dateRequired = document.getElementById('edit-task-duo-date-required');
 
-    // Check if editedTitle input is empty and has red border
-    if (editedTitle.value.trim() === '') {
-        editedTitle.style.border = '1px solid red';
-        titleRequired.style.opacity = 1;
+    validateField(editedTitle, titleRequired);
+    validateField(editedDate, dateRequired);
 
-        // Add event listener to remove red border and opacity on click or when typing starts
-        editedTitle.addEventListener('input', function () {
-            if (editedTitle.value.trim() !== '') {
-                editedTitle.style.border = '1px solid grey';
-                titleRequired.style.opacity = 0;
-                // Remove event listener after updating style once
-                editedTitle.removeEventListener('input', arguments.callee);
-            }
-        });
+    if (isFieldFilled(editedTitle) && isFieldFilled(editedDate)) {
+        saveEdit(i);
+    }
+}
+
+function validateField(inputElement, requiredElement) {
+    if (inputElement.value.trim() === '') {
+        showValidationError(inputElement, requiredElement);
+        addInputListener(inputElement, requiredElement);
     } else {
         resetFieldStyle(inputElement, requiredElement);
     }
@@ -775,4 +773,16 @@ async function moveToStatus(taskId, newStatus, dropdownId) {
         console.error('Fehler beim Aktualisieren der Datenbank oder beim Rendern der Karten:', error);
         // Hier könnten weitere Fehlerbehandlungsschritte implementiert werden
     }
+}/**
+ * Shows a task added message by adding a CSS class to the element with the class 'task-added-msg'.
+ * After 2 seconds, it redirects to the board.
+ *
+ * @return {void} 
+ */
+function showTaskAddedMessage() {
+    const messageElement = document.querySelector('.task-added-msg');
+    messageElement.classList.add('d-flex-visible');
+    setTimeout(() => {
+        redirectToBoard()
+    }, 2000);
 }
