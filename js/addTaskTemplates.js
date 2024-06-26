@@ -388,8 +388,9 @@ function saveTask() {
     tempTasks.push(newTask);
     console.log(newTask);
     console.log(tempTasks);
-    clearTask();
+    showTaskAddedMessage()
     putData();
+    
 }
 
 /**
@@ -577,4 +578,8 @@ async function putData() {
         },
         body: JSON.stringify(newTask)
     });
+}
+
+function redirectToBoard() {
+    window.location.href = 'board.html';
 }

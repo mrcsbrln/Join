@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="./styles/addTask2.css">
 </head>
+
 <body onload="initAddTask()">
     <div w3-include-html="./assets/templates/desktopHeader.html"></div>
     <div w3-include-html="./assets/templates/desktopNav.html"></div>
@@ -36,7 +38,8 @@
                             <label class="margin-top-16" for="dropdown-container">Assigned to</label>
                             <div class="dropdown-container">
                                 <div id="contacts-list" class="select-btn">
-                                    <input class="select-btn-input back-placeholder" type="text" placeholder="Select contacts to assign">
+                                    <input class="select-btn-input back-placeholder" type="text"
+                                        placeholder="Select contacts to assign">
                                     <span class="arrow-down">
                                         <img src="./assets/img/icons_add_task/chevron.svg" alt="">
                                     </span>
@@ -59,9 +62,12 @@
                         <div class="form-group">
                             <label>Prio</label>
                             <div class="prio-buttons">
-                                <button type="button" id="urgent" class="prio-btn urgent">Urgent<img src="./assets/img/icons_add_task/urgent.svg" alt=""></button>
-                                <button type="button" id="medium" class="prio-btn active">Medium<img src="./assets/img/icons_add_task/medium-white.svg" alt=""></button>
-                                <button type="button" id="low" class="prio-btn low">Low<img src="./assets/img/icons_add_task/low.svg" alt=""></button>
+                                <button type="button" id="urgent" class="prio-btn urgent">Urgent<img
+                                        src="./assets/img/icons_add_task/urgent.svg" alt=""></button>
+                                <button type="button" id="medium" class="prio-btn active">Medium<img
+                                        src="./assets/img/icons_add_task/medium-white.svg" alt=""></button>
+                                <button type="button" id="low" class="prio-btn low">Low<img
+                                        src="./assets/img/icons_add_task/low.svg" alt=""></button>
                             </div>
                         </div>
                         <div class="form-group">
@@ -73,7 +79,8 @@
                                         <img src="./assets/img/icons_add_task/chevron.svg" alt="">
                                     </span>
                                 </div>
-                                <div id="category-required" class="field-required-msg category-required-msg">This field is required</div>
+                                <div id="category-required" class="field-required-msg category-required-msg">This field
+                                    is required</div>
                                 <ul class="list-items category scoll-disabled">
                                     <li data-value="Technical stack" class="list-item category">
                                         <span>Technical stack</span>
@@ -111,12 +118,18 @@
                 <div class="form-bottom">
                     <p class="required-p"><span class="required">*</span> This Field is required</p>
                     <div class="form-actions">
-                        <button onclick="clearTask()" type="button" class="clear-btn" id="clear-btn">Clear <img id="cancel-icon" src="./assets/img/icons_add_task/cancel.svg" alt=""></button>
-                        <button type="submit" class="create-btn">Create Task <img src="./assets/img/icons_add_task/check.svg" alt=""></button>
+                        <button onclick="clearTask()" type="button" class="clear-btn" id="clear-btn">Clear <img
+                                id="cancel-icon" src="./assets/img/icons_add_task/cancel.svg" alt=""></button>
+                        <button type="submit" class="create-btn">Create Task <img
+                                src="./assets/img/icons_add_task/check.svg" alt=""></button>
                     </div>
                 </div>
             </div>
         </form>
+    </div>
+    <div class="task-added-msg">
+        <p>Task added to board</p>
+        <img src="assets/img/nav_img/board_icon_active.svg" alt="">
     </div>
     <script src="./script.js"></script>
     <script src="./js/desktopHeader.js"></script>
@@ -124,4 +137,5 @@
     <script src="./js/addTaskTemplates.js"></script>
     <script src="./js/addTask.js"></script>
 </body>
+
 </html>

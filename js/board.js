@@ -650,3 +650,20 @@ function saveEditValidation(i) {
         saveEdit(i);
     }
 }
+
+
+
+/**
+ * Shows a task added message by adding a CSS class to the element with the class 'task-added-msg'.
+ * After 2 seconds, it redirects to the board.
+ *
+ * @return {void} 
+ */
+function showTaskAddedMessage() {
+    const messageElement = document.querySelector('.task-added-msg');
+    messageElement.classList.add('d-flex-visible');
+    setTimeout(() => {
+        redirectToBoard()
+    }, 2000);
+    
+}
