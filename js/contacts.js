@@ -151,7 +151,6 @@ async function addContact() {
 
         // Increment highestId for the new contact
         highestId += 1;
-        console.log(highestId);
         // Create a new contact object
         const newContact = {
             id: highestId,
