@@ -300,6 +300,8 @@ function scrollToContact(id) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    window.addEventListener('load', checkOrientation);
+    window.addEventListener('resize', checkOrientation);
     const inputs = document.querySelectorAll('.input input');
 
     inputs.forEach(function (input) {
