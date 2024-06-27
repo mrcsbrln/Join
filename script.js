@@ -467,3 +467,31 @@ async function putData(path="", data={}) {
 	return responseToJson;
 }
 
+
+
+
+
+/* ####################################################################################################################################    */
+/*     Landscape    */
+/* ####################################################################################################################################    */
+
+
+function checkOrientation() {
+    const warning = document.getElementById('landscapeWarning');
+
+    if ((window.innerWidth) < 900) {
+
+        if (window.innerHeight < window.innerWidth) {
+            // Landscape-Modus
+            warning.classList.add('visible');
+        } else {
+            // Portrait-Modus
+            warning.classList.remove('visible');
+        }
+    } else {
+        warning.classList.remove('visible');
+    }
+}
+
+window.addEventListener('load', checkOrientation);
+window.addEventListener('resize', checkOrientation);
