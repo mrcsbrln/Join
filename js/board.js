@@ -626,7 +626,7 @@ async function drop(status) {
     if (taskIndex !== -1) {
         tasks[taskIndex].status = status;
     }
-   await putDataEdit(`/tasks/${tasks[taskIndex]}`, tasks[taskIndex])
+   await putDataEdit(`/tasks`, tasks)
     removeHighlight();
     renderCards();
 }
