@@ -10,18 +10,36 @@
 function initSummary() {
     includeHTML().then(() => {
       highlightSummary();
-      updateHeaderProfileInitials()
+      updateHeaderProfileInitials();
     })
 
-    updateGreetingText();
-    setGreetingAnimation();
+    // checks if greeting = true in session storage. 
+    // if true, nothing happens. No more greetings
+    // if false, the user gets greeted
+    checkForGreeting();
     
     // checks if a currentUser is existing in session storage. 
     // if true, nothing happens. 
     // if false, the user gets rediurected to the login.html
     checkForCurrentUser() ? '' : redirectToLogin();
-
 }
+
+
+
+function checkForGreeting() {
+  const greeting = sessionStorage.getItem('greeting');
+
+  if (!greeting) 
+      {
+      updateGreetingText();
+      setGreetingAnimation();
+      sessionStorage.setItem('greeting', true);
+      } else 
+      {
+          return;
+      }
+}
+
 
 
 

@@ -264,7 +264,6 @@ async function login() {
     if (matchingContact) {
         currentUser = matchingContact;
         saveCurrentUserToSessionStorage(currentUser);
-        // setCurrentUser(matchingContact);
         clearForm('email', 'password');
         const checkbox = document.getElementById('checkbox');
         if (checkIfCheckBoxIsClicked(checkbox)) {
