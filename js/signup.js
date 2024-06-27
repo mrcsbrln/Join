@@ -105,7 +105,7 @@ function showPassword(element) {
     const isPasswordVisible = passwordField.type === 'password';
     passwordField.type = isPasswordVisible ? 'text' : 'password';
     passwordIcon.src = isPasswordVisible ? './assets/img/icons_signup/visibility.png' : './assets/img/icons_signup/visibility_off.png';
-    passwordIcon.classList.toggle('visible', isPasswordVisible);
+    passwordIcon.classList.toggle('visible_yes', isPasswordVisible);
     passwordField.onkeyup = isPasswordVisible ? '' : 'changePasswordIcon()';
 }
 
