@@ -4,7 +4,7 @@ function initAddTask() {
     includeHTML().then(() => {
         highlightAddTask();
         updateHeaderProfileInitials()
-        })
+    })
     filterContacts();
     showMenu();
     changeSvgOnHover();
@@ -17,7 +17,7 @@ function initAddTask() {
     closeContactListOnOutsideClick();
     categoryMenu();
     preventFormSubmitOnEnter();
-    preventDefaultValidation(); 
+    preventDefaultValidation();
 }
 
 function showTaskAddedMessage() {
@@ -32,5 +32,5 @@ function showTaskAddedMessage() {
     setTimeout(() => {
         redirectToBoard()
     }, 2000);
-    
+
 }

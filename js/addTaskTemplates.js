@@ -352,7 +352,7 @@ function confirmSubtaskEdit() {
 /**
  * Save the task and push it to the database.
  */
-function saveTask() {
+async function saveTask() {
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
     const dueDate = document.getElementById('due-date-input').value;
@@ -373,8 +373,8 @@ function saveTask() {
         completed: false,
     }));
 
-    newTask = {
-        id: Date.now(),
+    const newTask = {
+        id: Date.now().toString(), // Ensure this ID is a string
         title: title,
         description: description,
         category: category,
@@ -385,12 +385,22 @@ function saveTask() {
         assignedTo: assignedTo,
     };
 
-    tempTasks.push(newTask);
-    console.log(newTask);
-    console.log(tempTasks);
-    showTaskAddedMessage()
-    putData();
-    
+    try {
+        // Fetch existing tasks
+        const tasks = await fetchTasks();
+        
+        // Append new task
+        tasks.push(newTask);
+        
+        // Update tasks array
+        await updateTasks(tasks);
+        
+        console.log(newTask);
+        console.log(tasks);
+        showTaskAddedMessage();
+    } catch (error) {
+        console.error('Error saving task:', error);
+    }
 }
 
 /**
@@ -570,14 +580,20 @@ function preventDefaultValidation() {
 /**
  * Send the new task data to the Firebase database.
  */
-async function putData() {
-    await fetch(`${BASE_URL}/tasks/${newTask.id}.json`, {
+async function updateTasks(newTasksArray) {
+    await fetch(`${BASE_URL}/tasks.json`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(newTask)
+        body: JSON.stringify(newTasksArray)
     });
+}
+
+async function fetchTasks() {
+    const response = await fetch(`${BASE_URL}/tasks.json`);
+    const data = await response.json();
+    return data || []; // Return an empty array if no data is found
 }
 
 function redirectToBoard() {
