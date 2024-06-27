@@ -415,6 +415,7 @@ function clearTask() {
     subtasks.length = 0;
     deselectListItems();
     renderSubtasks();
+    renderContacts();
     selectMediumPriority();
     resetCategory();
 }
