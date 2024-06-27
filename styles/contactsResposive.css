@@ -186,8 +186,6 @@
         transform: translateY(0) !important;
     }
 
-
-
     .contacts-container {
         top: 80px;
         width: 100%;
@@ -225,11 +223,10 @@
 
     .main-container {
         display: none;
-        position: fixed;
         background-color: rgba(246, 247, 248, 1);
         padding: 128px 36px;
         gap: 48px;
-    }
+    } 
 
     .title-container {
         flex-direction: column;
@@ -241,7 +238,7 @@
         font-size: 47px;
     }
 
-    .title-separator {
+   .title-separator {
         order: 3;
         height: 3px;
         width: 90px;
@@ -256,7 +253,7 @@
 
     .contact-header {
         gap: 20px;
-    }
+    } 
 
     .contact-img-mobile {
         height: 80px;
@@ -310,10 +307,11 @@
     .toast-msg-slide-in {
         transform: translateY(0);
     }
-    .toast-msg-slide-out {
+
+    /* .toast-msg-slide-out {
         transform: translateY(2000%);
-    }
-}
+    }  */
+} 
 
 @media (max-width: 424px) {
     .pop-up-banner {
