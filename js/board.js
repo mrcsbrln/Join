@@ -621,12 +621,12 @@ function allowDrop(ev) {
  * Handles the dropping of a task into a specified status.
  * @param {string} status - The status where the task is dropped.
  */
-function drop(status) {
+async function drop(status) {
     const taskIndex = tasks.findIndex(task => task.id === draggedItemId);
     if (taskIndex !== -1) {
         tasks[taskIndex].status = status;
     }
-    putDataEdit(`/tasks/${tasks[taskIndex].id}`, tasks[taskIndex])
+   await putDataEdit(`/tasks/${tasks[taskIndex]}`, tasks[taskIndex])
     removeHighlight();
     renderCards();
 }
@@ -755,10 +755,10 @@ async function moveToStatus(taskId, newStatus, dropdownId) {
             return;
         }
 
-    
+
         // 1. Aktualisiere den Status lokal im tasks-Array
         tasks[taskIndex].status = newStatus;
-
+        console.log(taskIndex);
         // 2. Aktualisiere die Datenbank mit der neuen Task-Information
         await putDataEdit(`/tasks/${taskIndex}`, tasks[taskIndex]);
 
@@ -767,7 +767,7 @@ async function moveToStatus(taskId, newStatus, dropdownId) {
         renderCards();
 
         // 4. Schließe das Dropdown-Menü
-        
+
 
     } catch (error) {
         console.error('Fehler beim Aktualisieren der Datenbank oder beim Rendern der Karten:', error);

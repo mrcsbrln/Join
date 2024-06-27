@@ -374,7 +374,7 @@ async function saveTask() {
     }));
 
     const newTask = {
-        id: Date.now().toString(), // Ensure this ID is a string
+        id: Date.now(), 
         title: title,
         description: description,
         category: category,
