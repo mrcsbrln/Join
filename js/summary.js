@@ -13,15 +13,17 @@ function initSummary() {
       updateHeaderProfileInitials();
     })
 
-    // checks if greeting = true in session storage. 
-    // if true, nothing happens. No more greetings
-    // if false, the user gets greeted
-    checkForGreeting();
-    
     // checks if a currentUser is existing in session storage. 
     // if true, nothing happens. 
     // if false, the user gets rediurected to the login.html
-    checkForCurrentUser() ? '' : redirectToLogin();
+    checkForCurrentUser() ? checkForGreeting() : redirectToLogin();
+
+    // checks if greeting = true in session storage. 
+    // if true, nothing happens. No more greetings
+    // if false, the user gets greeted
+    // checkForGreeting();
+    
+
 }
 
 
