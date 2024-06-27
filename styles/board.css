@@ -56,12 +56,11 @@ button {
 }
 
 .statuses {
-    justify-content: space-between;
     flex-wrap: wrap;
     padding: 0 64px 0 64px;
     padding-left: 50px;
     padding-right: 80px;
-    gap: 10px
+    gap: 24px
 }
 
 .statusHeader {
@@ -401,7 +400,8 @@ button {
 
 
 }
-.cardBody{
+
+.cardBody {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -409,6 +409,7 @@ button {
     min-height: 220px;
 
 }
+
 @media (max-width: 1024px) {
 
     .board {
@@ -430,9 +431,10 @@ button {
 }
 
 @media (max-width: 550px) {
-    .titelCardBig{
+    .titelCardBig {
         font-size: 40px;
     }
+
     .tools {
         flex-direction: column-reverse;
         width: 100%;
@@ -497,13 +499,13 @@ button {
         bottom: 10px;
     }
 
-    .taskCardBig{
+    .taskCardBig {
         margin-left: 24px;
     }
 }
 
-.titleCard{
-    min-height:38px;
+.titleCard {
+    min-height: 38px;
 }
 
 @media (max-width: 450px) {
@@ -524,14 +526,13 @@ button {
         font-size: 16px;
     }
 
- 
+
     .dialogContent label,
     .dialogContent input,
     .dialogContent input::placeholder,
-    .dialogContent textarea 
-    .listItems,
+    .dialogContent textarea .listItems,
     .cardTextGrey,
-    .cardTextBlack{
+    .cardTextBlack {
         font-size: 16px !important;
     }
 
@@ -540,10 +541,11 @@ button {
         height: 25px;
     }
 
-    .prioEdit img{
+    .prioEdit img {
         width: 15px;
     }
-    .prioBtnText{
-        font-size: 12px!important;
+
+    .prioBtnText {
+        font-size: 12px !important;
     }
 }
