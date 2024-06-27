@@ -493,5 +493,11 @@ function checkOrientation() {
     }
 }
 
-window.addEventListener('load', checkOrientation);
-window.addEventListener('resize', checkOrientation);
+
+// window.addEventListener('load', checkOrientation);
+// window.addEventListener('resize', checkOrientation);
+
+document.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('load', checkOrientation);
+    window.addEventListener('resize', checkOrientation);
+});
