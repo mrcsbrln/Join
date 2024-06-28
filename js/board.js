@@ -29,9 +29,15 @@ async function initBoard() {
     let taskData = await loadData("/tasks")
     tasks = taskData;
     tasks = tasks.filter(task => task !== null);
+    let contactsData = await loadData("/contacts")
+    contacts = contactsData;
+    contacts = contacts.filter(contact => contact !== null);
+    initAddTaskBoard();
+}
+
+function initAddTaskBoard() {
     highlightBoard();
     renderCards();
-    highlightBoard();
     updateHeaderProfileInitials();
     pushSubtaskEdit();
     showMenu();
@@ -48,6 +54,7 @@ async function initBoard() {
     preventDefaultValidation();
     filterContacts();
 }
+
 
 /**
  * Opens the Dialog if a card is clicked
@@ -134,7 +141,6 @@ function renderCards(filteredTasks = null) {
     });
     checkContainerTodo();
 }
-
 /**
  * Checks if the 'To Do' container is empty and toggles the visibility of the empty task message accordingly. 
  * Additionally, calls the 'checkContainerInProgress' function 
@@ -625,10 +631,11 @@ async function drop(status) {
     const taskIndex = tasks.findIndex(task => task.id === draggedItemId);
     if (taskIndex !== -1) {
         tasks[taskIndex].status = status;
+        removeHighlight();
+        renderCards();
     }
    await putDataEdit(`/tasks`, tasks)
-    removeHighlight();
-    renderCards();
+  
 }
 
 /**
@@ -686,7 +693,7 @@ async function changeProgressBar(i) {
 
             // Update data in the database
             try {
-                await putData(`/tasks/${task.id}`, task);
+                await putData(`/tasks/`, tasks);
             } catch (error) {
             }
         }

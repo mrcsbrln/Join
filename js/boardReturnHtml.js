@@ -1,25 +1,40 @@
 function renderCardHtml(task) {
     let color = (task.category === 'User Story') ? 'Blue' : 'Green';
-    // Beachte die Korrektur von 'completet' zu 'completed'
     const completedSubtasks = task.subTasks ? task.subTasks.filter(subtask => subtask.completet).length : 0;
     const assignedToArray = Array.isArray(task.assignedTo) ? task.assignedTo : [];
 
-    // Alle verfügbaren Status
-    const allStatuses = ['toDo', 'inProgress', 'done', 'awaitingFeedback']; // Beispielstatus, anpassen nach Bedarf
-
-    // Extrahiere den aktuellen Status des Tasks
+    // All available statuses
+    const allStatuses = ['toDo', 'inProgress', 'done', 'awaitingFeedback'];
     const currentStatus = task.status;
-
-    // Filtere den aktuellen Status aus der Liste der verfügbaren Status
     const availableStatuses = allStatuses.filter(status => status !== currentStatus);
 
-    // Eindeutige ID für das Dropdown-Menü der aktuellen Karte
+    // Unique ID for the dropdown menu
     const dropdownId = `dropdown-content-${task.id}`;
-
-    // Dropdown-HTML mit den verfügbaren Status-Optionen
     const dropdownOptions = availableStatuses.map(status => `
         <p onclick="moveToStatus(${task.id}, '${status}', '${dropdownId}')">${statusLabels[status]}</p>
     `).join('');
+
+    // Track the number of rendered badges
+    const maxBadges = 6;
+    let renderedCount = 0;
+
+    // Render badges with a limit and "+N" for extras
+    let badgesHtml = assignedToArray.map(id => {
+        if (contacts[id]) {
+            if (renderedCount < maxBadges) {
+                renderedCount++;
+                return renderBadge(contacts[id]);
+            }
+        }
+        return '';
+    }).join('');
+
+    // Calculate the number of additional badges
+    const extraBadgesCount = assignedToArray.length - maxBadges;
+    if (extraBadgesCount > 0) {
+        badgesHtml += `
+                <div class="badgeImg" style="background-color: grey">+${extraBadgesCount}</div>`;
+    }
 
     return `
     <div draggable="true" ondragstart="startDragging(${task.id})" id="taskCard${task.id}" class="taskCard">
@@ -46,13 +61,7 @@ function renderCardHtml(task) {
                 </div>
                 <div class="footerCard boardFlex">
                     <div class="profileBadges">
-                        ${assignedToArray.map(id => {
-                            if (contacts[id]) {
-                                return renderBadge(contacts[id]);
-                            } else {
-                                return '';
-                            }
-                        }).join('')}
+                        ${badgesHtml}
                     </div>
                     <div class="prioImg">
                         <img src="assets/img/icons/${task.priority}.svg" alt="">
@@ -62,7 +71,6 @@ function renderCardHtml(task) {
         </div>
     </div>`;
 }
-
 
 /**
  * Renders the top section of a large task card with details such as category, title, description, due date, priority, and assigned members.
