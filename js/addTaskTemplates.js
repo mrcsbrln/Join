@@ -61,14 +61,31 @@ function showMenu() {
 
 /**
  * Filter contacts based on user input.
- */
-function filterContacts() {
+ */function filterContacts() {
     const selectBtnInput = document.querySelector('.select-btn-input');
-    selectBtnInput.addEventListener('input', () => {
-        let filterValue = selectBtnInput.value.toLowerCase();
-        filteredContacts = contacts.filter(contact => contact.name.toLowerCase().startsWith(filterValue));
+    
+    // Füge Eventlistener für 'click' und 'input' hinzu
+    selectBtnInput.addEventListener('click', handleFilter);
+    selectBtnInput.addEventListener('input', handleFilter);
+
+    /**
+     * Handle filter and render contacts based on input value.
+     */
+    function handleFilter() {
+        const filterValue = selectBtnInput.value.toLowerCase().trim();
+
+        // Filtere Kontakten basierend auf dem Input-Wert
+        if (filterValue === '') {
+            // Wenn Input leer ist, zeige alle Kontakten
+            filteredContacts = contacts;
+        } else {
+            // Ansonsten filtere Kontakten nach Namen, die mit dem Input-Wert beginnen
+            filteredContacts = contacts.filter(contact => contact.name.toLowerCase().startsWith(filterValue));
+        }
+
+        // Rendere die gefilterten Kontakten
         renderContacts();
-    });
+    }
 }
 
 /**
