@@ -30,6 +30,9 @@
     .pop-up-banner-content div {
         width: 234px;
     }
+    .no-contacts {
+        width: 352px;
+    }
    
 }
 
@@ -41,6 +44,10 @@
     }
 
     .contact {
+        width: 300px;
+    }
+
+    .no-contacts {
         width: 300px;
     }
 
@@ -218,6 +225,10 @@
     }
 
     .contact {
+        width: 100%;
+    }
+
+    .no-contacts {
         width: 100%;
     }
 

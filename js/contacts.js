@@ -1,8 +1,9 @@
 const teamBASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
 // const myBASE_URL = "https://join-database-6441e-default-rtdb.europe-west1.firebasedatabase.app/";
 
-let mycontacts = contacts;
+ 
 let highestId = 0;
+
 
 function initContacts() {
     includeHTML().then(() => { highlightContacts() });
@@ -12,6 +13,7 @@ function initContacts() {
     });
 }
 
+
 async function loadData(path = "") {
     let response = await fetch(teamBASE_URL + path + ".json");
     let responseToJson = await response.json();
@@ -19,22 +21,23 @@ async function loadData(path = "") {
     return responseToJson;
 }
 
+
 async function readData() {
-    try {
         const contactsData = await loadData("/contacts");
-        if (contactsData) {
-            // Convert the retrieved object into an array and filter null values
-            mycontacts = filterNullValues(Object.values(contactsData));
-
-            // Determine the highest ID among the existing contacts
-            highestId = mycontacts.reduce((maxId, contact) => Math.max(maxId, contact.id), 0);
-
-            console.log('Contacts retrieved from database:', mycontacts);
-        } else {
-            console.log('No contacts found in the database.');
+        if (!contactsData) {
+            contacts = [];
+            highestId = 0;
+            return;
         }
-    } catch (error) {
-        console.error('Error loading contacts data:', error);
+        contacts = filterNullValues(Object.values(contactsData));
+        highestId = contacts.reduce((maxId, contact) => Math.max(maxId, contact.id), 0);
+}
+
+function emptyContacts () {
+    if (contacts.length === 0) {
+        const contactsListContainer = document.getElementById('contacts-list');
+        contactsListContainer.innerHTML = '<p class="no-contacts">No contacts</p>';
+        return;
     }
 }
 
@@ -42,14 +45,14 @@ async function readData() {
 async function renderContacts() {
     try {
         // Check if contacts array is empty
-        if (mycontacts.length === 0) {
+        if (contacts.length === 0) {
             const contactsListContainer = document.getElementById('contacts-list');
             contactsListContainer.innerHTML = '<p class="no-contacts">No contacts</p>';
             return;
         }
 
         // Sort the contacts by name
-        const sortedContacts = mycontacts.sort((a, b) => a.name.localeCompare(b.name));
+        const sortedContacts = contacts.sort((a, b) => a.name.localeCompare(b.name));
 
         // Render contacts
         const contactsListContainer = document.getElementById('contacts-list');
@@ -102,7 +105,7 @@ function createUserInitials(name) {
 }
 
 async function displayContact(id) {
-    const contact = mycontacts.find(contact => contact.id === id);
+    const contact = contacts.find(contact => contact.id === id);
     if (contact) {
         const contactDetailsContainer = document.getElementById('contact-displayed');
         contactDetailsContainer.innerHTML = displayContactHtml(contact);
@@ -162,7 +165,7 @@ async function addContact() {
         };
 
         // Add the new contact to the array
-        mycontacts.push(newContact);
+        contacts.push(newContact);
 
         // Save the new contact to the database
         await fetch(`${teamBASE_URL}/contacts/${newContact.id}.json`, {
@@ -188,13 +191,14 @@ async function addContact() {
 
 function editContact(id) {
     // Find the contact by ID
-    const contact = mycontacts.find(contact => contact.id === id);
+    const contact = contacts.find(contact => contact.id === id);
     if (!contact) return;
     const editContactContainer = document.getElementById('edit-contact');
     editContactContainer.innerHTML = editContactHtml(contact);
 
     // Open the pop-up window
     openPopUpWindow('edit-contact', 'modal', 'pop-up-open', 'pop-up-close');
+    addInputEventListeners()
 }
 
 async function updateContact(id) {
@@ -206,7 +210,7 @@ async function updateContact(id) {
         const initials = createUserInitials(name);
 
         // Find the contact in the array
-        const contact = mycontacts.find(contact => contact.id === id);
+        const contact = contacts.find(contact => contact.id === id);
         if (!contact) return;
 
         // Update the contact details locally
@@ -244,7 +248,7 @@ async function updateContact(id) {
 async function deleteContact(id) {
     try {
         // Remove the contact from the array
-        mycontacts = mycontacts.filter(contact => contact.id !== id);
+        contacts = contacts.filter(contact => contact.id !== id);
 
         // Hide the contact display container
         const container = document.getElementById('contact-displayed');
@@ -299,11 +303,8 @@ function scrollToContact(id) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    window.addEventListener('load', checkOrientation);
-    window.addEventListener('resize', checkOrientation);
+function addInputEventListeners() {
     const inputs = document.querySelectorAll('.input input');
-
     inputs.forEach(function (input) {
         const container = input.parentElement;
 
@@ -319,6 +320,10 @@ document.addEventListener('DOMContentLoaded', function () {
             container.classList.add('input-active');
         });
     });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    addInputEventListeners();
 });
 
 function clearInputs() {

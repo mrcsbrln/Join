@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="./styles/desktopNav.css">
     <link rel="stylesheet" href="styles.css">
     <script src="script.js"></script>
-    <script src="./js/contacts.js"></script>
     <script src="./js/contactsTemplates.js"></script>
+    <script src="./js/contacts.js"></script>
     <script src="./js/desktopNav.js"></script>
     <script src="./js/desktopHeader.js"></script>
 
@@ -89,7 +89,7 @@
                             </div>
                         </div>
                         <div class="input">
-                            <input id="new-phone" type="phone" placeholder="Phone" required>
+                            <input id="new-phone" type="tel" pattern="^[0-9-+\s()]{6,16}" placeholder="Phone" required>
                             <div class="icon-container">
                                 <img src="./assets/img/contacts_img/phone_icon.svg" alt="">
                             </div>
