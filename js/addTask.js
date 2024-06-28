@@ -1,21 +1,19 @@
 actStatus = 'toDo'
 
-function initAddTask() {
-    includeHTML().then(() => {
-        highlightAddTask();
-        updateHeaderProfileInitials()
-    })
-    filterContacts();
+
+async function initAddTask() {
+    contacts = await loadData('/contacts');
+    await includeHTML();
+    highlightAddTask();
+    updateHeaderProfileInitials();
+    filterContacts(); 
     showMenu();
     changeSvgOnHover();
     changePrioBtn();
-    changeSvgOnHover();
     categoryMenu();
     styleSubtaskInput();
     pushSubtask();
-    renderContacts();
     closeContactListOnOutsideClick();
-    categoryMenu();
     preventFormSubmitOnEnter();
     preventDefaultValidation();
 }
