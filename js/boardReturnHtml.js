@@ -1,50 +1,69 @@
-function renderCardHtml(task) {
-    let color = (task.category === 'User Story') ? 'Blue' : 'Green';
-    const completedSubtasks = task.subTasks ? task.subTasks.filter(subtask => subtask.completet).length : 0;
-    const assignedToArray = Array.isArray(task.assignedTo) ? task.assignedTo : [];
-
-    // All available statuses
+// Funktion zum Rendern der Dropdown-Optionen für den Statuswechsel
+function renderDropdownOptions(taskId, currentStatus) {
     const allStatuses = ['toDo', 'inProgress', 'done', 'awaitingFeedback'];
-    const currentStatus = task.status;
     const availableStatuses = allStatuses.filter(status => status !== currentStatus);
+    const dropdownId = `dropdown-content-${taskId}`;
 
-    // Unique ID for the dropdown menu
-    const dropdownId = `dropdown-content-${task.id}`;
-    const dropdownOptions = availableStatuses.map(status => `
-        <p onclick="moveToStatus(${task.id}, '${status}', '${dropdownId}')">${statusLabels[status]}</p>
+    return availableStatuses.map(status => `
+        <p onclick="moveToStatus(${taskId}, '${status}', '${dropdownId}')">${statusLabels[status]}</p>
     `).join('');
+}
 
-    // Track the number of rendered badges
-    const maxBadges = 6;
+// Funktion zum Rendern der Badges für die zugewiesenen Kontakte
+function renderBadges(assignedToArray, maxBadges = 6) {
     let renderedCount = 0;
+    let addedContacts = new Set(); // Vermeidung von Duplikaten
 
-    // Render badges with a limit and "+N" for extras
     let badgesHtml = assignedToArray.map(id => {
-        if (contacts[id]) {
-            if (renderedCount < maxBadges) {
-                renderedCount++;
-                return renderBadge(contacts[id]);
-            }
+        if (contacts[id] && !addedContacts.has(id) && renderedCount < maxBadges) {
+            addedContacts.add(id); // Kontakt als hinzugefügt markieren
+            renderedCount++;
+            return renderBadge(contacts[id]);
         }
         return '';
     }).join('');
 
-    // Calculate the number of additional badges
-    const extraBadgesCount = assignedToArray.length - maxBadges;
+    // Anzahl zusätzlicher Badges berechnen
+    const extraBadgesCount = assignedToArray.length - addedContacts.size;
     if (extraBadgesCount > 0) {
-        badgesHtml += `
-                <div class="badgeImg" style="background-color: grey">+${extraBadgesCount}</div>`;
+        badgesHtml += `<div class="badgeImg" style="background-color: grey">+${extraBadgesCount}</div>`;
     }
+
+    return badgesHtml;
+}
+
+// Funktion zum Rendern der Fortschrittsanzeige
+function renderProgress(task) {
+    const completedSubtasks = task.subTasks ? task.subTasks.filter(subtask => subtask.completet).length : 0;
+    const totalSubtasks = task.subTasks ? task.subTasks.length : 0;
+
+    return `
+        <div class="progress boardFlex">
+            <div class="progressBarContainer">
+                <div id="progressBar${task.id}" class="progressBar"></div>
+            </div>
+            <p class="amountSubtasks">${completedSubtasks}/${totalSubtasks}</p>
+        </div>
+    `;
+}
+
+// Hauptfunktion zum Rendern der Task-Karte
+function renderCardHtml(task) {
+    const color = (task.category === 'User Story') ? 'Blue' : 'Green';
+    const assignedToArray = Array.isArray(task.assignedTo) ? task.assignedTo : [];
+    const dropdownOptions = renderDropdownOptions(task.id, task.status);
+    const badgesHtml = renderBadges(assignedToArray);
+    const progressHtml = renderProgress(task);
 
     return `
     <div draggable="true" ondragstart="startDragging(${task.id})" id="taskCard${task.id}" class="taskCard">
         <div class="taskCardTop">
             <label class="category${color}">${task.category}</label>
             <div class="dropdown">
-                <button onclick="toggleDropdown('${dropdownId}')" class="dropdown-btn">
+                <button onclick="toggleDropdown('dropdown-content-${task.id}')" class="dropdown-btn">
                     <div class="dropdownBtnContainer"><img src="assets/img/icons/contacts_sub_menu.svg" alt="Dropdown Arrow"></div>
                 </button>
-                <div id="${dropdownId}" class="dropdown-content">
+                <div id="dropdown-content-${task.id}" class="dropdown-content">
                     ${dropdownOptions}
                 </div>
             </div>
@@ -53,12 +72,7 @@ function renderCardHtml(task) {
             <p class="titleCard">${task.title}</p>
             <p class="descriptionCard">${task.description}</p>
             <div>
-                <div class="progress boardFlex">
-                    <div class="progressBarContainer">
-                        <div id="progressBar${task.id}" class="progressBar"></div>
-                    </div>
-                    <p class="amountSubtasks">${completedSubtasks}/${task.subTasks ? task.subTasks.length : 0}</p>
-                </div>
+                ${progressHtml}
                 <div class="footerCard boardFlex">
                     <div class="profileBadges">
                         ${badgesHtml}
@@ -70,6 +84,11 @@ function renderCardHtml(task) {
             </div>
         </div>
     </div>`;
+}
+
+// Beispielimplementierung der Funktion renderBadge
+function renderBadge(contact) {
+    return `<div class="badgeImg" style="background-color: ${contact.color}">${contact.initials}</div>`;
 }
 
 /**
