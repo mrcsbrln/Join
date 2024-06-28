@@ -38,6 +38,7 @@ button {
     padding-left: 50px;
     padding-right: 80px;
     flex-wrap: wrap;
+    max-width: 1400px;
 }
 
 .containerTools h1 {
@@ -60,7 +61,8 @@ button {
     padding: 0 64px 0 64px;
     padding-left: 50px;
     padding-right: 80px;
-    gap: 24px
+    gap: 24px; 
+    margin-bottom: 120px;
 }
 
 .statusHeader {
