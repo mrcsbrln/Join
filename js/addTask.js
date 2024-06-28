@@ -1,4 +1,4 @@
-
+actStatus = 'toDo'
 
 function initAddTask() {
     includeHTML().then(() => {

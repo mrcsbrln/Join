@@ -378,7 +378,7 @@ async function saveTask() {
         title: title,
         description: description,
         category: category,
-        status: 'toDo',
+        status: actStatus,
         dueDate: dueDate,
         priority: priority,
         subTasks: newSubtasks,
