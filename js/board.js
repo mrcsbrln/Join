@@ -1,5 +1,6 @@
 
 let draggedItemId = "";
+let minDate = "";
 let actSubtasks = [];
 let actAssignedTo = [];
 let taskEditAsiggnedTo = [];
@@ -56,52 +57,6 @@ function initAddTaskBoard() {
 }
 
 
-/**
- * Opens the Dialog if a card is clicked
- */
-function openDialog() {
-    document.getElementById('dialogContainer').classList.add('open');
-    document.documentElement.classList.add('overflowHidden');
-}
-
-function openDialogTasks(status) {
-    document.getElementById('dialogContainerAddTask').classList.add('open');
-    document.documentElement.classList.add('overflowHidden');
-    actStatus = status;
-}
-
-/**
- * Closes the dialog if the background is clicked.
- * @param {Event} event - The event object.
- */
-function closeDialog(event) {
-    if (event.currentTarget === event.target) {
-        event.stopPropagation();
-        document.getElementById('dialogContainer').classList.remove('open');
-        document.documentElement.classList.remove('overflowHidden');
-    }
-}
-
-function closeDialogTask(event) {
-    if (event.currentTarget === event.target) {
-        event.stopPropagation();
-        document.getElementById('dialogContainerAddTask').classList.remove('open');
-        document.documentElement.classList.remove('overflowHidden');
-    }
-}
-
-/**
- * Closes the dialog when a button is clicked.
- */
-function closeDialogBtn() {
-    document.getElementById('dialogContainer').classList.remove('open');
-    document.documentElement.classList.remove('overflowHidden');
-}
-
-function closeDialogTaskBtn() {
-    document.getElementById('dialogContainerAddTask').classList.remove('open');
-    document.documentElement.classList.remove('overflowHidden');
-}
 
 /**
  * Retrieves the input value from the search bar and triggers the searchTasks function.
@@ -179,96 +134,9 @@ function checkContainerDone() {
     document.getElementById('emptyTaskDone').classList.toggle('hidden', container.innerHTML.trim() !== '');
 }
 
-/**
- * Renders a badge with the initials of a contact and background color.
- * @param {Object} contact - The contact object containing information such as initials and color.
- * @returns {string} - The HTML string representing the badge.
- */
-function renderBadge(contact) {
-    return `<div class="badgeImg" style="background-color: ${contact.color}">${contact.initials}</div>`;
-}
 
-/**
- * Renders a large version of a task card with additional details.
- * @param {number} i - The index of the task.
- */
-function renderCardBig(i) {
-    tasks.forEach((task, index) => {
-        if (task.id == i) {
-            renderCardBigHeader(index);
-            renderCardBigTop(index);
-            renderCardBigSubTo(index);
-            renderCardBigSubtask(index);
-        }
-    });
-}
 
-function renderCardBigHeader(i) {
-    let color = (tasks[i].category === 'User Story') ? 'Blue' : 'Green';
-    document.getElementById('containerCloseBtn').innerHTML = renderCardBigHeaderHtml(i, color);
-    document.getElementById('containerCloseBtn').classList.remove('flexEnd');
-    document.getElementById('containerCloseBtn').classList.add('spaceBetween');
-}
 
-/**
- * Renders the assigned members section of a large task card.
- * @param {number} i - The index of the task.
- */
-function renderCardBigSubTo(i) {
-    // Sicherstellen, dass tasks[i].assignedTo ein Array ist oder ein leeres Array verwenden
-    const assignedToArray = Array.isArray(tasks[i]?.assignedTo) ? tasks[i].assignedTo : [];
-
-    // Leeren der bisherigen Zuordnungen
-    actAssignedTo = [];
-    const badgeContainer = document.getElementById('badgeContainer');
-    badgeContainer.innerHTML = '';
-
-    // Durchlaufen des assignedTo-Arrays und Rendering der Badges
-    assignedToArray.forEach(id => {
-        // Überprüfen, ob die ID im contacts-Objekt existiert
-        if (contacts[id]) {
-            const contact = contacts[id];
-            actAssignedTo.push({
-                color: contact.color,
-                initials: contact.initials,
-                name: contact.name
-            });
-            badgeContainer.innerHTML += renderCardBigSubToHtml(contact);
-        }
-    });
-}
-
-/**
- * Renders the subtasks section of a large task card.
- * @param {number} i - The index of the task.
- */
-function renderCardBigSubtask(i) {
-    let subtasksHtml = '';
-    actSubtasks = [];
-    if (tasks[i].subTasks === undefined) {
-        tasks[i].subTasks = [];
-    }
-    tasks[i].subTasks.forEach(subtask => {
-        actSubtasks.push({
-            id: subtask.id,
-            completet: subtask.completet,
-            content: subtask.content
-        });
-        subtasksHtml += renderCardBigSubHtml(subtask, i);
-    });
-    document.getElementById('subtasks').innerHTML = subtasksHtml;
-}
-
-function handleSubtaskChange(taskId, subtaskId, checkboxElement) {
-    const task = tasks.find(t => t.id === taskId);
-    if (task) {
-        const subtask = task.subTasks.find(st => st.id === subtaskId);
-        if (subtask) {
-            subtask.completet = checkboxElement.checked;
-            updateTaskDisplay();
-        }
-    }
-}
 
 function updateTaskDisplay() {
     renderCards();
@@ -337,270 +205,12 @@ async function deleteTaskFromDatabase(taskId) {
  */
 async function deleteTask(i) {
     const taskId = tasks[i].id;
-
-    // Löschen aus der lokalen Liste
     tasks.splice(i, 1);
-
-    // Löschen aus der Datenbank
     await deleteTaskFromDatabase(taskId);
-
-    // Schließen des Dialogs und Neu-Rendern der Aufgabenliste
     closeDialogBtn();
     renderCards();
 }
-/**
- * Renders the edit card interface for a specific task.
- * It then calls `renderEditBadges` to render any badges and `renderEditSubtasks`
- * to display the subtasks of the task.
- *
- * @param {number} i - The index of the task in the tasks array.
- */
-function renderCardEdit(i) {
-    document.getElementById('containerCloseBtn').innerHTML = renderCardEditHeaderHtml();
-    document.getElementById('containerCloseBtn').classList.add('flexEnd');
-    document.getElementById('containerCloseBtn').classList.remove('spaceBetween');
-    document.getElementById('dialogContent').innerHTML = renderCardEditHtml(i);
 
-    if (tasks[i] && tasks[i].assignedTo) {
-        taskEditAsiggnedTo = tasks[i].assignedTo.slice();
-    } else {
-        taskEditAsiggnedTo = [];
-    }
-
-    changePrioBtnEdit(i);
-    renderContactsEdit(i);
-    renderSelectedContactsEdit();
-    renderEditSubtasks(i);
-}
-
-function showDropdown() {
-    const dropdown = document.getElementById('dropDownContact');
-    dropdown.classList.toggle('show-menu');
-    const searchInput = document.getElementById('searchContacts');
-    if (searchInput) {
-        searchInput.addEventListener('focus', () => {
-            dropdown.classList.add('show-menu');
-            filterContactEdit();
-        });
-    }
-}
-
-function renderContactsEdit(i, filteredContacts = null) {
-    const listContacts = document.getElementById('listContacts');
-    listContacts.innerHTML = '';
-
-    const contactsToRender = filteredContacts ? filteredContacts : contacts;
-
-    if (!tasks[i]) {
-        return;
-    }
-    if (!tasks[i].assignedTo || typeof tasks[i].assignedTo.includes !== 'function') {
-        return;
-    }
-    contactsToRender.forEach(contact => {
-        const isAssigned = tasks[i].assignedTo.includes(contact.id);
-        const checkedClass = isAssigned ? 'checked' : '';
-
-        listContacts.innerHTML += renderContactsEditHtml(contact, isAssigned, checkedClass);
-    });
-
-    selectListItemsEdit(i);
-}
-
-
-
-function selectListItemsEdit(i) {
-    const listItems = document.querySelectorAll('.contactListItems');
-    listItems.forEach((item, j) => {
-        item.addEventListener('click', () => {
-            const img = item.querySelector('.checkbox');
-            item.classList.toggle('checked');
-            img.classList.toggle('checked');
-            const contactId = j;
-            if (item.classList.contains('checked')) {
-                taskEditAsiggnedTo.push(contactId);
-                img.src = './assets/img/icons_add_task/checkedbox.svg';
-            } else {
-                const indexToRemove = taskEditAsiggnedTo.indexOf(contactId);
-                if (indexToRemove !== -1) {
-                    taskEditAsiggnedTo.splice(indexToRemove, 1);
-                }
-                img.src = './assets/img/icons_add_task/checkbox.svg';
-            }
-            renderSelectedContactsEdit();
-        });
-    });
-}
-
-function renderSelectedContactsEdit() {
-    const selectedContactsDiv = document.querySelector('.selectedContactsContainer');
-    selectedContactsDiv.innerHTML = '';
-    taskEditAsiggnedTo.forEach(i => {
-        selectedContactsDiv.innerHTML += `
-            <div class="cicle" style="background-color: ${contacts[i].color}">${contacts[i].initials}</div>
-        `;
-    })
-}
-
-function getTaskAndPriority(taskIndex) {
-    const task = tasks[taskIndex];
-    const currentPrio = task.priority;
-    actTaskPrio = currentPrio;
-    return { task, currentPrio };
-}
-
-function handlePrioButtonClick(event, task, svgMappingsEdit) {
-    const button = event.target.closest('.prioEdit');
-    if (!button) return;
-    const selectedPrio = button.value;
-    task.priority = selectedPrio;
-    actTaskPrio = selectedPrio;
-    updatePrioButtons(selectedPrio, svgMappingsEdit);
-}
-
-function updatePrioButtons(selectedPrio, svgMappingsEdit) {
-    document.querySelectorAll('.prioEdit').forEach(btn => {
-        const prio = btn.value;
-        const img = btn.querySelector('img');
-
-        if (prio === selectedPrio) {
-            btn.classList.add('active');
-            img.src = svgMappingsEdit[`${prio}-active`];
-        } else {
-            btn.classList.remove('active');
-            img.src = svgMappingsEdit[prio];
-        }
-    });
-}
-
-function setInitialPrioButtons(currentPrio, svgMappingsEdit) {
-    document.querySelectorAll('.prioEdit').forEach(btn => {
-        const prio = btn.value;
-        const img = btn.querySelector('img');
-
-        if (prio === currentPrio) {
-            btn.classList.add('active');
-            img.src = svgMappingsEdit[`${prio}-active`];
-        } else {
-            btn.classList.remove('active');
-            img.src = svgMappingsEdit[prio];
-        }
-    });
-}
-
-function changePrioBtnEdit(taskIndex) {
-    const prioContainer = document.querySelector('.prioBtn');
-    if (!prioContainer) return;
-
-    const { task, currentPrio } = getTaskAndPriority(taskIndex);
-
-    prioContainer.addEventListener('click', (event) => {
-        handlePrioButtonClick(event, task, svgMappingsEdit);
-    });
-
-    setInitialPrioButtons(currentPrio, svgMappingsEdit);
-    actTaskPrio = currentPrio;
-}
-
-function renderEditSubtasks() {
-    const subtasksList = document.getElementById('subtaskList');
-    subtasksList.innerHTML = "";
-    actSubtasks.forEach((item, index) => {
-        subtasksList.innerHTML += renderEditSubtasksUneditedHtml(item, index);
-    });
-    subTaskEdit();
-}
-
-function subTaskEdit() {
-    const subtaskListItems = document.querySelectorAll('.subtask-list-item');
-    subtaskListItems.forEach((item, index) => {
-        const editSubtaskBtn = item.querySelector('.edit-subtask-btn');
-        editSubtaskBtn.addEventListener('click', () => {
-            let input = item.querySelector('.edit-subtask-input');
-            if (!input) {
-                let liText = item.querySelector('.li-text');
-                const content = liText.textContent.trim();
-                item.innerHTML = renderSubtaskEditHtml(content, index);
-                item.classList.add('subtask-list-item-edit');
-                acceptSubtaskEdit();
-            }
-        });
-    });
-}
-
-function acceptSubtaskEdit() {
-    const subtaskListItemsEdit = document.querySelectorAll('.subtask-list-item-edit');
-
-    subtaskListItemsEdit.forEach(item => {
-        const confirmSubtaskEditBtn = item.querySelector('.confirm-subtask-edit-btn');
-        confirmSubtaskEditBtn.addEventListener('click', () => {
-            const index = item.getAttribute('data-index');
-            const input = item.querySelector('.edit-subtask-input');
-            actSubtasks[index].content = input.value;
-            renderEditSubtasks();
-        });
-    });
-}
-
-function deleteSubtaskEdit(index) {
-    actSubtasks.splice(index, 1);
-    renderEditSubtasks();
-}
-
-function styleSubtaskInputEdit() {
-    const subtaskBtnAdd = document.getElementById('addSubtaskBtn');
-    const subtaskBtnCheckCancel = document.getElementById('cancelDiv');
-    subtaskBtnAdd.classList.add('hidden');
-    subtaskBtnCheckCancel.classList.add('show');
-}
-
-function pushSubtaskEdit() {
-    const subtaskInput = document.getElementById('subtaskInput');
-    if (subtaskInput) {
-        const subtaskInputValue = subtaskInput.value.trim();
-
-        if (subtaskInputValue !== '') {
-            actSubtasks.push({
-                id: actSubtasks.length + 1,
-                completet: false,
-                content: subtaskInputValue
-            });
-
-            renderEditSubtasks();
-            subtaskInput.value = '';
-            hideInputTools();
-        }
-    }
-}
-
-function hideInputTools() {
-    document.getElementById('addSubtaskBtn').classList.remove('hidden');
-    document.getElementById('cancelDiv').classList.remove('show');
-}
-
-function emptyInput() {
-    document.getElementById('subtaskInput').value = "";
-}
-
-function filterContactEdit() {
-    const searchInput = document.getElementById('searchContacts').value.toLowerCase();
-    const filteredContacts = contacts.filter(contact =>
-        contact.name.toLowerCase().startsWith(searchInput)
-    );
-    renderContactsEdit(0, filteredContacts);
-}
-
-/**
- * Renders badges for assigned contacts in the edit card interface.
- */
-function renderEditBadges() {
-    const badgeContainer = document.getElementById('profileBadgesEdit');
-    badgeContainer.innerHTML = '';
-    actAssignedTo.forEach(contact => {
-        badgeContainer.innerHTML += `
-            <span class="badgeImg" style="background-color: ${contact.color}">${contact.initials}</span>`;
-    });
-}
 
 
 
@@ -682,22 +292,26 @@ document.addEventListener('dragend', function (event) {
 async function changeProgressBar(i) {
     tasks.forEach(async (task, index) => {
         if (task.id == i && task.subTasks) {
-            const completedSubtasks = task.subTasks.filter(subtask => subtask.completet).length;
-            const totalSubtasks = task.subTasks.length;
-
-            let percent = 0;
-            if (totalSubtasks !== 0) {
-                percent = (completedSubtasks / totalSubtasks) * 100;
-            }
-            document.getElementById(`progressBar${i}`).style.width = percent + '%';
-
-            // Update data in the database
+            changeProgressCheckEmpty(task, i);
             try {
                 await putData(`/tasks/`, tasks);
             } catch (error) {
             }
         }
     });
+}
+
+function changeProgressCheckEmpty( task, i){
+    const completedSubtasks = task.subTasks.filter(subtask => subtask.completet).length;
+    const totalSubtasks = task.subTasks.length;
+    let percent = 0;
+    if (totalSubtasks !== 0) {
+        percent = (completedSubtasks / totalSubtasks) * 100;
+    }
+     const progressBarElement = document.getElementById(`progressBar${i}`);
+    if (progressBarElement) {
+        progressBarElement.style.width = percent + '%';
+    }
 }
 
 function saveEditValidation(i) {
@@ -750,8 +364,6 @@ function addInputListener(inputElement, requiredElement) {
 function toggleDropdown(dropdownId) {
     const dropdownContent = document.getElementById(dropdownId);
     dropdownContent.classList.toggle('showDropdown');
-
-
 }
 
 async function moveToStatus(taskId, newStatus, dropdownId) {
@@ -761,35 +373,60 @@ async function moveToStatus(taskId, newStatus, dropdownId) {
         if (taskIndex === -1) {
             return;
         }
-
-
-        // 1. Aktualisiere den Status lokal im tasks-Array
         tasks[taskIndex].status = newStatus;
         console.log(taskIndex);
-        // 2. Aktualisiere die Datenbank mit der neuen Task-Information
         await putDataEdit(`/tasks/${taskIndex}`, tasks[taskIndex]);
-
-        // 3. Rendere die Karten neu, um die visuelle Änderung anzuzeigen
         toggleDropdown(dropdownId);
         renderCards();
-
-        // 4. Schließe das Dropdown-Menü
-
-
     } catch (error) {
         console.error('Fehler beim Aktualisieren der Datenbank oder beim Rendern der Karten:', error);
-        // Hier könnten weitere Fehlerbehandlungsschritte implementiert werden
     }
-}/**
- * Shows a task added message by adding a CSS class to the element with the class 'task-added-msg'.
- * After 2 seconds, it redirects to the board.
- *
- * @return {void} 
- */
-function showTaskAddedMessage() {
-    const messageElement = document.querySelector('.task-added-msg');
-    messageElement.classList.add('d-flex-visible');
-    setTimeout(() => {
-        redirectToBoard()
-    }, 2000);
+
+}
+
+function renderDropdownOptions(taskId, currentStatus) {
+    const allStatuses = ['toDo', 'inProgress', 'done', 'awaitingFeedback'];
+    const availableStatuses = allStatuses.filter(status => status !== currentStatus);
+    const dropdownId = `dropdown-content-${taskId}`;
+
+    return availableStatuses.map(status => `
+        <p onclick="moveToStatus(${taskId}, '${status}', '${dropdownId}')">${statusLabels[status]}</p>
+    `).join('');
+}
+
+
+function renderBadges(assignedToArray, maxBadges = 6) {
+    let renderedCount = 0;
+    let addedContacts = new Set();
+    let badgesHtml = assignedToArray.map(id => {
+        if (contacts[id] && !addedContacts.has(id) && renderedCount < maxBadges) {
+            addedContacts.add(id); 
+            renderedCount++;
+            return renderBadge(contacts[id]);
+        }
+        return '';
+    }).join('');
+    const extraBadgesCount = assignedToArray.length - addedContacts.size;
+    if (extraBadgesCount > 0) {
+        badgesHtml += `<div class="badgeImg" style="background-color: grey">+${extraBadgesCount}</div>`;
+    }
+    return badgesHtml;
+}
+
+function getMinDate() {
+const dateIn = document.getElementById('editedDate');
+const today = new Date();
+const year = today.getFullYear();
+const month = String(today.getMonth() + 1).padStart(2, '0');
+const day = String(today.getDate()).padStart(2, '0');
+minDate =`${year}-${month}-${day}`;
+dateIn.min = minDate;
+dateIn.addEventListener('input', function() {
+    const selectedDate = new Date(this.value);
+    const minDate = new Date(dateIn.min);
+
+    if (selectedDate < minDate) {
+        this.value = ''; // Setze das Eingabefeld zurück, wenn das Datum ungültig ist
+        alert('Bitte wähle ein Datum ab dem heutigen Tag aus.');
+    }});
 }

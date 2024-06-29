@@ -1,43 +1,14 @@
-// Funktion zum Rendern der Dropdown-Optionen für den Statuswechsel
-function renderDropdownOptions(taskId, currentStatus) {
-    const allStatuses = ['toDo', 'inProgress', 'done', 'awaitingFeedback'];
-    const availableStatuses = allStatuses.filter(status => status !== currentStatus);
-    const dropdownId = `dropdown-content-${taskId}`;
 
-    return availableStatuses.map(status => `
-        <p onclick="moveToStatus(${taskId}, '${status}', '${dropdownId}')">${statusLabels[status]}</p>
-    `).join('');
-}
-
-// Funktion zum Rendern der Badges für die zugewiesenen Kontakte
-function renderBadges(assignedToArray, maxBadges = 6) {
-    let renderedCount = 0;
-    let addedContacts = new Set(); // Vermeidung von Duplikaten
-
-    let badgesHtml = assignedToArray.map(id => {
-        if (contacts[id] && !addedContacts.has(id) && renderedCount < maxBadges) {
-            addedContacts.add(id); // Kontakt als hinzugefügt markieren
-            renderedCount++;
-            return renderBadge(contacts[id]);
-        }
-        return '';
-    }).join('');
-
-    // Anzahl zusätzlicher Badges berechnen
-    const extraBadgesCount = assignedToArray.length - addedContacts.size;
-    if (extraBadgesCount > 0) {
-        badgesHtml += `<div class="badgeImg" style="background-color: grey">+${extraBadgesCount}</div>`;
-    }
-
-    return badgesHtml;
-}
 
 // Funktion zum Rendern der Fortschrittsanzeige
 function renderProgress(task) {
     const completedSubtasks = task.subTasks ? task.subTasks.filter(subtask => subtask.completet).length : 0;
     const totalSubtasks = task.subTasks ? task.subTasks.length : 0;
+    if (totalSubtasks == 0) {
+        return ``
 
-    return `
+    } else {
+        return `
         <div class="progress boardFlex">
             <div class="progressBarContainer">
                 <div id="progressBar${task.id}" class="progressBar"></div>
@@ -45,6 +16,7 @@ function renderProgress(task) {
             <p class="amountSubtasks">${completedSubtasks}/${totalSubtasks}</p>
         </div>
     `;
+    }
 }
 
 // Hauptfunktion zum Rendern der Task-Karte
@@ -196,7 +168,7 @@ function renderCardEditHtml(i) {
     <div class="dueDateEdit">
         <p class="cardTextGrey">Due Date</p>
         <div>
-            <input id="editedDate" class="cardTextBlack inputEdit margin-bottom-4" type="date" value="${tasks[i].dueDate}">
+            <input id="editedDate" onclick="getMinDate()" class="cardTextBlack inputEdit margin-bottom-4" type="date"  value="${tasks[i].dueDate}">
             <div id="edit-task-duo-date-required" class="field-required-msg margin-edit-task-inputs">This field is required</div>
         </div>
     </div>
