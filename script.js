@@ -479,7 +479,7 @@ async function putData(path="", data={}) {
 function checkOrientation() {
     const warning = document.getElementById('landscapeWarning');
 
-    if ((window.innerWidth) < 900) {
+    if ((window.innerWidth) < 933) {
 
         if (window.innerHeight < window.innerWidth) {
             // Landscape-Modus
