@@ -141,7 +141,7 @@ function saveEdit(i) {
     actSubtasks = [];
     closeDialogBtn();
     renderCards();
-    putDataEdit(`/tasks/${tasks[i].id}`, tasks[i])
+    putDataEdit(`/tasks}`, tasks)
 }
 
 /**
@@ -167,7 +167,6 @@ async function putDataEdit(path = "", data = {}) {
         throw error;
     }
 }
-
 
 /**
  * deletes a task from the `tasks` array and the database.
@@ -258,7 +257,7 @@ async function changeProgressBar(i) {
         if (task.id == i && task.subTasks) {
             changeProgressCheckEmpty(task, i);
             try {
-                await putData(`/tasks/`, tasks);
+                await putData(`/tasks`, tasks);
             } catch (error) {
             }
         }
@@ -390,7 +389,7 @@ async function moveToStatus(taskId, newStatus, dropdownId) {
             return;
         }
         tasks[taskIndex].status = newStatus;
-        await putDataEdit(`/tasks/${taskIndex}`, tasks[taskIndex]);
+        await putDataEdit(`/tasks`, tasks);
         toggleDropdown(dropdownId);
         renderCards();
     } catch (error) {

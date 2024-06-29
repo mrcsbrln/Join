@@ -159,7 +159,6 @@ function showTaskAddedMessage() {
     }, 2000);
 }
 
-
 /**
  * Sets the minimum date for the 'editedDate' input element to today's date and adds
  * a blur event listener for date validation.
@@ -239,7 +238,6 @@ async function deleteTaskFromDatabase(taskId) {
                 'Content-Type': 'application/json'
             }
         });
-
         if (!response.ok) {
             throw new Error(`Fehler beim Löschen der Aufgabe aus der Datenbank: ${response.status} ${response.statusText}`);
         }
