@@ -169,7 +169,7 @@ function renderCardEditHtml(i) {
         <p class="cardTextGrey">Due Date</p>
         <div>
             <input id="editedDate" onclick="getMinDate()" class="cardTextBlack inputEdit margin-bottom-4" type="date"  value="${tasks[i].dueDate}">
-            <div id="edit-task-duo-date-required" class="field-required-msg margin-edit-task-inputs">This field is required</div>
+            <div id="edit-task-duo-date-required" class="field-required-msg margin-edit-task-inputs">This field is required. Please choose a date that is in the future.</div>
         </div>
     </div>
     <div class="priorityEdit">

@@ -414,19 +414,27 @@ function renderBadges(assignedToArray, maxBadges = 6) {
 }
 
 function getMinDate() {
-const dateIn = document.getElementById('editedDate');
-const today = new Date();
-const year = today.getFullYear();
-const month = String(today.getMonth() + 1).padStart(2, '0');
-const day = String(today.getDate()).padStart(2, '0');
-minDate =`${year}-${month}-${day}`;
-dateIn.min = minDate;
-dateIn.addEventListener('input', function() {
-    const selectedDate = new Date(this.value);
-    const minDate = new Date(dateIn.min);
-
-    if (selectedDate < minDate) {
-        this.value = ''; // Setze das Eingabefeld zurück, wenn das Datum ungültig ist
-        alert('Bitte wähle ein Datum ab dem heutigen Tag aus.');
-    }});
+    const dateIn = document.getElementById('editedDate');
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const minDate = `${year}-${month}-${day}`;
+    
+    dateIn.min = minDate;
+    dateIn.addEventListener('blur', function() {
+        const inputValue = this.value.trim(); 
+    
+        if (inputValue.length === 0) {
+            this.value = minDate;
+        } else if (inputValue.length >= 10) {
+            const selectedDate = new Date(inputValue);
+            if (selectedDate <= today) {
+                this.value = minDate;
+                showValidationError(dateIn, document.getElementById('edit-task-duo-date-required'));
+            } else {
+                resetFieldStyle(dateIn, document.getElementById('edit-task-duo-date-required'));
+            }
+        }
+    });
 }
