@@ -885,43 +885,6 @@ body {
 
 
 
-
-
-@media (max-width: 550px) and (min-height: 800px) {
-
-    .header {
-        height: 15%;
-    }
-
-    .logIn__container {
-        margin-top: 0;
-    }
-
-    .logIn__form {
-        margin-top: 24px;
-    }
-
-    .logIn__container h1  {
-        margin-top: 0;
-    }
-
-    .inputField__container {
-        margin-top: 16px;
-    }
-
-    .logIn__btn__container {
-        margin-top: 16px;
-    }
-
-    .login__footer {
-        margin-top: 32px;
-    }
-}
-
-
-
-
-
 @media (max-width: 360px) and (max-height: 600px) {
 
     .header {
