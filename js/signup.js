@@ -1,49 +1,51 @@
 "use strict";
 
 
+/**
+ * Base URL for the Firebase Realtime Database.
+ * @type {string}
+ */
 const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
 
 
+/**
+ * DOM element representing the container for the password input field.
+ * @type {HTMLElement}
+ */
 let containerPassword = document.getElementById('password__container');
+
+
+/**
+ * DOM element representing the feedback message for incorrect password input.
+ * @type {HTMLElement}
+ */
 let feedbackPassword = document.getElementById('form__wrongPassword__message');
 
+
+/**
+ * Array of color codes representing user avatar colors.
+ * @type {string[]}
+ */
 const userColors = [
     '#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', '#00BEE8', '#1FD7C1', '#FF745E', '#FFA35E', '#FC71FF',
     '#FFC701', '#0038FF', '#C3FF2B', '#FFE62B', '#FF4646', '#FFBB2B',
 ]
 
 
-
-
-
-
 /**
+ * Initializes the sign-up page by performing necessary actions.
  * 
- * Initializes-function for summary.html 
- * 
-*/
-function initSignUp() {
+ * Calls functions to change password icons for password fields,
+ * disable the sign-up button if the form is empty,
+ * and delete any messages indicating that passwords do not match.
+ */
+async function initSignUp() {
+    await getDataFromFirebase();
     changePasswordIcon('password');
     changePasswordIcon('password__confirm');
     disableSignupButtonIfFormIsEmpty();
     deleteMessageThatPasswordsDontMatch();
 }
-
-
-
-
-
-
-/* ####################################################################################################################################    */
-/* ---------  Effects --------- */
-/* allows to check and uncheck the checkbox */
-/* clicking on the bluw arrow redirects back to last visited page */
-/* show password and toggle icon */
-/* disable login button until form is filled */
-/* ####################################################################################################################################    */
-
-
-
 
 
 /**
@@ -69,7 +71,6 @@ function checkIfCheckBoxIsClicked(checkbox) {
  * and toggles its state between checked and unchecked. It also updates the `src` attribute of the
  * checkbox image to reflect the new state.
  *
- * @function checkBoxClicked
  * @returns {void} This function does not return a value.
  */
 function checkBoxClicked() {
@@ -79,7 +80,6 @@ function checkBoxClicked() {
         ? './assets/img/icons_signup/checkbox_unchecked.png' 
         : './assets/img/icons_signup/checkbox_checked.png';
     checkbox.dataset.checked = isChecked ? 'false' : 'true';
-
     disableSignupButtonIfFormIsEmpty();
 }
 
@@ -95,6 +95,11 @@ function goBack() {
 }
 
 
+/**
+ * Toggles the visibility of the password in the specified input field.
+ * 
+ * @param {string} element - The ID of the password input field.
+ */
 function showPassword(element) {
     const passwordField = document.getElementById(element);
     const passwordIcon = document.getElementById(element+'__icon');
@@ -106,6 +111,11 @@ function showPassword(element) {
 }
 
 
+/**
+ * Updates the password icon based on the content of the specified input field.
+ * 
+ * @param {string} element - The ID of the password input field.
+ */
 function changePasswordIcon(element) {
     const passwordField = document.getElementById(element);
     const passwordIcon = document.getElementById(element+'__icon');
@@ -116,110 +126,195 @@ function changePasswordIcon(element) {
 }
 
 
-
+/**
+ * Disables the sign-up button if any of the required form fields are empty or the checkbox is not checked.
+ * 
+ * @returns {void}
+ */
 function disableSignupButtonIfFormIsEmpty() {
-    let button = document.getElementById('btn__signUp');
-    const name = document.getElementById('name').value.length
-    const email = document.getElementById('email').value.length
-    const password = document.getElementById('password').value.length
-    const passwordConfirm = document.getElementById('password__confirm').value.length
+    const button = document.getElementById('btn__signUp');
+    const name = document.getElementById('name').value.trim().length;
+    const email = document.getElementById('email').value.trim().length;
+    const password = document.getElementById('password').value.trim().length;
+    const passwordConfirm = document.getElementById('password__confirm').value.trim().length;
     const checkbox = document.getElementById('checkbox');
     const isChecked = checkIfCheckBoxIsClicked(checkbox);
-    if (email == 0 || password == 0 || name == 0 || passwordConfirm == 0 || !isChecked) {
-        button.disabled = true;
-        button.classList.add('btn__disabled');
-    } else {
-        button.disabled = false;
-        button.classList.remove('btn__disabled')
-    }
+    const isEmpty = name === 0 || email === 0 || password === 0 || passwordConfirm === 0 || !isChecked;
+    button.disabled = isEmpty;
+    button.classList.toggle('btn__disabled', isEmpty);
 }
 
 
-
-
-/* ####################################################################################################################################    */
-/* ---------  SIGNUP PROCEDURE --------- */
-/* ####################################################################################################################################    */
-
-
+/**
+ * Prevents the default form submission action and invokes the sign-up process.
+ * 
+ * @param {Event} event - The event object representing the form submission.
+ */
 function signUpSubmit(event) {
     event.preventDefault();
     signUp();
 }
 
 
-
-function signUp() {
-    const name = document.getElementById('name').value
-    const email = document.getElementById('email').value
-    const password = document.getElementById('password').value
-    const passwordConfirm = document.getElementById('password__confirm').value
-    const passwordsMatching = checkIfPasswordsAreMatching(password, passwordConfirm);
-
-    if (!passwordsMatching) {
-        wrongPassword();
-    }
-
-    if (passwordsMatching) {
-
-        deleteMessageThatPasswordsDontMatch();
-
-        const date = new Date();
-        const newUserID = date.getTime();
-        const newUserColor = userColors[randomUserColors()];
-        const newUserInitials = createUserInitials(name);
-
-        const newUser = {
-            name : name,
-            email : email,
-            password : password,
-            phone: '',
-            color: newUserColor,
-            initials: newUserInitials,
-            id: newUserID,
-        }
-
-        const newContact = {
-            id : newUserID,
-            name : name,
-            email : email,
-            phone : '',
-            color : newUserColor,
-            initials : newUserInitials,
-        }
-
-        users.push(newUser);
-        contacts.push(newContact);
-
-        putData("/users", users);
-        putData("/contacts", contacts);
-        
-        clearSignUpForm();
-        successfullSignUp();
-        setTimeout(redirectToLogin, 1750);
-    
-    }
+/**
+ * Retrieves data from Firebase for tasks, users, and contacts.
+ * 
+ * Asynchronously retrieves data from Firebase for tasks, users, and contacts,
+ * ensuring each collection is populated and not empty.
+ * 
+ */
+async function getDataFromFirebase() {
+    tasks = await checkIfDatabaseIsEmpty("/tasks");
+    users = await checkIfDatabaseIsEmpty("/users");
+    contacts = await checkIfDatabaseIsEmpty("/contacts");
 }
 
 
+/**
+ * Checks if the database or specified path within the database is empty.
+ * 
+ * Asynchronously loads data from the specified path and returns a default
+ * value (tasksDummy) if the result is falsy (empty or undefined).
+ * 
+ * @async
+ * @function checkIfDatabaseIsEmpty
+ * @param {string} [path=""] - The path within the database to check for data.
+ * @returns {Promise<any>} A promise that resolves with the loaded data or tasksDummy if empty.
+ */
+const checkIfDatabaseIsEmpty = async (path = "") => {
+    const result = await loadData(path);
+    if (!result) {
+      console.warn("Datenbank bzw. angegebener Pfad innerhalb der Datenbank ist leer");
+      return tasksDummy;
+    }
+    return result;
+};
+
+
+/**
+ * Handles the sign-up process by collecting user input, validating passwords, creating a new user object,
+ * saving user data, and performing subsequent sign-up actions.
+ */
+function signUp() {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('password__confirm').value;
+    const passwordsMatching = checkIfPasswordsAreMatching(password, passwordConfirm);
+    if (!passwordsMatching) {
+        wrongPassword();
+        return;
+    }
+    const newUser = createNewUser(name, email, password);
+    const newContact = createNewContact(newUser);
+    saveUserData(newUser, newContact);
+    performSignUpActions();
+}
+
+
+/**
+ * Creates a new user object with the provided name, email, and password.
+ * Generates a unique user ID based on the current timestamp,
+ * assigns a random color from userColors array, and creates initials from the user's name.
+ * 
+ * @param {string} name - The name of the new user.
+ * @param {string} email - The email of the new user.
+ * @param {string} password - The password of the new user.
+ * @returns {object} The newly created user object.
+ */
+function createNewUser(name, email, password) {
+    const date = new Date();
+    const newUserID = date.getTime();
+    const newUserColor = userColors[randomUserColors()];
+    const newUserInitials = createUserInitials(name);
+    return {
+        name: name,
+        email: email,
+        password: password,
+        phone: '',
+        color: newUserColor,
+        initials: newUserInitials,
+        id: newUserID,
+    };
+}
+
+
+/**
+ * Creates a new contact object based on the provided user object.
+ * 
+ * @param {object} user - The user object containing user information.
+ * @returns {object} The newly created contact object.
+ */
+function createNewContact(user) {
+    return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: '',
+        color: user.color,
+        initials: user.initials,
+    };
+}
+
+
+/**
+ * Saves the new user and contact data to the database.
+ * 
+ * @param {object} newUser - The new user object to be added.
+ * @param {object} newContact - The new contact object to be added.
+ */
+function saveUserData(newUser, newContact) {
+    users.push(newUser);
+    contacts.push(newContact);
+    putData("/users", users);
+    putData("/contacts", contacts);
+}
+
+
+/**
+ * Performs actions after successful user sign-up:
+ * clears the sign-up form, displays a success message, and redirects to the login page after a delay.
+ */
+function performSignUpActions() {
+    clearSignUpForm();
+    successfullSignUp();
+    setTimeout(redirectToLogin, 1750);
+}
+
+
+/**
+ * Displays the sign-up success overlay by removing the 'd-none' class.
+ */
 function successfullSignUp() {
     const element = document.getElementById('signup__overlay');
     element.classList.remove('d-none');
 }
 
 
+/**
+ * Redirects the user to the login.html page.
+ */
 function redirectToLogin() {
     window.location.href = 'login.html';
 }
 
 
-
+/**
+ * Checks if the given passwords match.
+ * 
+ * @param {string} password - The first password.
+ * @param {string} passwordConfirm - The second password to confirm against the first.
+ * @returns {boolean} True if passwords match, false otherwise.
+ */
 function checkIfPasswordsAreMatching(password, passwordConfirm) {
     const check = password === passwordConfirm;
     return check;
 }
 
 
+/**
+ * Clears the input fields of the sign-up form.
+ */
 function clearSignUpForm() {
     document.getElementById('name').value = '';
     document.getElementById('email').value = '';
@@ -228,18 +323,29 @@ function clearSignUpForm() {
 }
 
 
+/**
+ * Displays an error message indicating that the entered passwords don't match.
+ */
 function wrongPassword() {
     containerPassword.classList.add('wrongPassword');
     feedbackPassword.innerHTML = `Ups! Your passwords don't match!`;
 }
 
+
+/**
+ * Clears the error message indicating that the entered passwords don't match.
+ */
 function deleteMessageThatPasswordsDontMatch() {
     containerPassword.classList.remove('wrongPassword');
     feedbackPassword.innerHTML = '';
 }
 
 
-
+/**
+ * Generates a random index to pick a color from the userColors array.
+ *
+ * @returns {number} Random index within the bounds of the userColors array.
+ */
 function randomUserColors() {
     const amount = userColors.length;
     const randomColor = Math.floor(Math.random() * (amount + 1));
@@ -247,13 +353,16 @@ function randomUserColors() {
 }
 
 
+/**
+ * Creates initials from the given name.
+ *
+ * @param {string} name - The full name to create initials from.
+ * @returns {string} Initials generated from the first letters of each word in the name.
+ */
 function createUserInitials(name) {
     const names = name.split(' ');
     const firstNameInitial = names[0].charAt(0).toUpperCase();
     const lastNameInitial = names.length > 1 ? names[names.length - 1].charAt(0).toUpperCase() : '';
     return firstNameInitial + lastNameInitial;
 }
-
-
-
 
