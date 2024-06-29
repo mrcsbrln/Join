@@ -1,13 +1,6 @@
 "use strict";
 
 
-// global variables  : by Meik 
-// const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
-
-
-
-
-
 /**
  * 
  * Initializes-function for summary.html 
@@ -72,13 +65,14 @@ async function includeHTML() {
 }
 
 
-
-
-
-
-/* -----------   Session Storage & globle variable : by Meik   -------------  */
-
-
+/**
+ * Default user object template.
+ * 
+ * Represents a default user object with empty fields.
+ * 
+ * @constant
+ * @type {object}
+ */
 const defaultUser = {
     name: '',
     email: '',
@@ -89,52 +83,51 @@ const defaultUser = {
 };
 
 
-
-// check if in session storage already
+/**
+ * Loads the current user object from session storage.
+ * 
+ * Retrieves the current user object from session storage,
+ * parses it from JSON format, and returns it. If no user
+ * object is found in session storage, returns a default user.
+ * 
+ * @function loadCurrentUser
+ * @returns {object} The current user object loaded from session storage,
+ *                   or a default user object if not found.
+ */
 function loadCurrentUser() {
     const user = sessionStorage.getItem('currentUser');
     return user ? JSON.parse(user) : defaultUser;
 }
 
 
-// initialise globle variable
 let currentUser = loadCurrentUser();
-// console.log('main.js currentUser:', currentUser);
 
 
-
-
-
-
-
-/* -----------   Checks if currentUser exists in Session Storage, if not allows to automaticalle relocate to loginPage : by Meik   -------------  */
-/* if you wish to use it, you habe to manually call the function checkForCurrentUser() within your page  */
-
-// check if a currentUser exists
+/**
+ * Checks for the presence and validity of the current user in session storage.
+ * 
+ * Retrieves the user object from session storage and attempts to parse it from JSON.
+ * Logs a warning if no user object is found in session storage and returns false.
+ * Logs an error if JSON parsing fails and returns false.
+ * 
+ * @function checkForCurrentUser
+ * @returns {boolean} True if a valid user object exists in session storage, otherwise false.
+ */
 function checkForCurrentUser() {
-    const userString = sessionStorage.getItem('currentUser');
-
-    if (userString) {
-        try {
-            const userJSON = JSON.parse(userString);
-            // console.log('Current user found in Session Storage:', userJSON.name);
-			return true;
-            // redirectToSummary();
-        } catch (error) {
-            console.error('Error parsing JSON from Session Storage', error);
-			return false;
-            // redirectToLogin();
-        }
-    } else {
-        console.warn('No current existing - please log in or sign up');
-		return false;
-        // redirectToLogin();
-    }
+	const userString = sessionStorage.getItem('currentUser');
+	if (!userString) {
+	  console.warn('No current user exists - please log in or sign up');
+	  return false;
+	}
+	try {
+	  const userJSON = JSON.parse(userString);
+	  return true;
+	} catch (error) {
+	  console.error('Error parsing JSON from Session Storage', error);
+	  return false;
+	}
 }
-
-
-
-
+  
 
 /**
  * Redirects the browser to the login page.
@@ -164,25 +157,85 @@ function redirectToSummary() {
 }
 
 
+/**
+ * Loads data asynchronously from a specified path using fetch.
+ * 
+ * @async
+ * @function loadData
+ * @param {string} [path=""] - The path to fetch data from.
+ * @returns {Promise<any>} A promise that resolves with the fetched data as a JSON object.
+ */
+async function loadData(path="") {
+	let response = await fetch(BASE_URL + path + ".json");
+	let responseToJson = await response.json();
+	console.log(responseToJson);
+	return responseToJson;
+}
+
+
+/**
+ * Sends a PUT request to update data at a specified path using fetch.
+ * 
+ * @async
+ * @function putData
+ * @param {string} [path=""] - The path to send the PUT request to.
+ * @param {object} [data={}] - The data to be updated, provided as an object.
+ * @returns {Promise<any>} A promise that resolves with the JSON response data.
+ */
+async function putData(path="", data={}) {
+	let response = await fetch(BASE_URL + path + ".json", {
+		method: "PUT",
+		header: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data),
+	});
+	let responseToJson = await response.json();
+	return responseToJson;
+}
+
+
+/**
+ * Checks the orientation of the window and displays a warning if in landscape mode on small screens.
+ * 
+ * Retrieves the warning element by its ID ('landscapeWarning'). If the window width is less than 933 pixels,
+ * it checks if the window height is less than the window width to determine landscape orientation.
+ * If in landscape orientation, adds the 'visible' class to the warning element; otherwise, removes it.
+ * If the window width is 933 pixels or more, hides the warning by removing the 'visible' class.
+ */
+function checkOrientation() {
+    const warning = document.getElementById('landscapeWarning');
+    if ((window.innerWidth) < 933) {
+        if (window.innerHeight < window.innerWidth) {
+            warning.classList.add('visible');
+        } else {
+            warning.classList.remove('visible');
+        }
+    } else {
+        warning.classList.remove('visible');
+    }
+}
+
+  
+/**
+ * Adds event listeners for DOMContentLoaded, window load, and window resize events to invoke checkOrientation function.
+ * 
+ * Attaches event listeners to the document and window objects:
+ * - DOMContentLoaded: Ensures the initial HTML document has been completely loaded and parsed.
+ * - load: Fires when the whole page has loaded, including all dependent resources.
+ * - resize: Fires when the window size changes.
+ * Each event listener calls the checkOrientation function to handle orientation changes and display warnings accordingly.
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('load', checkOrientation);
+    window.addEventListener('resize', checkOrientation);
+});
 
 
 
 
-
-
-
-
-
-
-
-
-
+// const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
 /* ----------- Temporary contacts and tasks are initialised and set up here --------- */
-/* later we will get data from firebase realtime datebase  : by Meik  */
-
-
-// These are the signed up users, which can login with password and mail
-// if a new user signs up, the new user will be stored here
 let users = [
 	{
 	  "color": "#FF70AA",
@@ -232,9 +285,6 @@ let users = [
 ]
 
 
-// These are all known contacts which can be added to tasks
-// users are at the moment integrated into contacts
-// the id should be same as the position-no
 let contacts = [
 	{
 		"id" : 0,
@@ -320,8 +370,6 @@ let contacts = [
 ];
 
 
-// here you can find all existing tasks of the join canban board
-// 'assignedTo' links via arry to the id in contacts-array - the id should be same as the position-no
 let tasks = [
 	{
 		"id" : 0,
@@ -420,84 +468,3 @@ let tasks = [
 
 
 
-
-
-/* ####################################################################################################################################    */
-/* ---------  LOAD DATA FROM FIREBASE --------- */
-/* ####################################################################################################################################    */
-/* Paths:
-await loadData("/contacts");
-await loadData("/tasks");
-await loadData("/users");
-const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
-*/
-
-async function loadData(path="") {
-	let response = await fetch(BASE_URL + path + ".json");
-	let responseToJson = await response.json();
-	console.log(responseToJson);
-	return responseToJson;
-}
-
-
-
-
-
-
-/* ####################################################################################################################################    */
-/* ---------  PUT DATA TO DATABASE --------- */
-/* ####################################################################################################################################    */
-/* Paths:
-await loadData("/contacts");
-await loadData("/tasks");
-await loadData("/users");
-const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
-*/
-
-
-async function putData(path="", data={}) {
-	let response = await fetch(BASE_URL + path + ".json", {
-		method: "PUT",
-		header: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(data),
-	});
-	let responseToJson = await response.json();
-	return responseToJson;
-}
-
-
-
-
-
-/* ####################################################################################################################################    */
-/*     Landscape    */
-/* ####################################################################################################################################    */
-
-
-function checkOrientation() {
-    const warning = document.getElementById('landscapeWarning');
-
-    if ((window.innerWidth) < 933) {
-
-        if (window.innerHeight < window.innerWidth) {
-            // Landscape-Modus
-            warning.classList.add('visible');
-        } else {
-            // Portrait-Modus
-            warning.classList.remove('visible');
-        }
-    } else {
-        warning.classList.remove('visible');
-    }
-}
-
-
-// window.addEventListener('load', checkOrientation);
-// window.addEventListener('resize', checkOrientation);
-
-document.addEventListener('DOMContentLoaded', function() {
-    window.addEventListener('load', checkOrientation);
-    window.addEventListener('resize', checkOrientation);
-});
