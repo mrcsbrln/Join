@@ -331,6 +331,7 @@ button {
 }
 
 .addBtn {
+    transition: background-color 225ms ease, border 225ms ease;
     background-color: #2A3647;
     border-radius: 10px;
     padding: 8px 16px;
@@ -340,11 +341,8 @@ button {
     color: #ffffff;
     border: 1px solid #2A3647;
     display: inline-flex;
-    /* Für horizontales Ausrichten */
     align-items: center;
-    /* Vertikales Zentrieren des Inhalts */
     justify-content: center;
-    /* Horizontales Zentrieren des Inhalts */
 }
 
 .addBtnSmall {
@@ -409,7 +407,28 @@ button {
     gap: 16px;
     margin-top: 16px;
     min-height: 220px;
+}
 
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.statusHeader img{
+    transition: content 225ms;
+    cursor: pointer;
+}
+
+.statusHeader img:hover{
+    cursor: pointer;
+    content: url('/assets/img/icons/plusBtnblue.png')
+}
+
+.addBtn:hover {
+    transition: 225ms;
+    background-color: #29ABE2;
+    border: 1px solid #29ABE2;
+    
 }
 
 @media (max-width: 1024px) {
