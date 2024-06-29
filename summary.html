@@ -12,9 +12,11 @@
         <link rel="stylesheet" type="text/css" href="./styles/desktopHeader.css" />
         <link rel="stylesheet" type="text/css" href="./styles/desktopNav.css" />
         <link rel="stylesheet" type="text/css" href="./styles/summary.css" />
+        <link rel="stylesheet" type="text/css" href="./styles/summaryResponsive.css" />
         <script src="./script.js" type="text/javascript"></script>
         <script src="./js/desktopHeader.js" type="text/javascript"></script>
         <script src="./js/desktopNav.js" type="text/javascript"></script>
+        <script src="./js/summaryData.js" type="text/javascript"></script>
         <script src="./js/summary.js" type="text/javascript"></script>
         <title>Summary</title>
     </head>
@@ -23,8 +25,6 @@
         <div w3-include-html="assets/templates/desktopHeader.html"></div>
         <div w3-include-html="assets/templates/desktopNav.html"></div>
         <div class="main__container">
-
-
             <!-- GREETING Mobile Version -->
             <div id="overlay" class="summary__overlay__container d-none">
                 <div class="summary__greeting__container-mobile">
@@ -71,13 +71,12 @@
                         <div>
                             <a href="./board.html">
                                 <div class="summary__second__section">
-                                    
                                     <div class="second__section__first__tile">
                                         <div>
                                             <img class="summary__icons" src="./assets/img/icons_summary/urgent.png" alt="urgent" />
                                         </div>
                                         <div class="summary__tiles__text">
-                                            <div id="summary__urgent" class="summary__tiles__number">1</div>
+                                            <div id="summary__urgent" class="summary__tiles__number"></div>
                                             <div class="summary__text__middle">Urgent</div>
                                         </div>
                                     </div>
@@ -88,7 +87,6 @@
                                         <div id="summary__date" class="summary__deadline__date"></div>
                                         <div class="summary__deadline__text">Upcoming deadline</div>
                                     </div>
-                                    
                                 </div>
                             </a>
                         </div>
@@ -129,9 +127,6 @@
         <footer></footer>
 
         <!-- ---------- landscape ---------- -->
-        <div class="landscape-warning" id="landscapeWarning">
-            Bitte drehen Sie Ihr Gerät in den Hochformatmodus.
-        </div>
-
+        <div class="landscape-warning" id="landscapeWarning">Bitte drehen Sie Ihr Gerät in den Hochformatmodus.</div>
     </body>
 </html>

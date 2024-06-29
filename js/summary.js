@@ -1,46 +1,139 @@
 "use strict";
 
+
 const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
 currentUser = loadCurrentUser();
 
-// getDataFromFirebase().then(renderSummary);
 
 /**
  * Initializes the summary page by including HTML content and updating greeting text.
  * 
  * This function initializes the summary page by including HTML content using the includeHTML function
- * and updating the greeting text using the updateGreetingText function.
+ * and updating the greeting text using the updateGreetingText function, fetching data from realtime database and render the summary.html
  *
  */
 async function initSummary() {
-    includeHTML().then(() => {
-      highlightSummary();
-      updateHeaderProfileInitials();
-    })
-    checkForCurrentUser() ? checkForGreeting() : redirectToLogin();
-    await getDataFromFirebase();
-    renderSummary();
+  includeHTML().then(() => {
+    highlightSummary();
+    updateHeaderProfileInitials();
+  })
+  checkForCurrentUser() ? checkForGreeting() : redirectToLogin();
+  await getDataFromFirebase();
+  renderSummary();
 }
 
 
-
-function checkForGreeting() {
-  const greeting = sessionStorage.getItem('greeting');
-
-  if (!greeting) 
-      {
-      updateGreetingText();
-      setGreetingAnimation();
-      sessionStorage.setItem('greeting', true);
-      } else 
-      {
-          return;
-      }
-}
-
+/**
+ * Object mapping image IDs to their corresponding source paths for different states.
+ */
+const imgIdToSrcMap = {
+  summary__toDo: {
+    highlight: './assets/img/icons_summary/edit_light.png',
+    reset: './assets/img/icons_summary/edit_dark.png'
+  },
+  summary__done: {
+    highlight: './assets/img/icons_summary/done_light.png',
+    reset: './assets/img/icons_summary/done_dark.png'
+  }
+};
 
 
+/**
+ * Checks if the greeting has already been displayed in the session storage.
+ * If not, updates the greeting text, sets the greeting animation, and marks
+ * the greeting as displayed in the session storage.
+ */
+const checkForGreeting = () => {
+  if (sessionStorage.getItem('greeting')) return;
+  updateGreetingText();
+  setGreetingAnimation();
+  sessionStorage.setItem('greeting', 'true');
+};
 
+
+/**
+ * Changes the image source of an element based on a specified state, 
+ * if the window width is greater than 992 pixels.
+ * 
+ * @param {HTMLElement} element - The HTML element whose image source will be changed.
+ * @param {string} state - The state to set the image to ('highlight' or 'reset').
+ */
+const changeIconImage = (element, state) => {
+  if (window.innerWidth <= 992) return;
+  const img = element.querySelector('img');
+  const newSrc = imgIdToSrcMap[img?.id]?.[state];
+  if (newSrc) img.src = newSrc;
+};
+
+
+/**
+ * Clears the text content of multiple HTML elements.
+ * 
+ * @param {...HTMLElement} elements - The HTML elements whose text content will be cleared.
+ */
+const clearElementsText = (...elements) => {
+  elements.forEach(element => clearText(element));
+};
+
+
+/**
+ * Sets the text content of multiple HTML elements.
+ * 
+ * Calls functions to set greeting text and current user name for each element.
+ * 
+ * @param {...HTMLElement} elements - The HTML elements to set the text content.
+ */
+const setElementsText = (...elements) => {
+  elements.forEach(element => {
+    setGreetingText(element);
+    setCurrentUserName(element);
+  });
+};
+
+
+/**
+ * Updates greeting text and current user name for desktop and mobile views.
+ * 
+ * Clears and then sets the greeting text and current user name for both desktop
+ * and mobile elements.
+ */
+const updateGreetingText = () => {
+  const userName = document.getElementById('user__name');
+  const userNameMobile = document.getElementById('user__name-mobile');
+  const greetingText = document.getElementById('greeting__text');
+  const greetingTextMobile = document.getElementById('greeting__text-mobile');
+  clearElementsText(greetingText, greetingTextMobile, userName, userNameMobile);
+  setElementsText(greetingText, greetingTextMobile, userName, userNameMobile);
+};
+
+
+/**
+ * Checks if the database or specified path within the database is empty.
+ * 
+ * Asynchronously loads data from the specified path and returns a default
+ * value (tasksDummy) if the result is falsy (empty or undefined).
+ * 
+ * @async
+ * @function checkIfDatabaseIsEmpty
+ * @param {string} [path=""] - The path within the database to check for data.
+ * @returns {Promise<any>} A promise that resolves with the loaded data or tasksDummy if empty.
+ */
+const checkIfDatabaseIsEmpty = async (path = "") => {
+  const result = await loadData(path);
+  if (!result) {
+    console.warn("Datenbank bzw. angegebener Pfad innerhalb der Datenbank ist leer");
+    return tasksDummy;
+  }
+  return result;
+};
+
+
+/**
+ * Sets a greeting animation for mobile devices.
+ * 
+ * Shows and hides the overlay container to create a brief greeting animation 
+ * for mobile devices when the window width is less than 1220 pixels.
+ */
 function setGreetingAnimation() {
   const containerMobile = document.getElementById('overlay');
   if (window.innerWidth < 1220) {
@@ -48,10 +141,8 @@ function setGreetingAnimation() {
     setTimeout(function () {
       containerMobile.classList.add("d-none");
     }, 1800);
-    
   }
 }
-
 
 
 /**
@@ -81,33 +172,6 @@ async function includeHTML() {
 
 
 /**
- * Changes the source image of buttons based on the provided state.
- * 
- * @param {Element} element - The element containing the button image.
- * @param {string} state - The state indicating whether to highlight or reset the button.
- */
-function changeIconImage(element, state) {
-  if (window.innerWidth > 992) {
-    const img = element.querySelector('img');
-    const imgIdToSrcMap = {
-      summary__toDo: {
-        highlight: './assets/img/icons_summary/edit_light.png',
-        reset: './assets/img/icons_summary/edit_dark.png'
-      },
-      summary__done: {
-        highlight: './assets/img/icons_summary/done_light.png',
-        reset: './assets/img/icons_summary/done_dark.png'
-      }
-    };
-    const newSrc = imgIdToSrcMap[img.id]?.[state];
-    if (newSrc) {
-      img.src = newSrc;
-    }
-  }
-}
-
-
-/**
  * Changes the source image of buttons to a highlighted version.
  * 
  * @param {Element} element - The element containing the button image.
@@ -124,32 +188,6 @@ function changeIcon(element) {
  */
 function resetIcon(element) {
   changeIconImage(element, 'reset');
-}
-
-
-
-
-/**
- * Updates the greeting text based on the current user's name.
- * 
- * This function retrieves the current user information, clears the text content of
- * the greeting and user name elements, sets the appropriate greeting text based on
- * the time of the day, and updates the user name with the capitalized current user's name.
- *
- */
-function updateGreetingText() {
-    const userName = document.getElementById('user__name');
-    const userNameMobile = document.getElementById('user__name-mobile');
-    const greetingText = document.getElementById('greeting__text');
-    const greetingTextMobile = document.getElementById('greeting__text-mobile');
-    clearText(greetingText);
-    clearText(greetingTextMobile);
-    clearText(userName);
-    clearText(userNameMobile);
-    setGreetingText(greetingText);
-    setGreetingText(greetingTextMobile);
-    setCurrentUserName(userName);
-    setCurrentUserName(userNameMobile);
 }
 
 
@@ -191,6 +229,17 @@ function capitalizeFirstChar(string) {
 }
 
 
+/**
+ * Sets the current user's name in the provided HTML element.
+ * 
+ * If a currentUser object exists, sets the inner text of the userName element
+ * to the capitalized name of the currentUser.
+ * 
+ * @function setCurrentUserName
+ * @param {HTMLElement} userName - The HTML element where the user's name will be displayed.
+ * @param {object|null} currentUser - The current user object containing the user's details.
+ *                                   Must have a 'name' property.
+ */
 function setCurrentUserName(userName) {
   if (currentUser) {
     userName.innerText = capitalizeFirstChar(currentUser['name']);
@@ -198,6 +247,13 @@ function setCurrentUserName(userName) {
 }
 
 
+/**
+ * Retrieves data from Firebase for tasks, users, and contacts.
+ * 
+ * Asynchronously retrieves data from Firebase for tasks, users, and contacts,
+ * ensuring each collection is populated and not empty.
+ * 
+ */
 async function getDataFromFirebase() {
     tasks = await checkIfDatabaseIsEmpty("/tasks");
     users = await checkIfDatabaseIsEmpty("/users");
@@ -205,17 +261,14 @@ async function getDataFromFirebase() {
 }
 
 
-async function checkIfDatabaseIsEmpty(path="") {
-	let result = await loadData(path);
-	if (!result) {
-		console.warn("Datenbank bzw. angegebener Pfad innerhalb der Datenbank ist leer");
-		return tasksDummy;
-	} else {
-		return result;
-	}
-}
-
-
+/**
+ * Loads data asynchronously from a specified path using fetch.
+ * 
+ * @async
+ * @function loadData
+ * @param {string} [path=""] - The path to fetch data from.
+ * @returns {Promise<any>} A promise that resolves with the fetched data as a JSON object.
+ */
 async function loadData(path="") {
 	let response = await fetch(BASE_URL + path + ".json");
 	let responseToJson = await response.json();
@@ -223,6 +276,14 @@ async function loadData(path="") {
 }
 
 
+/**
+ * Renders summary data based on task criteria and counts.
+ * 
+ * Retrieves counts for tasks based on status ('toDo', 'done', 'inProgress', 'awaitingFeedback')
+ * and priority ('urgent'), then renders this data to corresponding summary elements.
+ * Additionally, renders the total number of tasks and urgent tasks nearest to their due dates.
+ * 
+ */
 function renderSummary() {
     const todo = countTasksByCriteria('status', 'toDo');
     const done = countTasksByCriteria('status', 'done');
@@ -240,30 +301,57 @@ function renderSummary() {
 }
 
 
+/**
+ * Counts the number of tasks that match a specified criteria and value.
+ * 
+ * @function countTasksByCriteria
+ * @param {string} criteria - The property of the task object to compare (e.g., 'status', 'priority').
+ * @param {string} value - The value to compare against (case insensitive).
+ * @returns {number} The count of tasks matching the criteria and value.
+ */
 function countTasksByCriteria(criteria, value) {
     return tasks.filter(task => task[criteria].toLowerCase() === value.toLowerCase()).length;
 }
 
 
+/**
+ * Renders a number to a summary element identified by its ID.
+ * 
+ * @function renderDataToSummary
+ * @param {string} id - The ID of the HTML element to render data into.
+ * @param {number} number - The number to render into the element.
+ */
 function renderDataToSummary(id, number) {
     let element = document.getElementById(id);
     element.innerText = `${number}`;
 }
 
 
+/**
+ * Retrieves the most urgent task based on priority and due date.
+ * 
+ * @function getMostUrgentTask
+ * @param {Array<object>} tasks - An array of task objects to search through.
+ * @returns {object|null} The most urgent task object or null if no urgent tasks exist.
+ */
 function getMostUrgentTask(tasks) {
     const urgentTasks = tasks.filter(task => task.priority.toLowerCase() === 'urgent');
-
     if (urgentTasks.length === 0) {
         return null;
     }
-
     return urgentTasks.reduce((earliestTask, currentTask) => {
         return new Date(currentTask.dueDate) < new Date(earliestTask.dueDate) ? currentTask : earliestTask;
     });
 }
 
 
+/**
+ * Formats a date string into a localized date format.
+ * 
+ * @function formatDateString
+ * @param {string} dateString - The date string to format.
+ * @returns {string} The formatted date string in the format 'Month Day, Year' (e.g., 'January 1, 2024').
+ */
 function formatDateString(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const date = new Date(dateString);
@@ -271,6 +359,16 @@ function formatDateString(dateString) {
 }
 
 
+/**
+ * Renders the nearest due date of the most urgent task to the summary element.
+ * 
+ * Retrieves the most urgent task from the tasks array, formats its due date,
+ * and renders the formatted date to the summary element with ID 'summary__date'.
+ * If no urgent tasks are found, renders 'no urgent tasks' to the summary element
+ * and logs a message to the console.
+ * 
+ * @function renderUrgentTasksNearestDueDate
+ */
 function renderUrgentTasksNearestDueDate() {
     const mostUrgentTask = getMostUrgentTask(tasks);
     if (mostUrgentTask) {
@@ -281,56 +379,3 @@ function renderUrgentTasksNearestDueDate() {
         console.log('No urgent tasks found.');
     }
 }
-
-
-
-// tesksDummy is existing while testing the application so checkIfDatabaseIsEmpty() has a return-value, if firebase is empty
-let tasksDummy = [
-	{
-		"id" : 0,
-		"title" : "Dummy 0",
-		"description" : "Build start page with recipe recommendation.",
-		"category" : "User Story",
-		"status" : "toDo",
-		"dueDate" : "2024-07-31",
-		"priority" : "medium",
-		"subTasks" : [
-			{
-				"id" : 0,
-				"content" : "Implement Recipe Recommendation",
-				"completet" : true,
-			},
-			{
-				"id" : 1,
-				"content" : "Start Page Layout",
-				"completet" : false,
-			},
-		],
-		"assignedTo" : [0,5,6],
-	},
-
-	{
-		"id" : 1,
-		"title" : "Dummy 1",
-		"description" : "Define CSS naming conventions and structure",
-		"category" : "Technical Tasks",
-		"status" : "inProgress",
-		"dueDate" : "2024-07-31",
-		"priority" : "urgent",
-		"subTasks" : [
-			{
-				"id" : 0,
-				"content" : "Establish CSS Methodology",
-				"completet" : true,
-			},
-			{
-				"id" : 1,
-				"content" : "Setup Base Styles",
-				"completet" : true,
-			},
-		],
-
-		"assignedTo" : [2,7],
-	},
-
-]
