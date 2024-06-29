@@ -22,9 +22,6 @@
     <body onload="initSummary()">
         <div w3-include-html="assets/templates/desktopHeader.html"></div>
         <div w3-include-html="assets/templates/desktopNav.html"></div>
-
-        <!-- <main> -->
-
         <div class="main__container">
 
 
@@ -52,9 +49,8 @@
                             <a href="./board.html">
                                 <div class="summary__two_tiles" onmouseover="changeIcon(this)" onmouseout="resetIcon(this)">
                                     <img class="summary__icons" id="summary__toDo" src="./assets/img/icons_summary/edit_dark.png" alt="edit" />
-                                    <!-- <div class="edit_img"></div> -->
                                     <div class="summary__tiles__text">
-                                        <div id="summary__todo" class="summary__tiles__number">1</div>
+                                        <div id="summary__todo" class="summary__tiles__number"></div>
                                         <div class="summary__text__top-and-bottom">To-do</div>
                                     </div>
                                 </div>
@@ -62,10 +58,9 @@
 
                             <a href="./board.html">
                                 <div class="summary__two_tiles" onmouseover="changeIcon(this)" onmouseout="resetIcon(this)">
-                                    <!-- <img id="summary__done" src="./assets/img/icons/icons_summary/done_dark.png" alt="check"> -->
                                     <img class="summary__icons" id="summary__done" src="./assets/img/icons_summary/done_dark.png" alt="check" />
                                     <div class="summary__tiles__text">
-                                        <div id="summary__done" class="summary__tiles__number">1</div>
+                                        <div id="summary__done" class="summary__tiles__number"></div>
                                         <div class="summary__text__top-and-bottom">Done</div>
                                     </div>
                                 </div>
@@ -90,7 +85,7 @@
                                     <img class="summary__tiles__seperator" src="./assets/img/icons_summary/seperator_grey.png" alt="seperator" />
 
                                     <div>
-                                        <div id="summary__date" class="summary__deadline__date">October 16, 2022</div>
+                                        <div id="summary__date" class="summary__deadline__date"></div>
                                         <div class="summary__deadline__text">Upcoming deadline</div>
                                     </div>
                                     
@@ -102,21 +97,21 @@
                         <div class="summary__third__section">
                             <a href="./board.html">
                                 <div class="summary__third__section-tiles">
-                                    <div id="summary__tasks" class="summary__tiles__number">5</div>
+                                    <div id="summary__tasks" class="summary__tiles__number"></div>
                                     <div class="summary__text__top-and-bottom">Tasks in<br />Board</div>
                                 </div>
                             </a>
 
                             <a href="./board.html">
                                 <div class="summary__third__section-tiles">
-                                    <div id="summary__progress" class="summary__tiles__number">2</div>
+                                    <div id="summary__progress" class="summary__tiles__number"></div>
                                     <div class="summary__text__top-and-bottom">Tasks in<br />Progress</div>
                                 </div>
                             </a>
 
                             <a href="./board.html">
                                 <div class="summary__third__section-tiles">
-                                    <div id="summary__feedback" class="summary__tiles__number">2</div>
+                                    <div id="summary__feedback" class="summary__tiles__number"></div>
                                     <div class="summary__text__top-and-bottom summary__text__top-and-bottom-text_align">Awaiting<br />Feedback</div>
                                 </div>
                             </a>
@@ -130,9 +125,6 @@
                 <div id="user__name" class="summary__greeting__name"></div>
             </div>
         </div>
-
-        <!-- </main> -->
-
 
         <footer></footer>
 

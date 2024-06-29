@@ -1,5 +1,10 @@
 "use strict";
 
+const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
+currentUser = loadCurrentUser();
+
+// getDataFromFirebase().then(renderSummary);
+
 /**
  * Initializes the summary page by including HTML content and updating greeting text.
  * 
@@ -7,23 +12,14 @@
  * and updating the greeting text using the updateGreetingText function.
  *
  */
-function initSummary() {
+async function initSummary() {
     includeHTML().then(() => {
       highlightSummary();
       updateHeaderProfileInitials();
     })
-
-    // checks if a currentUser is existing in session storage. 
-    // if true, nothing happens. 
-    // if false, the user gets rediurected to the login.html
     checkForCurrentUser() ? checkForGreeting() : redirectToLogin();
-
-    // checks if greeting = true in session storage. 
-    // if true, nothing happens. No more greetings
-    // if false, the user gets greeted
-    // checkForGreeting();
-    
-
+    await getDataFromFirebase();
+    renderSummary();
 }
 
 
@@ -47,11 +43,6 @@ function checkForGreeting() {
 
 function setGreetingAnimation() {
   const containerMobile = document.getElementById('overlay');
-
-  // check, if already greeted!
-  // if YES, dont show greeting again!
-  // if NO, show greeting below! & set greeting to yes!
-
   if (window.innerWidth < 1220) {
     containerMobile.classList.remove("d-none");
     setTimeout(function () {
@@ -59,7 +50,6 @@ function setGreetingAnimation() {
     }, 1800);
     
   }
-  
 }
 
 
@@ -88,14 +78,6 @@ async function includeHTML() {
     }
   }
 }
-
-
-
-
-/* ####################################################################################################################################    */
-/* ---------  Hover Effect with icon change --------- */
-/* ####################################################################################################################################    */
-
 
 
 /**
@@ -145,21 +127,6 @@ function resetIcon(element) {
 }
 
 
-
-
-
-
-
-/* ####################################################################################################################################    */
-/* ---------  Set Greeting Text & loading currentUser from sessionStorage --------- */
-/* ####################################################################################################################################    */
-
-
-
-// loading currentUser-data from session storage
-// this is not nessesary, because currentUser is already defined f.e. in script.js,
-// but for savety we can load it here 'again'
-currentUser = loadCurrentUser();
 
 
 /**
@@ -213,7 +180,6 @@ function setGreetingText(greetingText) {
 }
 
 
-
 /**
  * Capitalizes the first character of a string.
  * 
@@ -232,27 +198,10 @@ function setCurrentUserName(userName) {
 }
 
 
-
-
-/* ####################################################################################################################################    */
-/* ---------  load tasks-datas from firebase realtime database  --------- */
-/* ####################################################################################################################################    */
-
-
-// function for fetching data from firebase
-// while not existing we will take the data provided in script.js
-// object called tasks
-// else we will load data from firebase realtime database starting with calling getDataFromFirebase()
-
-// this const should be declared in script.js - but some memeber have it in their .js, we need to fix this
-const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
-
-
-// starts the fetch prozess. After data are fetched, the summary will get rendered with this fetched data. So the 'than' is mandatory
-getDataFromFirebase().then(renderSummary);
-
 async function getDataFromFirebase() {
     tasks = await checkIfDatabaseIsEmpty("/tasks");
+    users = await checkIfDatabaseIsEmpty("/users");
+    contacts = await checkIfDatabaseIsEmpty("/contacts");
 }
 
 
@@ -274,27 +223,19 @@ async function loadData(path="") {
 }
 
 
-
-
-
-/* ####################################################################################################################################    */
-/* ---------  render Date from database to summary.html --------- */
-/* ####################################################################################################################################    */
-
-
-
-
 function renderSummary() {
     const todo = countTasksByCriteria('status', 'toDo');
     const done = countTasksByCriteria('status', 'done');
     const progress = countTasksByCriteria('status', 'inProgress');
     const awaitingFeedback = countTasksByCriteria('status', 'awaitingFeedback');
     const urgent = countTasksByCriteria('priority', 'urgent');
+    const tasksAmount = tasks.length;
     renderDataToSummary("summary__todo", todo);
     renderDataToSummary("summary__done", done);
     renderDataToSummary("summary__progress", progress);
     renderDataToSummary("summary__feedback", awaitingFeedback);
     renderDataToSummary("summary__urgent", urgent);
+    renderDataToSummary("summary__tasks", tasksAmount);
     renderUrgentTasksNearestDueDate();
 }
 
@@ -341,19 +282,6 @@ function renderUrgentTasksNearestDueDate() {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////////////////////////////////////////////////
 
 
 // tesksDummy is existing while testing the application so checkIfDatabaseIsEmpty() has a return-value, if firebase is empty

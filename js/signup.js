@@ -1,11 +1,7 @@
 "use strict";
 
 
-// reset data in firebase realtime database using this
-// https://meik-behr.developerakademie.net/m10_join_database/index.html
-
-
-
+const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
 
 
 let containerPassword = document.getElementById('password__container');
@@ -126,7 +122,6 @@ function disableSignupButtonIfFormIsEmpty() {
     const name = document.getElementById('name').value.length
     const email = document.getElementById('email').value.length
     const password = document.getElementById('password').value.length
-    // password__confirm
     const passwordConfirm = document.getElementById('password__confirm').value.length
     const checkbox = document.getElementById('checkbox');
     const isChecked = checkIfCheckBoxIsClicked(checkbox);
@@ -154,7 +149,6 @@ function signUpSubmit(event) {
 
 
 
-// should be async function if server is involved
 function signUp() {
     const name = document.getElementById('name').value
     const email = document.getElementById('email').value
@@ -162,10 +156,6 @@ function signUp() {
     const passwordConfirm = document.getElementById('password__confirm').value
     const passwordsMatching = checkIfPasswordsAreMatching(password, passwordConfirm);
 
-    
-
-
-    // check if password and passwordConfirm matching.
     if (!passwordsMatching) {
         wrongPassword();
     }
@@ -189,11 +179,20 @@ function signUp() {
             id: newUserID,
         }
 
+        const newContact = {
+            id : newUserID,
+            name : name,
+            email : email,
+            phone : '',
+            color : newUserColor,
+            initials : newUserInitials,
+        }
 
-        // here: push to global variable - later we should push it to the database!
         users.push(newUser);
+        contacts.push(newContact);
 
         putData("/users", users);
+        putData("/contacts", contacts);
         
         clearSignUpForm();
         successfullSignUp();
@@ -214,8 +213,6 @@ function redirectToLogin() {
 }
 
 
-
-/////////////////////////////////////////////////////////////////////////////////
 
 function checkIfPasswordsAreMatching(password, passwordConfirm) {
     const check = password === passwordConfirm;
@@ -260,24 +257,3 @@ function createUserInitials(name) {
 
 
 
-
-/* ####################################################################################################################################    */
-/* ---------  PUT DATA TO DATABASE --------- */
-/* ####################################################################################################################################    */
-
-
-const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
-
-// putData("/users", users);
-
-async function putData(path="", data={}) {
-	let response = await fetch(BASE_URL + path + ".json", {
-		method: "PUT",
-		header: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(data),
-	});
-	let responseToJson = await response.json();
-	return responseToJson;
-}
