@@ -31,12 +31,7 @@ function renderContactsEdit(i, filteredContacts = null) {
 
     const contactsToRender = filteredContacts ? filteredContacts : contacts;
 
-    if (!tasks[i]) {
-        return;
-    }
-    if (!tasks[i].assignedTo || typeof tasks[i].assignedTo.includes !== 'function') {
-        return;
-    }
+
     contactsToRender.forEach(contact => {
         const isAssigned = tasks[i].assignedTo.includes(contact.id);
         const checkedClass = isAssigned ? 'checked' : '';
@@ -44,32 +39,75 @@ function renderContactsEdit(i, filteredContacts = null) {
         listContacts.innerHTML += renderContactsEditHtml(contact, isAssigned, checkedClass);
     });
 
-    selectListItemsEdit(i);
+    selectListItemsEdit(i,contactsToRender);
+}
+
+function filterContactEdit(i) {
+    const searchInput = document.getElementById('searchContacts').value.toLowerCase();
+    const filteredContacts = contacts.filter(contact =>
+        contact.name.toLowerCase().startsWith(searchInput)
+    );
+    document.getElementById('dropDownContact').classList.add('show-menu');
+    renderContactsEdit(i, filteredContacts);
+
 }
 
 
 
-function selectListItemsEdit(i) {
-    const listItems = document.querySelectorAll('.contactListItems');
-    listItems.forEach((item, j) => {
-        item.addEventListener('click', () => {
-            const img = item.querySelector('.checkbox');
-            item.classList.toggle('checked');
-            img.classList.toggle('checked');
-            const contactId = j;
-            if (item.classList.contains('checked')) {
-                taskEditAsiggnedTo.push(contactId);
-                img.src = './assets/img/icons_add_task/checkedbox.svg';
-            } else {
-                const indexToRemove = taskEditAsiggnedTo.indexOf(contactId);
-                if (indexToRemove !== -1) {
-                    taskEditAsiggnedTo.splice(indexToRemove, 1);
-                }
-                img.src = './assets/img/icons_add_task/checkbox.svg';
-            }
-            renderSelectedContactsEdit();
-        });
+function toggleSelection(item, contactId) {
+    const img = item.querySelector('.checkbox');
+    item.classList.toggle('checked');
+    img.classList.toggle('checked');
+
+    if (item.classList.contains('checked')) {
+        if (!taskEditAsiggnedTo.includes(contactId)) {
+            taskEditAsiggnedTo.push(contactId);
+        }
+        img.src = './assets/img/icons_add_task/checkedbox.svg';
+    } else {
+        const indexToRemove = taskEditAsiggnedTo.indexOf(contactId);
+        if (indexToRemove !== -1) {
+            taskEditAsiggnedTo.splice(indexToRemove, 1);
+        }
+        img.src = './assets/img/icons_add_task/checkbox.svg';
+    }
+    renderSelectedContactsEdit();
+}
+
+
+function syncCheckboxState(item, contactId) {
+    const img = item.querySelector('.checkbox');
+    if (taskEditAsiggnedTo.includes(contactId)) {
+        item.classList.add('checked');
+        img.classList.add('checked');
+        img.src = './assets/img/icons_add_task/checkedbox.svg';
+    } else {
+        item.classList.remove('checked');
+        img.classList.remove('checked');
+        img.src = './assets/img/icons_add_task/checkbox.svg';
+    }
+}
+
+
+function setupClickListener(item, contactId) {
+    item.addEventListener('click', () => {
+        toggleSelection(item, contactId);
     });
+}
+
+
+function updateCheckboxState(listItems) {
+    listItems.forEach((item) => {
+        const contactId = parseInt(item.getAttribute('data-contact-id'), 10);
+        syncCheckboxState(item, contactId);
+        setupClickListener(item, contactId);
+    });
+}
+
+
+function selectListItemsEdit(i, filteredContacts) {
+    const listItems = document.querySelectorAll('.contactListItems');
+    updateCheckboxState(listItems);
 }
 
 function renderSelectedContactsEdit() {
@@ -149,6 +187,7 @@ function renderEditSubtasks() {
         subtasksList.innerHTML += renderEditSubtasksUneditedHtml(item, index);
     });
     subTaskEdit();
+    eventEnterSubtaskEdit();
 }
 
 function subTaskEdit() {
@@ -213,6 +252,22 @@ function pushSubtaskEdit() {
     }
 }
 
+function eventEnterSubtaskEdit() {
+    const subtaskInput = document.getElementById('subtaskInput');
+    const addButton = document.getElementById('pushSubtaskEditBtn');
+    subtaskInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            pushSubtaskEdit();
+        }
+    });
+    if (addButton) {
+        addButton.addEventListener('click', function () {
+            pushSubtaskEdit();
+        });
+    }
+}
+
 function hideInputTools() {
     document.getElementById('addSubtaskBtn').classList.remove('hidden');
     document.getElementById('cancelDiv').classList.remove('show');
@@ -226,31 +281,27 @@ function emptyInput() {
 function showDropdown() {
     const dropdown = document.getElementById('dropDownContact');
     const searchInput = document.getElementById('searchContacts');
-
-    if (dropdown) {
-        // Toggle 'show-menu' Klasse beim Klick auf das Dropdown-Element
-        dropdown.classList.toggle('show-menu');
-    }
-
-    if (searchInput) {
-        // Sicherstellen, dass das Dropdown-Menü offen bleibt, wenn das Eingabefeld den Fokus hat
-        searchInput.addEventListener('focus', () => {
-            if (!dropdown.classList.contains('show-menu')) {
-                dropdown.classList.add('show-menu');
-            }
-        });
-    }
+    dropdown.classList.toggle('show-menu');
 }
 
-function filterContactEdit() {
-    const searchInput = document.getElementById('searchContacts').value.toLowerCase();
-    const filteredContacts = contacts.filter(contact =>
-        contact.name.toLowerCase().startsWith(searchInput)
-    );
-    document.getElementById('dropDownContact').classList.add('show-menu');
-    renderContactsEdit(0, filteredContacts);
-    
+function closeContactListEdit() {
+    document.getElementById('dropDownContact').classList.remove('show-menu');
 }
+
+
+function closeContactListEditOnOutsideClick() {
+    document.addEventListener('click', function (event) {
+        const selectBtnContainer = document.getElementById('dropDownContact');
+        const listItemsContainer = document.getElementById('listContacts');
+
+        // Check if selectBtnContainer or listItemsContainer is null before using .contains()
+        if (selectBtnContainer && listItemsContainer &&
+            !selectBtnContainer.contains(event.target) && !listItemsContainer.contains(event.target)) {
+            closeContactListEdit();
+        }
+    });
+}
+
 
 /**
  * Renders badges for assigned contacts in the edit card interface.

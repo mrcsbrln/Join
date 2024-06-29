@@ -184,7 +184,7 @@ function renderCardEditHtml(i) {
         <p class="cardTextGrey">Assigned to</p>
         <div class="dropdown-container">
             <div onclick="showDropdown()" id="dropDownContact" class="select-btn">
-                <input onkeyup="filterContactEdit()" id="searchContacts" class="select-btn-input selectBtnIn" type="text" Placeholder="Select contacts to assign">
+                <input onkeyup="filterContactEdit(${i})" id="searchContacts" class="select-btn-input selectBtnIn" type="text" Placeholder="Select contacts to assign">
                 <span class="arrow-down">
                     <img src="./assets/img/icons_add_task/chevron.svg" alt="">
                 </span>
@@ -209,7 +209,7 @@ function renderCardEditHtml(i) {
                     <img onclick="emptyInput()" src="./assets/img/icons_add_task/subtask-close.svg" alt="">
                 </div>
                 <div class="subtask-divider"></div>
-                    <div onclick="pushSubtaskEdit()" class="subtask-check subtaskChekEdit">
+                    <div id="pushSubtaskEditBtn" class="subtask-check subtaskChekEdit">
                         <img src="./assets/img/icons_add_task/subtask-check.svg" alt="">
                     </div>
                 </div>
@@ -256,7 +256,7 @@ function renderEditSubtasksUneditedHtml(item, index) {
 }
 
 function renderContactsEditHtml(contact, isAssigned, checkedClass) {
-    return ` <li class="list-item assigned-to contactListItems ${checkedClass}">
+    return ` <li class="list-item assigned-to contactListItems ${checkedClass}"  data-contact-id="${contact.id}">
                 <div class="list-item-name">
                     <div class="cicle" style="background-color: ${contact.color}">${contact.initials}</div>
                     <span>${contact.name}</span>

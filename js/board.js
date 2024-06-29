@@ -1,41 +1,27 @@
 
-let draggedItemId = "";
-let minDate = "";
-let actSubtasks = [];
-let actAssignedTo = [];
-let taskEditAsiggnedTo = [];
-let actTaskPrio = "";
-let actStatus = "";
-let svgMappingsEdit = {
-    'urgent': 'assets/img/icons_add_task/urgent.svg',
-    'urgent-active': 'assets/img/icons_add_task/urgent-white.svg',
-    'medium': 'assets/img/icons_add_task/medium.svg',
-    'medium-active': 'assets/img/icons_add_task/medium-white.svg',
-    'low': 'assets/img/icons_add_task/low.svg',
-    'low-active': 'assets/img/icons_add_task/low-white.svg'
-};
-
-const statusLabels = {
-    toDo: 'To Do',
-    inProgress: 'In Progress',
-    done: 'Done',
-    awaitingFeedback: 'Awaiting Feedback'
-};
-
 /**
- * init function to render all Cards and highlight the boards Button on the Side Navigation
+ * Initializes the board by loading tasks and contacts data, and setting up UI interactions.
+ * It calls various functions to render cards, initialize task addition, and manage UI elements.
  */
 async function initBoard() {
+    
     await includeHTML();
+    checkForCurrentUser() ? "": redirectToLogin();
     let taskData = await loadData("/tasks")
     tasks = taskData;
     tasks = tasks.filter(task => task !== null);
     let contactsData = await loadData("/contacts")
     contacts = contactsData;
     contacts = contacts.filter(contact => contact !== null);
+    closeContactListEditOnOutsideClick();
     initAddTaskBoard();
 }
 
+/**
+ * Initializes the addition of tasks to the board. It highlights the board, renders cards,
+ * updates the header profile initials, and sets up various UI interactions such as menus,
+ * buttons, and form behaviors.
+ */
 function initAddTaskBoard() {
     highlightBoard();
     renderCards();
@@ -55,8 +41,6 @@ function initAddTaskBoard() {
     preventDefaultValidation();
     filterContacts();
 }
-
-
 
 /**
  * Retrieves the input value from the search bar and triggers the searchTasks function.
@@ -96,6 +80,7 @@ function renderCards(filteredTasks = null) {
     });
     checkContainerTodo();
 }
+
 /**
  * Checks if the 'To Do' container is empty and toggles the visibility of the empty task message accordingly. 
  * Additionally, calls the 'checkContainerInProgress' function 
@@ -134,32 +119,38 @@ function checkContainerDone() {
     document.getElementById('emptyTaskDone').classList.toggle('hidden', container.innerHTML.trim() !== '');
 }
 
-
-
-
-
+/**
+ * Renders the task card HTML based on the task object.
+ */
 function updateTaskDisplay() {
     renderCards();
 }
 
+/**
+ * Updates the properties of a task object at the specified index in the global 'tasks' array.
+ *
+ * @param {number} i - The index of the task in the 'tasks' array to update.
+ */
 function saveEdit(i) {
-    // Update the specific task object with new values from the form
     tasks[i].assignedTo = taskEditAsiggnedTo;
     tasks[i].title = document.getElementById('editedTitle').value;
     tasks[i].description = document.getElementById('editedDescription').value;
     tasks[i].dueDate = document.getElementById('editedDate').value;
     tasks[i].subTasks = actSubtasks;
     tasks[i].priority = actTaskPrio;
-
-    // Reset temporary variables and update UI
     actSubtasks = [];
     closeDialogBtn();
     renderCards();
-
-    // Send updated task to the server
     putDataEdit(`/tasks/${tasks[i].id}`, tasks[i])
 }
 
+/**
+ * Sends a PUT request to update data at the specified path on the server.
+ *
+ * @param {string} path - The path to send the PUT request to.
+ * @param {object} data - The data object to be sent in the PUT request body.
+ * @returns {Promise<object>} A promise that resolves to the parsed JSON response from the server.
+ */
 async function putDataEdit(path = "", data = {}) {
     try {
         const response = await fetch(`${BASE_URL}${path}.json`, {
@@ -177,27 +168,6 @@ async function putDataEdit(path = "", data = {}) {
     }
 }
 
-/**
- * Deletes task from Databse based on the ID
- * @param {number} taskId - Id of the task to be deleted
- * @returns {Promise<void>} - a Promise that resolves when the task is deleted
- */
-async function deleteTaskFromDatabase(taskId) {
-    try {
-        const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Fehler beim Löschen der Aufgabe aus der Datenbank: ${response.status} ${response.statusText}`);
-        }
-    } catch (error) {
-        throw new Error(`Fehler beim Löschen der Aufgabe aus der Datenbank: ${error.message}`);
-    }
-}
 
 /**
  * deletes a task from the `tasks` array and the database.
@@ -210,9 +180,6 @@ async function deleteTask(i) {
     closeDialogBtn();
     renderCards();
 }
-
-
-
 
 /**
  * Initiates the dragging operation for a task card.
@@ -244,8 +211,7 @@ async function drop(status) {
         removeHighlight();
         renderCards();
     }
-   await putDataEdit(`/tasks`, tasks)
-  
+    await putDataEdit(`/tasks`, tasks)
 }
 
 /**
@@ -268,7 +234,6 @@ function removeHighlight() {
     if (card) {
         card.classList.remove('dragging');
     }
-
     const containers = document.querySelectorAll('.cardContainer');
     containers.forEach(container => {
         container.classList.remove('highlightDragArea');
@@ -283,7 +248,6 @@ document.addEventListener('dragend', function (event) {
     }
     removeHighlight();
 });
-
 
 /**
  * Updates the progress bar width based on completed and total subtasks.
@@ -301,19 +265,30 @@ async function changeProgressBar(i) {
     });
 }
 
-function changeProgressCheckEmpty( task, i){
+/**
+ * Updates the progress bar width based on completed subtasks for a given task.
+ *
+ * @param {object} task - The task object containing subtasks information.
+ * @param {number} i - The index of the task in a list or array.
+ */
+function changeProgressCheckEmpty(task, i) {
     const completedSubtasks = task.subTasks.filter(subtask => subtask.completet).length;
     const totalSubtasks = task.subTasks.length;
     let percent = 0;
     if (totalSubtasks !== 0) {
         percent = (completedSubtasks / totalSubtasks) * 100;
     }
-     const progressBarElement = document.getElementById(`progressBar${i}`);
+    const progressBarElement = document.getElementById(`progressBar${i}`);
     if (progressBarElement) {
         progressBarElement.style.width = percent + '%';
     }
 }
 
+/**
+ * Validates and saves edits for a task based on user input.
+ *
+ * @param {number} i - The index of the task to be edited in the global 'tasks' array.
+ */
 function saveEditValidation(i) {
     const editedTitle = document.getElementById('editedTitle');
     const editedDate = document.getElementById('editedDate');
@@ -328,6 +303,12 @@ function saveEditValidation(i) {
     }
 }
 
+/**
+ * Validates an input field and displays an error message if it is empty.
+ *
+ * @param {HTMLInputElement} inputElement - The input element to validate.
+ * @param {HTMLElement} requiredElement - The element displaying the required field message.
+ */
 function validateField(inputElement, requiredElement) {
     if (inputElement.value.trim() === '') {
         showValidationError(inputElement, requiredElement);
@@ -337,21 +318,44 @@ function validateField(inputElement, requiredElement) {
     }
 }
 
+/**
+ * Checks if an input field is filled (not empty after trimming whitespace).
+ *
+ * @param {HTMLInputElement} inputElement - The input element to check.
+ * @returns {boolean} Returns true if the input field is filled; otherwise, false.
+ */
 function isFieldFilled(inputElement) {
     return inputElement.value.trim() !== '';
 }
 
+/**
+ * Displays validation error styles for an input field and shows a required element.
+ *
+ * @param {HTMLInputElement} inputElement - The input element to display error styles for.
+ * @param {HTMLElement} requiredElement - The element displaying the required field message.
+ */
 function showValidationError(inputElement, requiredElement) {
     inputElement.style.border = '1px solid red';
     requiredElement.style.opacity = 1;
 }
 
+/**
+ * Resets styles for an input field and hides a required element.
+ *
+ * @param {HTMLInputElement} inputElement - The input element to reset styles for.
+ * @param {HTMLElement} requiredElement - The element displaying the required field message.
+ */
 function resetFieldStyle(inputElement, requiredElement) {
     inputElement.style.border = '1px solid grey';
     requiredElement.style.opacity = 0;
 }
 
-
+/**
+ * Adds an input event listener to validate the input field and reset styles upon filling.
+ *
+ * @param {HTMLInputElement} inputElement - The input element to add the listener to.
+ * @param {HTMLElement} requiredElement - The element displaying the required field message.
+ */
 function addInputListener(inputElement, requiredElement) {
     inputElement.addEventListener('input', function listener() {
         if (isFieldFilled(inputElement)) {
@@ -361,11 +365,23 @@ function addInputListener(inputElement, requiredElement) {
     });
 }
 
+/**
+ * Toggles the visibility of a dropdown content by adding or removing the 'showDropdown' class.
+ *
+ * @param {string} dropdownId - The ID of the dropdown content element to toggle.
+ */
 function toggleDropdown(dropdownId) {
     const dropdownContent = document.getElementById(dropdownId);
     dropdownContent.classList.toggle('showDropdown');
 }
 
+/**
+ * Moves a task to a new status and updates it in the database.
+ *
+ * @param {number} taskId - The ID of the task to move.
+ * @param {string} newStatus - The new status to assign to the task.
+ * @param {string} dropdownId - The ID of the dropdown associated with the task.
+ */
 async function moveToStatus(taskId, newStatus, dropdownId) {
     try {
         const taskIndex = tasks.findIndex(task => task.id === taskId);
@@ -374,16 +390,21 @@ async function moveToStatus(taskId, newStatus, dropdownId) {
             return;
         }
         tasks[taskIndex].status = newStatus;
-        console.log(taskIndex);
         await putDataEdit(`/tasks/${taskIndex}`, tasks[taskIndex]);
         toggleDropdown(dropdownId);
         renderCards();
     } catch (error) {
         console.error('Fehler beim Aktualisieren der Datenbank oder beim Rendern der Karten:', error);
     }
-
 }
 
+/**
+ * Renders dropdown options for moving a task to different statuses.
+ *
+ * @param {number} taskId - The ID of the task for which dropdown options are rendered.
+ * @param {string} currentStatus - The current status of the task.
+ * @returns {string} Returns HTML string of dropdown options.
+ */
 function renderDropdownOptions(taskId, currentStatus) {
     const allStatuses = ['toDo', 'inProgress', 'done', 'awaitingFeedback'];
     const availableStatuses = allStatuses.filter(status => status !== currentStatus);
@@ -394,13 +415,19 @@ function renderDropdownOptions(taskId, currentStatus) {
     `).join('');
 }
 
-
+/**
+ * Renders badges for assigned contacts, limiting the number of badges displayed.
+ *
+ * @param {number[]} assignedToArray - Array of contact IDs assigned to the task.
+ * @param {number} [maxBadges=6] - Maximum number of badges to render.
+ * @returns {string} HTML string of rendered badges.
+ */
 function renderBadges(assignedToArray, maxBadges = 6) {
     let renderedCount = 0;
     let addedContacts = new Set();
     let badgesHtml = assignedToArray.map(id => {
         if (contacts[id] && !addedContacts.has(id) && renderedCount < maxBadges) {
-            addedContacts.add(id); 
+            addedContacts.add(id);
             renderedCount++;
             return renderBadge(contacts[id]);
         }
@@ -413,28 +440,3 @@ function renderBadges(assignedToArray, maxBadges = 6) {
     return badgesHtml;
 }
 
-function getMinDate() {
-    const dateIn = document.getElementById('editedDate');
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    const minDate = `${year}-${month}-${day}`;
-    
-    dateIn.min = minDate;
-    dateIn.addEventListener('blur', function() {
-        const inputValue = this.value.trim(); 
-    
-        if (inputValue.length === 0) {
-            this.value = minDate;
-        } else if (inputValue.length >= 10) {
-            const selectedDate = new Date(inputValue);
-            if (selectedDate <= today) {
-                this.value = minDate;
-                showValidationError(dateIn, document.getElementById('edit-task-duo-date-required'));
-            } else {
-                resetFieldStyle(dateIn, document.getElementById('edit-task-duo-date-required'));
-            }
-        }
-    });
-}
