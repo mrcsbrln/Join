@@ -1,41 +1,38 @@
 "use strict";
 
 
-// reset data in firebase realtime database using this
-// https://meik-behr.developerakademie.net/m10_join_database/index.html
-
-
-
-
-
-
-// global variables  : by Meik  - shoule be only declared in script.js
+/**
+ * Base URL for Firebase Realtime Database API.
+ * 
+ * Represents the base URL used to access the Firebase Realtime Database API.
+ * 
+ * @constant
+ * @type {string}
+ */
 const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
 
 
 /**
- * Initializes the application by setting up everything:
- * - animations
+ * Initializes the login page by executing various setup functions asynchronously.
+ * 
+ * Calls multiple functions asynchronously to initialize the login page:
+ * - checkForCurrentUserLogin: Checks if a current user is logged in.
+ * - changeOfDisplayNoneAfterAnimation: Handles animation and display changes after login.
+ * - checkLocalStorageForUserData: Checks local storage for user data.
+ * - changePasswordIcon: Updates the password icon based on user interaction.
+ * - disableLoginButtonIfFormIsEmpty: Disables the login button if the form is empty.
+ * - logInIsCorrected: Handles corrections and validations during login process.
  * 
  */
 async function initLogin() {
     checkForCurrentUserLogin();
     changeOfDisplayNoneAfterAnimation();
-
-    // check if a currentUser exists in local storage (remember me was checked!)
-    // if YES, form.mail & form.password & checkbox=checked are set in login.form, currentUser get data of local-storage
-    // if NO, form.mail & form.password = currentUSer & checkbox=unchecked are set in login.form
     checkLocalStorageForUserData();
     changePasswordIcon();
     disableLoginButtonIfFormIsEmpty();
     logInIsCorrected();
 }
 
-
-
-/* ####################################################################################################################################    */
-/* ---------  Take Care of the Animation --------- */
-/* ####################################################################################################################################    */
 
 /**
  * Toggles the display of overlay and overlay-logo elements after an animation delay.
@@ -48,7 +45,6 @@ async function initLogin() {
 function changeOfDisplayNoneAfterAnimation() {
     let overlay = document.getElementById('overlay');
     let logo = document.getElementById('header__logo');
-
     if (overlay && logo) {
         setTimeout(() => {
             overlay.classList.add('d-none');
@@ -57,12 +53,6 @@ function changeOfDisplayNoneAfterAnimation() {
     }
 }
 
-
-
-
-/* ####################################################################################################################################    */
-/* ---------  Functions for redirection --------- */
-/* ####################################################################################################################################    */
 
 /**
  * Redirects the browser to the summary page.
@@ -74,7 +64,6 @@ function changeOfDisplayNoneAfterAnimation() {
 function redirectToSummary() {
     window.location.href = 'summary.html';
 }
-
 
 
 /**
@@ -89,16 +78,13 @@ function redirectToSignUp() {
 }
 
 
-
-
-
-
-/* ####################################################################################################################################    */
-/* ---------  Checking local Storage & updating login-Form --------- */
-/* ####################################################################################################################################    */
-
-
-
+/**
+ * Checks local storage for user data related to login.
+ * 
+ * Retrieves user data from local storage using the checkLocalStorageForLoginData function.
+ * Updates the current user variable if user data is found and calls updateLogInForm with the appropriate parameter.
+ * If no user data is found, calls updateLogInForm with false.
+ */
 function checkLocalStorageForUserData() {
     const userInLocalStorage = checkLocalStorageForLoginData();
     if (userInLocalStorage) {
@@ -110,30 +96,61 @@ function checkLocalStorageForUserData() {
 }
 
 
+/**
+ * Checks local storage for user login data.
+ * 
+ * Retrieves the user data from local storage using the 'currentUser' key.
+ * Parses the JSON string retrieved from local storage to convert it into a JavaScript object.
+ * Returns the parsed user object if retrieval and parsing are successful.
+ * Returns null if no user data is found in local storage or if there is an error parsing the JSON.
+ * 
+ * @returns {object | null} The parsed user object from local storage, or null if not found or parsing error.
+ */
 function checkLocalStorageForLoginData() {
     const userInLocalStorageString = localStorage.getItem('currentUser');
     if (userInLocalStorageString) {
         try {
             const userInLocalStorage = JSON.parse(userInLocalStorageString);
-            // console.log('Current user found in Local Storage:', userInLocalStorage);
             return userInLocalStorage;
         } catch (error) {
             console.error('Error parsing JSON from Local Storage', error);
             return null;
         }
     } else {
-        // console.log('No current user found in Local Storage');
         return null;
     }
 }
 
 
+/**
+ * Updates the state (checked or unchecked) of a checkbox element.
+ * 
+ * Sets the source (src) attribute of the checkbox element's image based on the isChecked parameter.
+ * Updates the dataset.checked attribute of the checkbox to reflect the isChecked state.
+ * 
+ * @param {HTMLElement} checkbox - The checkbox element to update.
+ * @param {boolean} isChecked - The desired checked state:
+ *                              - true: Checkbox should be checked.
+ *                              - false: Checkbox should be unchecked.
+ */
 function updateCheckboxState(checkbox, isChecked) {
     checkbox.src = isChecked ? './assets/img/icons_login/checkbox_checked.png' : './assets/img/icons_login/checkbox_unchecked.png';
     checkbox.dataset.checked = isChecked ? 'true' : 'false';
 }
 
 
+/**
+ * Updates the login form fields based on whether user data is stored locally.
+ * 
+ * Sets the value of email and password fields in the login form based on the inStorage parameter:
+ * - If inStorage is true, sets emailField value to currentUser.email and passwordField value to currentUser.password.
+ * - If inStorage is false, clears both emailField and passwordField values.
+ * Updates the checkbox state using the updateCheckboxState function based on the inStorage parameter.
+ * 
+ * @param {boolean} inStorage - Indicates whether user data is stored locally:
+ *                              - true: User data is stored locally (currentUser object is available).
+ *                              - false: No user data is stored locally (currentUser object is not available).
+ */
 function updateLogInForm(inStorage) {
     const emailField = document.getElementById('email');
     const passwordField = document.getElementById('password');
@@ -144,6 +161,13 @@ function updateLogInForm(inStorage) {
 }
 
 
+/**
+ * Handles the click event of a checkbox element.
+ * 
+ * Retrieves the current state of the checkbox using the checkIfCheckBoxIsClicked function.
+ * Updates the state of the checkbox to the opposite of its current state using the updateCheckboxState function.
+ * 
+ */
 function checkBoxClicked() {
     const checkbox = document.getElementById('checkbox');
     const isChecked = checkIfCheckBoxIsClicked(checkbox);
@@ -169,57 +193,48 @@ function checkIfCheckBoxIsClicked(checkbox) {
 }
 
 
-
-
-
-
-
-
-
-/* ####################################################################################################################################    */
-/* ---------  LOAD DATA FROM FIREBASE --------- */
-/* ####################################################################################################################################    */
-
-
-
-async function loadData(path="") {
-	let response = await fetch(BASE_URL + path + ".json");
-	let responseToJson = await response.json();
-	return responseToJson;
-}
-
-
+/**
+ * Checks login credentials against user data loaded from a database.
+ * 
+ * Loads user data from the '/users' endpoint using the loadData function.
+ * Finds a user with a matching email in the loaded data.
+ * Compares the provided password with the password of the matching user.
+ * Logs appropriate warnings or errors for invalid credentials or database errors.
+ * Calls the wrongPassword function if the password does not match.
+ * Returns the matching user object if login is successful, or null otherwise.
+ * 
+ * @async
+ * @param {string} email - The email address entered by the user for login.
+ * @param {string} password - The password entered by the user for login.
+ * @returns {object | null} The user object if login is successful, or null if not found or incorrect password.
+ */
 async function checkLoginValues(email, password) {
-    const datas = await loadData("/users");
-    const matchingContact = datas.find(data => data.email === email);
-    if (matchingContact) {
-        if (matchingContact.password === password) {
-            console.log("Login successful");
-            return matchingContact;
-        } else {
+    try {
+        const datas = await loadData("/users");
+        const matchingContact = datas.find(data => data.email === email);
+        if (!matchingContact) {
+            console.warn("Kein Benutzer mit dieser E-Mail gefunden");
+        } else if (matchingContact.password !== password) {
             console.warn("Falsches Passwort");
             wrongPassword();
+        } else {
+            console.log("Login successful");
+            return matchingContact;
         }
-    } else {
-        console.warn("Kein Benutzer mit dieser E-Mail gefunden");
+    } catch (error) {
+        console.error("Error loading user data", error);
     }
+    return null;
 }
 
 
-
-
-
-
-
-/* ####################################################################################################################################    */
-/* ---------  LOGIN PROCEDURE :    GUEST --------- */
-/* ####################################################################################################################################    */
-
-
-
-
-function loginAsGuest() {
-    let guestUser = {
+/**
+ * Creates a guest user object with default values.
+ * 
+ * @returns {object} The guest user object 
+ */
+function createGuestUser() {
+    return {
         name: 'guest',
         email: 'guest@join.de',
         id: 'guest',
@@ -227,7 +242,18 @@ function loginAsGuest() {
         initials: 'G',
         password: 'guest',
     };
-    currentUser = guestUser;
+}
+
+
+/**
+ * Logs in the user as a guest.
+ * Creates a guest user, saves it to session storage,
+ * clears login form fields, resets checkbox state,
+ * removes 'currentUser' from local storage,
+ * and redirects to the summary page.
+ */
+function loginAsGuest() {
+    currentUser = createGuestUser();
     saveCurrentUser(currentUser);
     clearForm('email', 'password');
     localStorage.removeItem('currentUser');
@@ -236,30 +262,41 @@ function loginAsGuest() {
 }
 
 
-
-// save to session storage
+/**
+ * Saves the current user object to session storage.
+ * 
+ * @param {object} user - The user object to be saved.
+ */
 function saveCurrentUser(user) {
     sessionStorage.setItem('currentUser', JSON.stringify(user));
 }
 
 
-
-
-
-/* ####################################################################################################################################    */
-/* ---------  LOGIN PROCEDURE --------- */
-/* ####################################################################################################################################    */
-
-
+/**
+ * Handles the form submission for logging in.
+ * Prevents the default form submission action,
+ * and calls the login function to handle the login process.
+ * 
+ * @param {Event} event - The submit event object.
+ */
 function loginSubmit(event) {
     event.preventDefault();
     login();
 }
 
 
+/**
+ * Handles the login process asynchronously.
+ * Retrieves email and password from form input fields,
+ * checks login credentials against user data,
+ * updates session storage with the current user if login is successful,
+ * clears login form fields, manages checkbox state in local storage,
+ * and redirects to the summary page upon successful login.
+ * Logs a warning message if login fails.
+ */
 async function login() {
-    const email = document.getElementById('email').value
-    const password = document.getElementById('password').value
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
     const matchingContact = await checkLoginValues(email, password);
     if (matchingContact) {
         currentUser = matchingContact;
@@ -267,8 +304,7 @@ async function login() {
         clearForm('email', 'password');
         const checkbox = document.getElementById('checkbox');
         if (checkIfCheckBoxIsClicked(checkbox)) {
-            let currentUserString = JSON.stringify(currentUser);
-            localStorage.setItem('currentUser', currentUserString);
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
         } else {
             localStorage.removeItem('currentUser');
         }
@@ -280,14 +316,24 @@ async function login() {
 }
 
 
-
+/**
+ * Clears the values of specified form input fields.
+ * 
+ * @param {string} email - The ID of the email input field.
+ * @param {string} password - The ID of the password input field.
+ */
 function clearForm(email, password) {
     document.getElementById(`${email}`).value = '';
     document.getElementById(`${password}`).value = '';
 }
 
 
-
+/**
+ * Saves the current user object to session storage if it exists.
+ * Displays a warning message and returns early if currentUser is not available.
+ * 
+ * @param {object} currentUser - The user object to be saved.
+ */
 function saveCurrentUserToSessionStorage(currentUser) {
     if (currentUser) {
         sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
@@ -298,16 +344,15 @@ function saveCurrentUserToSessionStorage(currentUser) {
 }
 
 
-
-
-/* ####################################################################################################################################    */
-/* ---------  Effects --------- */
-/* show password and toggle icon */
-/* disable login button until form is filled */
-/* ####################################################################################################################################    */
-
-
-
+/**
+ * Toggles the visibility of the password field and updates the visibility icon.
+ * 
+ * Finds the password field and its visibility icon by ID.
+ * Changes the password field type between 'password' and 'text' to show or hide the password.
+ * Updates the visibility icon source accordingly ('./assets/img/icons_login/visibility.png' or './assets/img/icons_login/visibility_off.png').
+ * Toggles the 'visible' class on the icon based on password visibility.
+ * Sets an event listener on the password field based on its visibility state.
+ */
 function showPassword() {
     const passwordField = document.getElementById('password');
     const passwordIcon = document.getElementById('password__icon');
@@ -319,6 +364,15 @@ function showPassword() {
 }
 
 
+/**
+ * Updates the password visibility icon based on the password field's state.
+ * 
+ * Finds the password field and its icon by ID.
+ * Checks if the password field is empty to determine the icon source and visibility.
+ * Updates the icon source to './assets/img/icons_login/lock.png' if the password field is empty,
+ * or './assets/img/icons_login/visibility_off.png' if not.
+ * Toggles classes 'visible__no' and 'pointerEvents__none' on the icon based on whether the password field is empty.
+ */
 function changePasswordIcon() {
     const passwordField = document.getElementById('password');
     const passwordIcon = document.getElementById('password__icon');
@@ -329,71 +383,79 @@ function changePasswordIcon() {
 }
 
 
-
+/**
+ * Disables the login button if the email or password fields are empty or contain only whitespace; otherwise, enables it.
+ * 
+ * Finds the login button, email field, and password field by their IDs.
+ * Trims whitespace from the values in the email and password fields and checks their lengths.
+ * Disables the login button if either field is empty or contains only whitespace.
+ * Toggles the 'btn__disabled' class on the button based on its disabled state.
+ */
 function disableLoginButtonIfFormIsEmpty() {
-    let button = document.getElementById('btn__logIn');
-    const email = document.getElementById('email').value.length
-    const password = document.getElementById('password').value.length
-    if (email == 0 || password == 0) {
-        button.disabled = true;
-        button.classList.add('btn__disabled');
-    } else {
-        button.disabled = false;
-        button.classList.remove('btn__disabled')
-    }
+    const button = document.getElementById('btn__logIn');
+    const emailLength = document.getElementById('email').value.trim().length;
+    const passwordLength = document.getElementById('password').value.trim().length;
+    button.disabled = !(emailLength > 0 && passwordLength > 0);
+    button.classList.toggle('btn__disabled', button.disabled);
 }
 
 
-
-
+/**
+ * DOM element representing the container for the password input field.
+ * @type {HTMLElement}
+ */
 let containerPassword = document.getElementById('password__container');
+
+
+/**
+ * DOM element representing the feedback message for incorrect password input.
+ * @type {HTMLElement}
+ */
 let feedbackPassword = document.getElementById('form__wrongPassword__message');
 
 
+/**
+ * Adds the 'wrongPassword' class to the container of the password input field
+ * and updates the innerHTML of the feedback message element with an error message.
+ */
 function wrongPassword() {
     containerPassword.classList.add('wrongPassword');
     feedbackPassword.innerHTML = 'Wrong password Ups! Try again.';
 }
 
+
+/**
+ * Removes the 'wrongPassword' class from the container of the password input field
+ * and clears the innerHTML of the feedback message element.
+ */
 function logInIsCorrected() {
     containerPassword.classList.remove('wrongPassword');
     feedbackPassword.innerHTML = '';
 }
 
 
-function keyIsUp() {
-    console.log("Key is up");
-}
-
-
-
-/* ####################################################################################################################################    */
-/* ---------  If currentUser exists in session Storage, one can not access login.html  but --------- */
-/* ---------  get redirected to summary.html  --------- */
-/* ####################################################################################################################################    */
-
-
-// check if a currentUser exists
+/**
+ * Checks if there is a current user logged in based on session storage.
+ * 
+ * Retrieves the user string from session storage.
+ * If no user string is found, logs a warning and returns false.
+ * Attempts to parse the user string as JSON.
+ * If successful, returns true indicating a valid logged-in user.
+ * If parsing fails, logs an error and returns false.
+ * 
+ * @returns {boolean} True if a valid current user exists; otherwise, false.
+ */
 function checkForCurrentUserLogin() {
     const userString = sessionStorage.getItem('currentUser');
-
-    if (userString) {
-        try {
-            const userJSON = JSON.parse(userString);
-            return true;
-            // console.log('Current user found in Session Storage:', userJSON.name);
-            // redirectToSummary();
-        } catch (error) {
-            console.error('Error parsing JSON from Session Storage', error);
-            return false;
-            // redirectToLogin();
-        }
-    } else {
+    if (!userString) {
         console.warn('No current user existing - please log in or sign up');
         return false;
-        // redirectToLogin();
+    }
+    try {
+        const userJSON = JSON.parse(userString);
+        return true;
+    } catch (error) {
+        console.error('Error parsing JSON from Session Storage', error);
+        return false;
     }
 }
-
-
-
