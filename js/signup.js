@@ -261,13 +261,10 @@ function createNewContact(user) {
  * Saves the new user and contact data to the database.
  * 
  * @param {object} newUser - The new user object to be added.
- * @param {object} newContact - The new contact object to be added.
  */
 function saveUserData(newUser, newContact) {
     users.push(newUser);
-    contacts.push(newContact);
     putData("/users", users);
-    putData("/contacts", contacts);
 }
 
 
