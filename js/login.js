@@ -214,6 +214,7 @@ async function checkLoginValues(email, password) {
         const matchingContact = datas.find(data => data.email === email);
         if (!matchingContact) {
             console.warn("Kein Benutzer mit dieser E-Mail gefunden");
+            wrongMail();
         } else if (matchingContact.password !== password) {
             console.warn("Falsches Passwort");
             wrongPassword();
@@ -425,12 +426,38 @@ function wrongPassword() {
 
 
 /**
+ * DOM element representing the container for the password input field.
+ * @type {HTMLElement}
+ */
+let containerMail = document.getElementById('mail__container');
+
+
+/**
+ * DOM element representing the feedback message for incorrect password input.
+ * @type {HTMLElement}
+ */
+let feedbackMail = document.getElementById('form__wrongMail__message');
+
+
+/**
+ * Adds the 'wrongMail' class to the container of the mail input field
+ * and updates the innerHTML of the feedback message element with an error message.
+ */
+function wrongMail() {
+    containerMail.classList.add('wrongMail');
+    feedbackMail.innerHTML = 'Wrong eMail Ups! Try again.';
+}
+
+
+/**
  * Removes the 'wrongPassword' class from the container of the password input field
  * and clears the innerHTML of the feedback message element.
  */
 function logInIsCorrected() {
     containerPassword.classList.remove('wrongPassword');
     feedbackPassword.innerHTML = '';
+    containerMail.classList.remove('wrongMail');
+    feedbackMail.innerHTML = '';
 }
 
 

@@ -266,21 +266,24 @@
     box-shadow: none !important;
 }
 
-.form__wrongPassword__container {
+.form__wrongPassword__container,
+.form__wrongMail__container {
     width: clamp(240px, 422px, 80%);
     margin-top: 8px;
     height: 15.6px;
     content: none;
 }
 
-.form__wrongPassword__message {
+.form__wrongPassword__message,
+.form__wrongMail__message {
     font-weight: 400;
     font-size: 13px;
     line-height: 15.6px;
     color: #ff8190;
 }
 
-.wrongPassword {
+.wrongPassword,
+.wrongMail {
     border-color: #ff8190 !important;
 }
 
