@@ -43,8 +43,8 @@ const svgMappings = {
 /**
  * Show the menu for select buttons.
  */
-function showMenuTemplate() {
-    const selectBtns = document.querySelectorAll('.select-btn');
+function showMenu() {
+    const selectBtns = document.querySelectorAll('.select-btn.assigned-to, .select-btn.category');
 
     selectBtns.forEach(selectBtn => {
         selectBtn.addEventListener('click', () => {
@@ -214,9 +214,9 @@ function categoryMenu() {
         });
     });
 
-    selectBtnCategory.addEventListener('click', () => {
-        selectBtnCategory.classList.toggle('show-menu');
-    });
+    // selectBtnCategory.addEventListener('click', () => {
+    //     selectBtnCategory.classList.toggle('show-menu');
+    // });
 
     document.addEventListener('click', (event) => {
         if (!selectBtnCategory.contains(event.target) &&
