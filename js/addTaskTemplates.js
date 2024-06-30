@@ -61,7 +61,8 @@ function showMenuTemplate() {
 
 /**
  * Filter contacts based on user input.
- */function filterContacts() {
+ */
+function filterContacts() {
     const selectBtnInput = document.querySelector('.select-btn-input');
     
     // Füge Eventlistener für 'click' und 'input' hinzu
