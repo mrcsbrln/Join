@@ -521,78 +521,121 @@ function preventFormSubmitOnEnter() {
 }
 
 /**
- * Validate the form fields and show error messages.
+ * Resets the validation messages for the form fields.
+ *
+ * @param {boolean} titleClicked - Indicates if the title input was clicked.
+ * @param {boolean} dueDateClicked - Indicates if the due date input was clicked.
+ * @param {boolean} categoryClicked - Indicates if the category container was clicked.
  */
-function preventDefaultValidation() {
-    const form = document.getElementById('add-task-form');
+function resetValidationMessages(titleClicked, dueDateClicked, categoryClicked) {
     const titleInput = document.getElementById('title');
     const dueDateInput = document.getElementById('due-date-input');
     const categoryContainer = document.getElementById('category-container');
-    const categoryDisplayed = document.getElementById('category-displayed');
     const titleRequiredMsg = document.getElementById('title-required');
     const dateRequiredMsg = document.getElementById('date-required');
     const categoryRequiredMsg = document.getElementById('category-required');
 
+    if (titleClicked) {
+        titleInput.classList.remove('field-required');
+        titleRequiredMsg.style.opacity = '0';
+    }
+    if (dueDateClicked) {
+        dueDateInput.classList.remove('field-required');
+        dateRequiredMsg.style.opacity = '0';
+    }
+    if (categoryClicked) {
+        categoryContainer.classList.remove('category-required-border');
+        categoryRequiredMsg.style.opacity = '0';
+    }
+}
+
+/**
+ * Adds event listeners to the form fields to handle validation messages.
+ */
+function addValidationEventListeners() {
     let titleClicked = false;
     let dueDateClicked = false;
     let categoryClicked = false;
 
-    function resetValidationMessages() {
-        if (titleClicked) {
-            titleInput.classList.remove('field-required');
-            titleRequiredMsg.style.opacity = '0';
-        }
-        if (dueDateClicked) {
-            dueDateInput.classList.remove('field-required');
-            dateRequiredMsg.style.opacity = '0';
-        }
-        if (categoryClicked) {
-            categoryContainer.classList.remove('category-required-border');
-            categoryRequiredMsg.style.opacity = '0';
-        }
-    }
+    const titleInput = document.getElementById('title');
+    const dueDateInput = document.getElementById('due-date-input');
+    const categoryContainer = document.getElementById('category-container');
 
     titleInput.addEventListener('click', () => {
         titleClicked = true;
-        resetValidationMessages();
+        resetValidationMessages(titleClicked, dueDateClicked, categoryClicked);
     });
 
     dueDateInput.addEventListener('click', () => {
         dueDateClicked = true;
-        resetValidationMessages();
+        resetValidationMessages(titleClicked, dueDateClicked, categoryClicked);
     });
 
     categoryContainer.addEventListener('click', () => {
         categoryClicked = true;
-        resetValidationMessages();
+        resetValidationMessages(titleClicked, dueDateClicked, categoryClicked);
     });
+}
 
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
+/**
+ * Validates the form fields and shows error messages if necessary.
+ *
+ * @returns {boolean} - Returns true if the form is valid, otherwise false.
+ */
+function validateForm() {
+    const titleInput = document.getElementById('title');
+    const dueDateInput = document.getElementById('due-date-input');
+    const categoryDisplayed = document.getElementById('category-displayed');
+    const titleRequiredMsg = document.getElementById('title-required');
+    const dateRequiredMsg = document.getElementById('date-required');
+    const categoryRequiredMsg = document.getElementById('category-required');
+    const categoryContainer = document.getElementById('category-container');
 
-        resetValidationMessages();
+    let isValid = true;
+    if (titleInput.value.trim() === '') {
+        titleInput.classList.add('field-required');
+        titleRequiredMsg.style.opacity = '1';
+        isValid = false;
+    }
+    if (dueDateInput.value.trim() === '') {
+        dueDateInput.classList.add('field-required');
+        dateRequiredMsg.style.opacity = '1';
+        isValid = false;
+    }
+    if (categoryDisplayed.textContent === 'Select task category') {
+        categoryContainer.classList.add('category-required-border');
+        categoryRequiredMsg.style.opacity = '1';
+        isValid = false;
+    }
 
-        let isValid = true;
-        if (titleInput.value.trim() === '') {
-            titleInput.classList.add('field-required');
-            titleRequiredMsg.style.opacity = '1';
-            isValid = false;
-        }
-        if (dueDateInput.value.trim() === '') {
-            dueDateInput.classList.add('field-required');
-            dateRequiredMsg.style.opacity = '1';
-            isValid = false;
-        }
-        if (categoryDisplayed.textContent === 'Select task category') {
-            categoryContainer.classList.add('category-required-border');
-            categoryRequiredMsg.style.opacity = '1';
-            isValid = false;
-        }
+    return isValid;
+}
 
-        if (isValid) {
-            saveTask();
-        }
-    });
+/**
+ * Handles the form submit event, prevents default submission and performs validation.
+ *
+ * @param {Event} event - The submit event object.
+ */
+function handleFormSubmit(event) {
+    event.preventDefault();
+
+    let titleClicked = true;
+    let dueDateClicked = true;
+    let categoryClicked = true;
+    resetValidationMessages(titleClicked, dueDateClicked, categoryClicked);
+
+    if (validateForm()) {
+        saveTask();
+    }
+}
+
+/**
+ * Prevents default form submission and validates the form fields.
+ */
+function preventDefaultValidation() {
+    const form = document.getElementById('add-task-form');
+    addValidationEventListeners();
+    form.addEventListener('submit', handleFormSubmit);
 }
 
 /**
