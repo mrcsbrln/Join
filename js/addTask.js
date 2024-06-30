@@ -1,4 +1,4 @@
-actStatus = 'toDo'
+actStatus = "";
 
 
 async function initAddTask() {
@@ -48,3 +48,18 @@ function showMenu() {
         });
     });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+
+    if (status) {
+        actStatus = status;
+        // Call any initialization function here if needed
+        console.log('Status:', actStatus);
+    } else {
+        // Handle the case where the status parameter is missing
+        actStatus = 'toDo'; // Set a default value or handle accordingly
+        console.log('Status parameter is missing. Default value:', actStatus);
+    }
+});

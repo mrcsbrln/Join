@@ -30,10 +30,17 @@ function openDialog() {
     document.documentElement.classList.add('overflowHidden');
 }
 
+
 function openDialogTasks(status) {
-    document.getElementById('dialogContainerAddTask').classList.add('open');
-    document.documentElement.classList.add('overflowHidden');
+    const isMobile = window.matchMedia("only screen and (max-width: 1024px)").matches;
     actStatus = status;
+
+    if (isMobile) {
+        window.location.href = `addTask.html?status=${encodeURIComponent(status)}`;
+    } else {
+        document.getElementById('dialogContainerAddTask').classList.add('open');
+        document.documentElement.classList.add('overflowHidden');
+    }
 }
 
 /**

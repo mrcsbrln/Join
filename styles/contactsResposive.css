@@ -233,6 +233,7 @@
     }
 
     .main-container {
+        position: relative;
         display: none;
         background-color: rgba(246, 247, 248, 1);
         padding: 128px 36px;
