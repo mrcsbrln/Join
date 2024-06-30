@@ -214,10 +214,6 @@ function categoryMenu() {
         });
     });
 
-    // selectBtnCategory.addEventListener('click', () => {
-    //     selectBtnCategory.classList.toggle('show-menu');
-    // });
-
     document.addEventListener('click', (event) => {
         if (!selectBtnCategory.contains(event.target) &&
             !categoryDisplayed.contains(event.target) &&
