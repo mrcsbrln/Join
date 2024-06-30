@@ -44,7 +44,7 @@ const svgMappings = {
  * Show the menu for select buttons.
  */
 function showMenu() {
-    const selectBtns = document.querySelectorAll('.select-btn');
+    const selectBtns = document.querySelectorAll('.select-btn.assigned-to');
 
     selectBtns.forEach(selectBtn => {
         selectBtn.addEventListener('click', () => {
