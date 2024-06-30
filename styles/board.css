@@ -421,7 +421,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .statusHeader img:hover{
     cursor: pointer;
-    content: url('/assets/img/icons/plusBtnblue.png')
+    content: url('../assets/img/icons/plusBtnblue.png')
 }
 
 .addBtn:hover {
