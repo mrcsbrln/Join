@@ -43,8 +43,8 @@ const svgMappings = {
 /**
  * Show the menu for select buttons.
  */
-function showMenu() {
-    const selectBtns = document.querySelectorAll('.select-btn.assigned-to');
+function showMenuTemplate() {
+    const selectBtns = document.querySelectorAll('.select-btn');
 
     selectBtns.forEach(selectBtn => {
         selectBtn.addEventListener('click', () => {

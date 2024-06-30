@@ -27,7 +27,7 @@ function initAddTaskBoard() {
     renderCards();
     updateHeaderProfileInitials();
     pushSubtaskEdit();
-    showMenu();
+    showMenuTemplate();
     changeSvgOnHover();
     changePrioBtn();
     changeSvgOnHover();

@@ -32,3 +32,19 @@ function showTaskAddedMessage() {
     }, 2000);
 
 }
+
+function showMenu() {
+    const selectBtns = document.querySelectorAll('.select-btn.assigned-to');
+
+    selectBtns.forEach(selectBtn => {
+        selectBtn.addEventListener('click', () => {
+            selectBtn.classList.toggle('show-menu');
+        });
+    });
+
+    selectBtns.forEach(selectBtn => {
+        selectBtn.addEventListener('focus', () => {
+            selectBtn.classList.toggle('show-menu');
+        });
+    });
+}
