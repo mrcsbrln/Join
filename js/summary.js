@@ -102,8 +102,14 @@ const updateGreetingText = () => {
   const userNameMobile = document.getElementById('user__name-mobile');
   const greetingText = document.getElementById('greeting__text');
   const greetingTextMobile = document.getElementById('greeting__text-mobile');
-  clearElementsText(greetingText, greetingTextMobile, userName, userNameMobile);
-  setElementsText(greetingText, greetingTextMobile, userName, userNameMobile);
+  clearText(greetingText);
+  clearText(greetingTextMobile);
+  clearText(userName);
+  clearText(userNameMobile);
+  setGreetingText(greetingText);
+  setGreetingText(greetingTextMobile);
+  setCurrentUserName(userName);
+  setCurrentUserName(userNameMobile);
 };
 
 
