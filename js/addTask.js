@@ -33,22 +33,6 @@ function showTaskAddedMessage() {
 
 }
 
-function showMenu() {
-    const selectBtns = document.querySelectorAll('.select-btn.assigned-to');
-
-    selectBtns.forEach(selectBtn => {
-        selectBtn.addEventListener('click', () => {
-            selectBtn.classList.toggle('show-menu');
-        });
-    });
-
-    selectBtns.forEach(selectBtn => {
-        selectBtn.addEventListener('focus', () => {
-            selectBtn.classList.toggle('show-menu');
-        });
-    });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get('status');

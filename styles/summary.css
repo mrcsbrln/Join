@@ -173,8 +173,7 @@ main {
     margin-left: 78px;
 }
 
-.summary__greeting__formula,
-.summary__greeting__formula-mobile {
+.summary__greeting__formula {
     font-size: 47px;
     font-weight: 500;
     line-height: 56.4px;
@@ -182,12 +181,27 @@ main {
     color: #2a3647;
 }
 
-.summary__greeting__name,
-.summary__greeting__name-mobile {
+.summary__greeting__formula-mobile {
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 43.2px;
+    text-align: center;
+    color: #2a3647;
+}
+
+.summary__greeting__name {
     font-size: 64px;
     font-weight: 700;
     line-height: 76.8px;
     text-align: left;
+    color: #29abe2;
+}
+
+.summary__greeting__name-mobile {
+    font-size: 47px;
+    font-weight: 700;
+    line-height: 56.4px;
+    text-align: center;
     color: #29abe2;
 }
 

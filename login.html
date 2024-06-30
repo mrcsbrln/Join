@@ -37,8 +37,13 @@
                 <img class="logIn__separator" src="./assets/img/icons_login/separator.png" alt="separator" />
 
                 <form id="login" class="logIn__form" onsubmit="loginSubmit(event)" onkeyup="disableLoginButtonIfFormIsEmpty()">
-                    <div class="inputField__container inputField__container-margin32">
-                        <input id="email" type="email" placeholder="Email" autocomplete="email" required />
+
+                    <div class="form__wrongMail__container">
+                        <div class="form__wrongMail__message" id="form__wrongMail__message"></div>
+                    </div>
+
+                    <div id="mail__container" class="inputField__container inputField__container-margin32">
+                        <input id="email" type="email" placeholder="Email" autocomplete="email" required  onkeypress="logInIsCorrected()"/>
                         <img class="inputField__username__icon" src="./assets/img/icons_login/mail.png" alt="mail" />
                     </div>
 
