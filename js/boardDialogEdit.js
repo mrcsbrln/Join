@@ -113,18 +113,11 @@ function selectListItemsEdit(i, filteredContacts) {
 function renderSelectedContactsEdit() {
     const selectedContactsDiv = document.querySelector('.selectedContactsContainer');
     selectedContactsDiv.innerHTML = '';
-    taskEditAsiggnedTo = taskEditAsiggnedTo.filter(contactId => {
-        const contact = contacts[contactId];
-
-        if (contact && contact.color && contact.initials) {
-            selectedContactsDiv.innerHTML += `
-                <div class="cicle" style="background-color: ${contact.color}">${contact.initials}</div>
-            `;
-            return true;
-        } else {
-            return false;
-        }
-    });
+    taskEditAsiggnedTo.forEach(i => {
+        selectedContactsDiv.innerHTML += `
+            <div class="cicle" style="background-color: ${contacts[i].color}">${contacts[i].initials}</div>
+        `;
+    })
 }
 
 function getTaskAndPriority(taskIndex) {
