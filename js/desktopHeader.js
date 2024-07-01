@@ -1,3 +1,7 @@
+/**
+ * Opens the sub-menu by removing the 'd-none' class from the sub-menu modal and sub-menu elements,
+ * and animating the sub-menu open.
+ */
 function openSubMenu() {
     let subMenu = document.getElementById('sub-menu');
     let subModal = document.getElementById('sub-menu-modal');
@@ -7,8 +11,13 @@ function openSubMenu() {
         subMenu.classList.remove('sub-menu-close');
         subMenu.classList.add('sub-menu-open');
     }, 10);
-
 }
+
+
+/**
+ * Closes the sub-menu by adding the 'sub-menu-close' class to animate its closing,
+ * and adding the 'd-none' class to hide both the sub-menu modal and sub-menu elements.
+ */
 function closeSubMenu() {
     let subMenu = document.getElementById('sub-menu');
     let subModal = document.getElementById('sub-menu-modal');
@@ -20,6 +29,13 @@ function closeSubMenu() {
     }, 100);
 }
 
+
+/**
+ * Handles the window click event to close the sub-menu if the click event
+ * target matches the sub-menu modal element.
+ * 
+ * @param {Event} event - The click event object.
+ */
 window.onclick = function (event) {
     const subMenu = document.getElementById('sub-menu-modal');
     if (event.target === subMenu) {
@@ -27,11 +43,21 @@ window.onclick = function (event) {
     }
 }
 
+
+/**
+ * Hides the header icons by adding the 'd-none' class to the element with id 'header-icons'.
+ */
 function hideHeaderIcons() {
     document.getElementById('header-icons').classList.add('d-none');
-    // document.getElementById('header-icons-mobile').classList.add('d-none');
 }
 
+
+/**
+ * Updates the header profile initials based on the current user's data.
+ * Clears the inner HTML of the 'header-profile-icon' element, removes the 'initials-fsize' class,
+ * and sets the initials content and adjusts the font size if necessary based on the currentUser's initials.
+ * If currentUser or currentUser.initials is not defined, adds 'd-none' class to 'navLinks' element.
+ */
 function updateHeaderProfileInitials() {
     let userProfileIcon = document.getElementById('header-profile-icon');
     userProfileIcon.innerHTML = '';
@@ -46,6 +72,11 @@ function updateHeaderProfileInitials() {
     }
 }
 
+
+/**
+ * Logs out the current user by removing 'currentUser' and 'greeting' from sessionStorage,
+ * then redirects the user to the login page.
+ */
 function LogOut() {
     sessionStorage.removeItem('currentUser');
     sessionStorage.removeItem('greeting');
