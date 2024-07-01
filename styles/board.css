@@ -50,10 +50,8 @@ button {
 .tools {
     gap: 24px;
     position: relative;
-    /* Macht das Element zum Bezugspunkt für die absolute Positionierung des Buttons */
     display: flex;
     align-items: center;
-    /* Zentriert den Inhalt des Containers vertikal */
 }
 
 .statuses {
