@@ -36,7 +36,6 @@ function initAddTaskBoard() {
     updateHeaderProfileInitials();
     pushSubtaskEdit();
     showMenu();
-    changeSvgOnHover();
     changePrioBtn();
     changeSvgOnHover();
     categoryMenu();
