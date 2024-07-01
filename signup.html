@@ -18,7 +18,6 @@
 
     <body onload="initSignUp()">
         <div class="content__container">
-            
             <header class="header">
                 <div class="header__logo__container">
                     <img id="header__logo" class="header__logo" src="./assets/img/icons_login/logo.svg" alt="Logo" />
@@ -26,16 +25,13 @@
             </header>
 
             <div class="signUp__container">
-
                 <div class="headline__container">
-
                     <div class="goback" onclick="goBack()">
                         <img src="./assets/img/icons_signup/goback.png" alt="back" />
                     </div>
 
                     <h1>Sign Up</h1>
                     <img class="signUp__separator" src="./assets/img/icons_signup/separator.png" alt="separator" />
-                
                 </div>
 
                 <form id="signup" class="signUp__form" onsubmit="signUpSubmit(event)" onkeyup="disableSignupButtonIfFormIsEmpty()">
@@ -45,7 +41,7 @@
                     </div>
 
                     <div class="inputField__container inputField__container-margin24">
-                        <input id="email" type="email" placeholder="Email" autocomplete="email" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"/>
+                        <input id="email" type="email" placeholder="Email" autocomplete="email" required onkeyup="validateEmail()" />
                         <img class="inputField__username__icon" src="./assets/img/icons_signup/mail.png" alt="mail" />
                     </div>
 
@@ -57,7 +53,7 @@
                             placeholder="Password"
                             autocomplete="current-password"
                             required
-                            onkeyup="changePasswordIcon('password')"
+                            onkeyup="changePasswordIcon('password'); validatePassword()"
                             onkeypress="deleteMessageThatPasswordsDontMatch()" />
                         <img id="password__icon" class="inputField__password__icon pointerEvents__none" src="./assets/img/icons_signup/lock.png" alt="lock" onclick="showPassword('password')" />
                     </div>
@@ -112,9 +108,7 @@
             </div>
         </div>
 
-                <!-- ---------- landscape ---------- -->
-                <div class="landscape-warning" id="landscapeWarning">
-                    Bitte drehen Sie Ihr Gerät in den Hochformatmodus.
-                </div>
+        <!-- ---------- landscape ---------- -->
+        <div class="landscape-warning" id="landscapeWarning">Bitte drehen Sie Ihr Gerät in den Hochformatmodus.</div>
     </body>
 </html>
