@@ -310,6 +310,7 @@ async function login() {
             localStorage.removeItem('currentUser');
         }
         redirectToSummary();
+        await addUserToContacts();
     } else {
         localStorage.removeItem('currentUser');
         console.warn("Fehler bei der Anmeldung!");
@@ -485,4 +486,34 @@ function checkForCurrentUserLogin() {
         console.error('Error parsing JSON from Session Storage', error);
         return false;
     }
+}
+
+
+async function addUserToContacts() {
+
+    const userToContacts = {
+        id: currentUser.id,
+        name: currentUser.name,
+        email: currentUser.email,
+        phone: "",
+        color: currentUser.color,
+        initials: currentUser.initials,
+    };
+
+    // Add the new contact to the array
+    contacts.push(userToContacts);
+
+    // Save the new contact to the database
+  
+    await updateDataBase(contacts, 'contacts'); 
+}
+
+async function updateDataBase(array, arrayName) {
+    await fetch(`${teamBASE_URL}/${arrayName}.json`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(array)
+    }); 
 }
