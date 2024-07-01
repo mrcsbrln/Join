@@ -4,7 +4,6 @@
  * It calls various functions to render cards, initialize task addition, and manage UI elements.
  */
 async function initBoard() {
-    
     await includeHTML();
     checkForCurrentUser() ? "": redirectToLogin();
     let taskData = await loadData("/tasks")
@@ -372,6 +371,29 @@ function addInputListener(inputElement, requiredElement) {
 function toggleDropdown(dropdownId) {
     const dropdownContent = document.getElementById(dropdownId);
     dropdownContent.classList.toggle('showDropdown');
+    if (dropdownContent.classList.contains('showDropdown')) {
+        closeDropdownOnOutsideClick(dropdownContent);
+    }
+}
+
+/**
+ * Closes the dropdown when clicking outside of it.
+ *
+ * Adds an event listener to the document to close the dropdown if a click occurs outside
+ * its boundaries. The listener is added with a slight delay to avoid immediate closure.
+ *
+ * @param {HTMLElement} dropdownContent - The dropdown element to be managed.
+ */
+function closeDropdownOnOutsideClick(dropdownContent) {
+    function outsideClickListener(event) {
+        if (!dropdownContent.contains(event.target)) {
+            dropdownContent.classList.remove('showDropdown');
+            document.removeEventListener('click', outsideClickListener);
+        }
+    }
+    setTimeout(() => {
+        document.addEventListener('click', outsideClickListener);
+    }, 0);
 }
 
 /**
@@ -414,28 +436,4 @@ function renderDropdownOptions(taskId, currentStatus) {
     `).join('');
 }
 
-/**
- * Renders badges for assigned contacts, limiting the number of badges displayed.
- *
- * @param {number[]} assignedToArray - Array of contact IDs assigned to the task.
- * @param {number} [maxBadges=6] - Maximum number of badges to render.
- * @returns {string} HTML string of rendered badges.
- */
-function renderBadges(assignedToArray, maxBadges = 6) {
-    let renderedCount = 0;
-    let addedContacts = new Set();
-    let badgesHtml = assignedToArray.map(id => {
-        if (contacts[id] && !addedContacts.has(id) && renderedCount < maxBadges) {
-            addedContacts.add(id);
-            renderedCount++;
-            return renderBadge(contacts[id]);
-        }
-        return '';
-    }).join('');
-    const extraBadgesCount = assignedToArray.length - addedContacts.size;
-    if (extraBadgesCount > 0) {
-        badgesHtml += `<div class="badgeImg" style="background-color: grey">+${extraBadgesCount}</div>`;
-    }
-    return badgesHtml;
-}
 

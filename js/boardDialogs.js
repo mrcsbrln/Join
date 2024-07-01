@@ -30,7 +30,14 @@ function openDialog() {
     document.documentElement.classList.add('overflowHidden');
 }
 
-
+/**
+ * Opens the task dialog based on the screen size and task status.
+ *
+ * For mobile screens (width ≤ 1024px), redirects to the 'addTask' page with the status as a URL parameter.
+ * For larger screens, opens a modal dialog and prevents page scrolling.
+ *
+ * @param {string} status - The current status of the task.
+ */
 function openDialogTasks(status) {
     const isMobile = window.matchMedia("only screen and (max-width: 1024px)").matches;
     actStatus = status;
@@ -55,6 +62,9 @@ function closeDialog(event) {
     }
 }
 
+/**
+ * Closes the dialog when a button is clicked.
+ */
 function closeDialogTask(event) {
     if (event.currentTarget === event.target) {
         event.stopPropagation();
@@ -71,6 +81,9 @@ function closeDialogBtn() {
     document.documentElement.classList.remove('overflowHidden');
 }
 
+/**
+ * Closes the dialog when a button is clicked.
+ */
 function closeDialogTaskBtn() {
     document.getElementById('dialogContainerAddTask').classList.remove('open');
     document.documentElement.classList.remove('overflowHidden');
@@ -91,6 +104,14 @@ function renderCardBig(i) {
     });
 }
 
+/**
+ * Renders and styles the header for a task card.
+ *
+ * Sets the header color to 'Blue' for 'User Story' tasks, otherwise 'Green'.
+ * Updates the HTML of 'containerCloseBtn' and adjusts its layout classes.
+ *
+ * @param {number} i - The index of the task in the tasks array.
+ */
 function renderCardBigHeader(i) {
     let color = (tasks[i].category === 'User Story') ? 'Blue' : 'Green';
     document.getElementById('containerCloseBtn').innerHTML = renderCardBigHeaderHtml(i, color);
@@ -141,6 +162,15 @@ function renderCardBigSubtask(i) {
     document.getElementById('subtasks').innerHTML = subtasksHtml;
 }
 
+/**
+ * Handles the change event for a subtask's checkbox, updating its completion status.
+ *
+ * Finds the task and subtask by their IDs and updates the subtask's 'completed' status
+ * based on the checkbox's state. After updating, it refreshes the task display.
+ *
+ * @param {number} taskId - The unique identifier of the task.
+ * @param {number} subtaskId - The unique identifier of the subtask.
+ */
 function handleSubtaskChange(taskId, subtaskId, checkboxElement) {
     const task = tasks.find(t => t.id === taskId);
     if (task) {
@@ -251,4 +281,29 @@ async function deleteTaskFromDatabase(taskId) {
     } catch (error) {
         throw new Error(`Fehler beim Löschen der Aufgabe aus der Datenbank: ${error.message}`);
     }
+}
+
+/**
+ * Renders badges for assigned contacts, limiting the number of badges displayed.
+ *
+ * @param {number[]} assignedToArray - Array of contact IDs assigned to the task.
+ * @param {number} [maxBadges=6] - Maximum number of badges to render.
+ * @returns {string} HTML string of rendered badges.
+ */
+function renderBadges(assignedToArray, maxBadges = 6) {
+    let renderedCount = 0;
+    let addedContacts = new Set();
+    let badgesHtml = assignedToArray.map(id => {
+        if (contacts[id] && !addedContacts.has(id) && renderedCount < maxBadges) {
+            addedContacts.add(id);
+            renderedCount++;
+            return renderBadge(contacts[id]);
+        }
+        return '';
+    }).join('');
+    const extraBadgesCount = assignedToArray.length - addedContacts.size;
+    if (extraBadgesCount > 0) {
+        badgesHtml += `<div class="badgeImg" style="background-color: grey">+${extraBadgesCount}</div>`;
+    }
+    return badgesHtml;
 }

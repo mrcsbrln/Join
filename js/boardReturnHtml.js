@@ -1,6 +1,13 @@
-
-
-// Funktion zum Rendern der Fortschrittsanzeige
+/**
+ * Renders the progress bar and completion status for a task.
+ *
+ * Calculates the number of completed subtasks and total subtasks of the given task.
+ * Returns HTML markup representing a progress bar and completion status if there are subtasks,
+ * otherwise returns an empty string.
+ *
+ * @param {object} task - The task object for which progress is to be rendered.
+ * @returns {string} HTML markup representing the progress bar and completion status.
+ */
 function renderProgress(task) {
     const completedSubtasks = task.subTasks ? task.subTasks.filter(subtask => subtask.completet).length : 0;
     const totalSubtasks = task.subTasks ? task.subTasks.length : 0;
@@ -19,7 +26,16 @@ function renderProgress(task) {
     }
 }
 
-// Hauptfunktion zum Rendern der Task-Karte
+/**
+ * Generates HTML markup for rendering a task card.
+ *
+ * Constructs HTML markup representing a task card based on the provided task object.
+ * Includes category label, dropdown menu for task actions, task title, description,
+ * progress bar, assigned badges, priority indicator, and other dynamic elements.
+ *
+ * @param {object} task - The task object containing details to render in the card.
+ * @returns {string} HTML markup representing the task card.
+ */
 function renderCardHtml(task) {
     const color = (task.category === 'User Story') ? 'Blue' : 'Green';
     const assignedToArray = Array.isArray(task.assignedTo) ? task.assignedTo : [];
@@ -58,14 +74,27 @@ function renderCardHtml(task) {
     </div>`;
 }
 
-// Beispielimplementierung der Funktion renderBadge
+/**
+ * Generates HTML markup for rendering a badge representing a contact.
+ *
+ * Constructs HTML markup for a badge representing a contact, styled with the contact's
+ * initials and background color.
+ *
+ * @param {object} contact - The contact object containing details to render in the badge.
+ * @returns {string} HTML markup representing the badge.
+ */
 function renderBadge(contact) {
     return `<div class="badgeImg" style="background-color: ${contact.color}">${contact.initials}</div>`;
 }
 
 /**
- * Renders the top section of a large task card with details such as category, title, description, due date, priority, and assigned members.
- * @param {number} i - The index of the task.
+ * Renders the top section of a large task card in a dialog.
+ *
+ * Constructs HTML markup for the top section of a large task card based on the
+ * task details at the specified index `i`. Updates the dialog content with the
+ * rendered HTML.
+ *
+ * @param {number} i - The index of the task in the tasks array.
  */
 function renderCardBigTop(i) {
     document.getElementById('dialogContent').innerHTML = `
@@ -131,6 +160,16 @@ function renderCardBigSubToHtml(contact) {
     </li>`
 }
 
+/**
+ * Generates HTML markup for rendering the header of a large task card.
+ *
+ * Constructs HTML markup representing the header of a large task card based on the
+ * task category and color provided.
+ *
+ * @param {number} i - The index of the task in the tasks array.
+ * @param {string} color - The color class to apply to the category label.
+ * @returns {string} HTML markup representing the header of the large task card.
+ */
 function renderCardBigHeaderHtml(i, color) {
     return `
      <label class="categoryBig${color}">${tasks[i].category}</label>
@@ -139,12 +178,20 @@ function renderCardBigHeaderHtml(i, color) {
     </span>
     `}
 
+/**
+ * Generates HTML markup for rendering the header of an edit task card.
+ *
+ * Constructs HTML markup representing the header of an edit task card, including
+ * a close button for dismissing the dialog.
+ *
+ * @returns {string} HTML markup representing the header of the edit task card.
+ */
 function renderCardEditHeaderHtml() {
     return `   
-               <span onclick="closeDialogBtn()" class="closeBtn closeEdit">
-                   <img src="assets/img/icons/close.svg" alt="">
-               </span>
-   `}
+                   <span onclick="closeDialogBtn()" class="closeBtn closeEdit">
+                       <img src="assets/img/icons/close.svg" alt="">
+                   </span>
+       `}
 
 /**
  * Generates HTML for editing task details in the dialog box.
@@ -228,6 +275,16 @@ function renderCardEditHtml(i) {
    `
 }
 
+/**
+ * Generates HTML markup for rendering an editable subtask input field with buttons.
+ *
+ * Constructs HTML markup representing an editable subtask input field with delete and confirm buttons.
+ * The input field is pre-filled with the provided content.
+ *
+ * @param {string} content - The content to pre-fill in the subtask input field.
+ * @param {number} index - The index of the subtask for identifying purposes.
+ * @returns {string} HTML markup representing the editable subtask input field with buttons.
+ */
 function renderSubtaskEditHtml(content, index) {
     return `
             <input class="edit-subtask-input" type="text" value="${content}">
@@ -239,7 +296,16 @@ function renderSubtaskEditHtml(content, index) {
                 `
 }
 
-
+/**
+ * Generates HTML markup for rendering an unedited subtask item with edit and delete icons.
+ *
+ * Constructs HTML markup representing an unedited subtask item within a list, displaying
+ * the subtask content with edit and delete icons.
+ *
+ * @param {object} item - The subtask object containing content to display.
+ * @param {number} index - The index of the subtask for identifying purposes.
+ * @returns {string} HTML markup representing the unedited subtask item with icons.
+ */
 function renderEditSubtasksUneditedHtml(item, index) {
     return `
             <li class="subtask-list-item" data-index="${index}">
@@ -255,6 +321,17 @@ function renderEditSubtasksUneditedHtml(item, index) {
         `
 }
 
+/**
+ * Generates HTML markup for rendering a contact item in an edit contacts list.
+ *
+ * Constructs HTML markup representing a contact item within a list, including
+ * the contact's initials, name, and a checkbox indicating assignment status.
+ *
+ * @param {object} contact - The contact object containing details to display.
+ * @param {boolean} isAssigned - Flag indicating if the contact is assigned to a task.
+ * @param {string} checkedClass - Additional class for styling based on assignment status.
+ * @returns {string} HTML markup representing the contact item in the edit contacts list.
+ */
 function renderContactsEditHtml(contact, isAssigned, checkedClass) {
     return ` <li class="list-item assigned-to contactListItems ${checkedClass}"  data-contact-id="${contact.id}">
                 <div class="list-item-name">
