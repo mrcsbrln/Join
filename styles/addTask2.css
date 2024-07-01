@@ -75,6 +75,39 @@ margin-top: 16px;
 
 
 
+.subtasks-list::-webkit-scrollbar {
+    width: 24px;
+}
+
+.subtasks-list::-webkit-scrollbar-thumb {
+    background: rgba(168, 168, 168, 1);
+    border-radius: 100px;
+    border: 8px solid white;
+}
+
+.subtasks-list::-webkit-scrollbar-thumb:hover {
+    background: rgb(150, 150, 150);
+}
+
+.subtasks-list::-webkit-scrollbar-track {
+    background: white;
+}
+
+.subtasks-list::-webkit-scrollbar-button:single-button {
+    background-repeat: no-repeat;
+    width: 4px;
+    height: 24px;
+}
+
+.subtasks-list::-webkit-scrollbar-button:single-button:vertical:decrement {
+    background-image: url('../assets/img/contacts_img/scroll_up.svg');
+    background-position: center bottom;
+}
+
+.subtasks-list::-webkit-scrollbar-button:single-button:vertical:increment {
+    background-image: url('../assets/img/contacts_img/scroll_down.svg');
+    background-position: center top;
+}
 
 
 
