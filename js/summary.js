@@ -142,7 +142,7 @@ const checkIfDatabaseIsEmpty = async (path = "") => {
  */
 function setGreetingAnimation() {
   const containerMobile = document.getElementById('overlay');
-  if (window.innerWidth < 1220) {
+  if (window.innerWidth < 1207) {
     containerMobile.classList.remove("d-none");
     setTimeout(function () {
       containerMobile.classList.add("d-none");
