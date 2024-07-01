@@ -149,7 +149,7 @@ function saveEdit(i) {
     actSubtasks = [];
     closeDialogBtn();
     renderCards();
-    putDataEdit(`/tasks}`, tasks)
+    putDataEdit(`/tasks`, tasks)
 }
 
 /**
