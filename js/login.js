@@ -489,8 +489,11 @@ function checkForCurrentUserLogin() {
 }
 
 
+/**
+ * Adds the current user to the contacts list and updates the database.
+ * 
+  */
 async function addUserToContacts() {
-
     const userToContacts = {
         id: currentUser.id,
         name: currentUser.name,
@@ -499,15 +502,18 @@ async function addUserToContacts() {
         color: currentUser.color,
         initials: currentUser.initials,
     };
-
-    // Add the new contact to the array
     contacts.push(userToContacts);
-
-    // Save the new contact to the database
-  
     await updateDataBase(contacts, 'contacts'); 
 }
 
+
+/**
+ * Updates the specified array in the database.
+ * 
+ * @param {Array} array - The array to be updated in the database.
+ * @param {string} arrayName - The name of the array in the database.
+ * @returns {Promise<void>} A promise that resolves when the update is complete.
+ */
 async function updateDataBase(array, arrayName) {
     await fetch(`${teamBASE_URL}/${arrayName}.json`, {
         method: 'PUT',
