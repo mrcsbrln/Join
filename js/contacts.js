@@ -1,16 +1,17 @@
 const teamBASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.app/";
 // const myBASE_URL = "https://join-database-6441e-default-rtdb.europe-west1.firebasedatabase.app/";
 
- 
+
 let highestId = 0;
 
 
-function initContacts() {
-    includeHTML().then(() => { highlightContacts() });
-    readData().then(() => {
-        updateHeaderProfileInitials();
-        renderContacts();
-    });
+async function initContacts() {
+    await includeHTML();
+    highlightContacts();
+    await readData();
+    tasks = loadData("/tasks");
+    updateHeaderProfileInitials();
+    renderContacts();
 }
 
 
@@ -23,17 +24,17 @@ async function loadData(path = "") {
 
 
 async function readData() {
-        const contactsData = await loadData("/contacts");
-        if (!contactsData) {
-            contacts = [];
-            highestId = 0;
-            return;
-        }
-        contacts = filterNullValues(Object.values(contactsData));
-        highestId = contacts.reduce((maxId, contact) => Math.max(maxId, contact.id), 0);
+    const contactsData = await loadData("/contacts");
+    if (!contactsData) {
+        contacts = [];
+        highestId = 0;
+        return;
+    }
+    contacts = filterNullValues(Object.values(contactsData));
+    highestId = contacts.reduce((maxId, contact) => Math.max(maxId, contact.id), 0);
 }
 
-function emptyContacts () {
+function emptyContacts() {
     if (contacts.length === 0) {
         const contactsListContainer = document.getElementById('contacts-list');
         contactsListContainer.innerHTML = '<p class="no-contacts">No contacts</p>';
@@ -168,14 +169,8 @@ async function addContact() {
         contacts.push(newContact);
 
         // Save the new contact to the database
-        await fetch(`${teamBASE_URL}/contacts/${newContact.id}.json`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newContact)
-        });
-
+      
+        await updateDataBase(contacts, 'contacts');
         // Reload contacts and update the UI
         await renderContacts();
         await displayContact(newContact.id);
@@ -186,7 +181,15 @@ async function addContact() {
         console.error('Error adding contact:', error);
     }
 }
-
+async function updateDataBase(array, arrayName) {
+    await fetch(`${teamBASE_URL}/${arrayName}.json`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(array)
+    }); 
+}
 
 
 function editContact(id) {
@@ -220,21 +223,10 @@ async function updateContact(id) {
         contact.initials = initials;
 
         // Create an object with only the updated fields
-        const updatedFields = {
-            name: name,
-            email: email,
-            phone: phone,
-            initials: initials
-        };
+
 
         // Save the updated contact fields to the database using PATCH
-        await fetch(`${teamBASE_URL}/contacts/${id}.json`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedFields)
-        });
+        await updateDataBase(contacts, 'contacts');
 
         // Reload contacts and update the UI
         await renderContacts();
@@ -269,9 +261,10 @@ async function deleteContact(id) {
         closePopUpWindow('edit-contact', 'modal', 'pop-up-open', 'pop-up-close');
 
         // Send a DELETE request to remove the contact from the server
-        await fetch(`${teamBASE_URL}/contacts/${id}.json`, {
-            method: 'DELETE'
-        });
+        // await fetch(`${teamBASE_URL}/contacts/${id}.json`, {
+        //     method: 'DELETE'
+        // });
+        await updateDataBase(contacts, 'contacts');
 
         // Reload the contact list by rendering contacts again
         await renderContacts();
