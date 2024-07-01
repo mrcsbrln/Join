@@ -13,8 +13,9 @@ async function initBoard() {
     contacts = contactsData;
     contacts = contacts.filter(contact => contact !== null);
     closeContactListEditOnOutsideClick();
+    filterContactsInTasks(contacts, tasks);
     initAddTaskBoard();
-    filterContactsInTasks(contacts, tasks)
+   
 }
 
 function filterContactsInTasks(contacts, tasks) {
