@@ -33,10 +33,7 @@ function renderCardEdit(i) {
 function renderContactsEdit(i, filteredContacts = null) {
     const listContacts = document.getElementById('listContacts');
     listContacts.innerHTML = '';
-
     const contactsToRender = filteredContacts ? filteredContacts : contacts;
-
-
     contactsToRender.forEach(contact => {
         const isAssigned = tasks[i].assignedTo.includes(contact.id);
         const checkedClass = isAssigned ? 'checked' : '';
@@ -150,7 +147,6 @@ function selectListItemsEdit(i, filteredContacts) {
     updateCheckboxState(listItems);
 }
 
-
 /**
  * Renders selected contacts in the UI.
  */
@@ -182,7 +178,6 @@ function getTaskAndPriority(taskIndex) {
     actTaskPrio = currentPrio;
     return { task, currentPrio };
 }
-
 
 /**
  * Handles a priority button click event.
@@ -411,7 +406,6 @@ function emptyInput() {
     document.getElementById('subtaskInput').value = "";
 }
 
-
 /**
  * Toggles the visibility of the dropdown menu for contacts.
  *
@@ -424,14 +418,12 @@ function showDropdown() {
     dropdown.classList.toggle('show-menu');
 }
 
-
 /**
  * Closes the contact list edit view.
  */
 function closeContactListEdit() {
     document.getElementById('dropDownContact').classList.remove('show-menu');
 }
-
 
 /**
  * Closes the contact list edit view when clicking outside the dropdown or list.

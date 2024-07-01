@@ -433,6 +433,10 @@ input[type="search"]::-webkit-search-cancel-button {
     height: auto;
 }
 
+.descriptionCardBig{
+    white-space:pre-wrap; 
+}
+
 @media (max-width: 1024px) {
     .statuses {
         margin-bottom: 120px;
