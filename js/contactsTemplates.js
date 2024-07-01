@@ -1,3 +1,14 @@
+/**
+ * Generates the HTML for a contact item in the contacts list.
+ *
+ * @param {Object} contact - The contact object containing the contact's information.
+ * @param {string} contact.id - The unique identifier of the contact.
+ * @param {string} contact.color - The background color of the contact item.
+ * @param {string} contact.initials - The initials of the contact.
+ * @param {string} contact.name - The name of the contact.
+ * @param {string} contact.email - The email address of the contact.
+ * @return {string} The HTML for the contact item.
+ */
 function contactsListHtml(contact) {
     return `
     <div onclick="displayContact(${contact['id']})" id="${contact['id']}" class="contact">
@@ -12,6 +23,12 @@ function contactsListHtml(contact) {
     `;
 }
 
+/**
+ * Generates the HTML for a separator with a letter and a separator line.
+ *
+ * @param {string} letter - The letter to be displayed in the separator.
+ * @return {string} The HTML for the separator with the letter and a separator line.
+ */
 function contactsSeparatorHtml(letter) {
     return `
     <div class="section-letter">
@@ -20,6 +37,18 @@ function contactsSeparatorHtml(letter) {
     <div class="separator-line"></div>`;
 }
 
+/**
+ * Generates the HTML for displaying a contact.
+ *
+ * @param {Object} contact - The contact object containing the contact's information.
+ * @param {string} contact.color - The background color of the contact's icon.
+ * @param {string} contact.initials - The initials of the contact.
+ * @param {string} contact.name - The name of the contact.
+ * @param {string} contact.email - The email of the contact.
+ * @param {string} contact.phone - The phone number of the contact.
+ * @param {number} contact.id - The ID of the contact.
+ * @return {string} The HTML for displaying the contact.
+ */
 function displayContactHtml(contact) {
     return `
     <div class="contact-header">
@@ -68,6 +97,12 @@ function displayContactHtml(contact) {
     `;
 }
 
+/**
+ * Generates the HTML for the edit contact pop-up window.
+ *
+ * @param {Object} contact - The contact object containing the contact's information.
+ * @return {string} The HTML string for the edit contact pop-up window.
+ */
 function editContactHtml(contact) {
     return `
             <div class="pop-up-banner">
@@ -93,13 +128,13 @@ function editContactHtml(contact) {
                             </div>
                         </div>
                         <div class="input">
-                            <input id="edit-email" type="email" placeholder="Email" value="${contact['email']}" required>
+                            <input id="edit-email" type="email" placeholder="Email" value="${contact['email']}" required oninput="validateEmail('edit-email')">
                             <div class="icon-container">
                                 <img src="./assets/img/contacts_img/mail_icon.svg" alt="">
                             </div>
                         </div>
                         <div class="input">
-                            <input id="edit-phone" type="number" pattern="^[0-9-+\s()]{6,16}" placeholder="Phone" value="${contact['phone']}" required>
+                            <input id="edit-phone" type="phone" placeholder="Phone" value="${contact['phone']}" required>
                             <div class="icon-container">
                                 <img src="./assets/img/contacts_img/phone_icon.svg" alt="">
                             </div>

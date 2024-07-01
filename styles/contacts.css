@@ -1,3 +1,6 @@
+
+
+
 .contacts-container {
     background-color: white;
     position: fixed;
@@ -233,21 +236,33 @@
 .contact-displayed {
     top: 0px;
     left: 0px;
-    position: relative;
     transition: transform 125ms ease-in-out;
     display: flex;
     flex-direction: column;
     gap: 21px;
     height: 364px;
+    overflow-x: hidden;
 }
+
+
 .contact-slide-out {
     transform: translateX(100%);
     opacity: 0;
-    display: none;
 }
+
+
+body {
+    overflow-x: hidden;
+}
+
+
 .contact-slide-in {
     transform: translateX(0);
     opacity: 1;
+}
+
+.d-flex-visible {
+    display: flex;
 }
 
 .contact-header {
@@ -344,7 +359,7 @@
 }
 
 .toast-msg {
-    display: none;
+    display: flex;
     position: relative;
     top: 100px;
     left: 0;

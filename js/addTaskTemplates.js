@@ -648,12 +648,21 @@ async function updateTasks(newTasksArray) {
     });
 }
 
+/**
+ * Fetches tasks from the Firebase database.
+ *
+ * @return {Promise<Array>} A promise that resolves to an array of tasks. If no data is found, an empty array is returned.
+ */
 async function fetchTasks() {
     const response = await fetch(`${BASE_URL}/tasks.json`);
     const data = await response.json();
     return data || []; // Return an empty array if no data is found
 }
 
+/**
+ * Redirects the user to the board.html page.
+ *
+ */
 function redirectToBoard() {
     window.location.href = 'board.html';
 }
