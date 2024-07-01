@@ -59,8 +59,8 @@ button {
     padding: 0 64px 0 64px;
     padding-left: 50px;
     padding-right: 80px;
-    gap: 24px; 
-    margin-bottom: 120px;
+    gap: 24px;
+    margin-bottom: 15px;
 }
 
 .statusHeader {
@@ -412,12 +412,12 @@ input[type="search"]::-webkit-search-cancel-button {
     appearance: none;
 }
 
-.statusHeader img{
+.statusHeader img {
     transition: content 225ms;
     cursor: pointer;
 }
 
-.statusHeader img:hover{
+.statusHeader img:hover {
     cursor: pointer;
     content: url('../assets/img/icons/plusBtnblue.png')
 }
@@ -426,13 +426,18 @@ input[type="search"]::-webkit-search-cancel-button {
     transition: 225ms;
     background-color: #29ABE2;
     border: 1px solid #29ABE2;
-    
+
 }
-#subtaskList{
+
+#subtaskList {
     height: auto;
 }
 
 @media (max-width: 1024px) {
+    .statuses {
+        margin-bottom: 120px;
+    }
+
 
     .board {
         padding-left: 0;
