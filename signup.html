@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="inputField__container inputField__container-margin24">
-                        <input id="email" type="email" placeholder="Email" autocomplete="email" required onkeyup="validateEmail()" />
+                        <input id="email" type="email" placeholder="Email" autocomplete="email" required oninput="validateEmail()" />
                         <img class="inputField__username__icon" src="./assets/img/icons_signup/mail.png" alt="mail" />
                     </div>
 
@@ -53,7 +53,8 @@
                             placeholder="Password"
                             autocomplete="current-password"
                             required
-                            onkeyup="changePasswordIcon('password'); validatePassword()"
+                            onkeyup="changePasswordIcon('password')"
+                            oninput="validatePassword()"
                             onkeypress="deleteMessageThatPasswordsDontMatch()" />
                         <img id="password__icon" class="inputField__password__icon pointerEvents__none" src="./assets/img/icons_signup/lock.png" alt="lock" onclick="showPassword('password')" />
                     </div>
