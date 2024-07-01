@@ -1,4 +1,3 @@
-
 let draggedItemId = "";
 let minDate = "";
 let actSubtasks = [];
@@ -125,12 +124,13 @@ function renderCardBigHeader(i) {
  */
 function renderCardBigSubTo(i) {
     const assignedToArray = Array.isArray(tasks[i]?.assignedTo) ? tasks[i].assignedTo : [];
-    actAssignedTo = [];
+    actAssignedTo = []; // Clear actAssignedTo array
     const badgeContainer = document.getElementById('badgeContainer');
-    badgeContainer.innerHTML = '';
+    badgeContainer.innerHTML = ''; // Clear badgeContainer HTML
+
     assignedToArray.forEach(id => {
-        if (contacts[id]) {
-            const contact = contacts[id];
+        const contact = contacts.find(contact => contact.id === id); // Find contact by its ID
+        if (contact) { // Check if contact with this id exists in contacts
             actAssignedTo.push({
                 color: contact.color,
                 initials: contact.initials,
@@ -294,10 +294,11 @@ function renderBadges(assignedToArray, maxBadges = 6) {
     let renderedCount = 0;
     let addedContacts = new Set();
     let badgesHtml = assignedToArray.map(id => {
-        if (contacts[id] && !addedContacts.has(id) && renderedCount < maxBadges) {
+        const contact = contacts.find(c => c.id === id);
+        if (contact && !addedContacts.has(id) && renderedCount < maxBadges) {
             addedContacts.add(id);
             renderedCount++;
-            return renderBadge(contacts[id]);
+            return renderBadge(contact);
         }
         return '';
     }).join('');

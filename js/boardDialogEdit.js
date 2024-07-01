@@ -10,13 +10,11 @@ function renderCardEdit(i) {
     document.getElementById('containerCloseBtn').classList.add('flexEnd');
     document.getElementById('containerCloseBtn').classList.remove('spaceBetween');
     document.getElementById('dialogContent').innerHTML = renderCardEditHtml(i);
-
     if (tasks[i] && tasks[i].assignedTo) {
         taskEditAsiggnedTo = tasks[i].assignedTo.slice();
     } else {
         taskEditAsiggnedTo = [];
     }
-
     changePrioBtnEdit(i);
     renderContactsEdit(i);
     renderSelectedContactsEdit();
@@ -46,7 +44,7 @@ function renderContactsEdit(i, filteredContacts = null) {
         listContacts.innerHTML += renderContactsEditHtml(contact, isAssigned, checkedClass);
     });
 
-    selectListItemsEdit(i, contactsToRender);
+    selectListItemsEdit(i,contactsToRender);
 }
 
 /**
@@ -159,11 +157,14 @@ function selectListItemsEdit(i, filteredContacts) {
 function renderSelectedContactsEdit() {
     const selectedContactsDiv = document.querySelector('.selectedContactsContainer');
     selectedContactsDiv.innerHTML = '';
-    taskEditAsiggnedTo.forEach(i => {
-        selectedContactsDiv.innerHTML += `
-            <div class="cicle" style="background-color: ${contacts[i].color}">${contacts[i].initials}</div>
-        `;
-    })
+    taskEditAsiggnedTo.forEach(id => {
+        const contact = contacts.find(c => c.id === id);
+        if (contact) {
+            selectedContactsDiv.innerHTML += `
+                <div class="badgeImg" style="background-color: ${contact.color}">${contact.initials}</div>
+            `;
+        }
+    });
 }
 
 /**
@@ -259,7 +260,6 @@ function setInitialPrioButtons(currentPrio, svgMappingsEdit) {
 function changePrioBtnEdit(taskIndex) {
     const prioContainer = document.querySelector('.prioBtn');
     if (!prioContainer) return;
-
     const { task, currentPrio } = getTaskAndPriority(taskIndex);
 
     prioContainer.addEventListener('click', (event) => {
