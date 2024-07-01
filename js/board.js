@@ -14,8 +14,16 @@ async function initBoard() {
     contacts = contacts.filter(contact => contact !== null);
     closeContactListEditOnOutsideClick();
     initAddTaskBoard();
+    filterContactsInTasks(contacts, tasks)
 }
 
+function filterContactsInTasks(contacts, tasks) {
+    // Iterate through each task
+    tasks.forEach(task => {
+        // Filter out invalid contact IDs from assignedTo array
+        task.assignedTo = task.assignedTo.filter(contactId => contacts.some(contact => contact.id === contactId));
+    });
+}
 /**
  * Initializes the addition of tasks to the board. It highlights the board, renders cards,
  * updates the header profile initials, and sets up various UI interactions such as menus,
