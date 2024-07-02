@@ -127,7 +127,7 @@ const updateGreetingText = () => {
 const checkIfDatabaseIsEmpty = async (path = "") => {
   const result = await loadData(path);
   if (!result) {
-    console.warn("Datenbank bzw. angegebener Pfad innerhalb der Datenbank ist leer");
+    /* console.error("Datenbank bzw. angegebener Pfad innerhalb der Datenbank ist leer"); */
     return tasksDummy;
   }
   return result;
@@ -382,6 +382,5 @@ function renderUrgentTasksNearestDueDate() {
         renderDataToSummary("summary__date", mostUrgentTasksDueDate);
     } else {
         renderDataToSummary("summary__date", 'no urgent tasks');
-        console.log('No urgent tasks found.');
     }
 }
