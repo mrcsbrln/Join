@@ -19,9 +19,7 @@ async function initBoard() {
 }
 
 function filterContactsInTasks(contacts, tasks) {
-    // Iterate through each task
     tasks.forEach(task => {
-        // Filter out invalid contact IDs from assignedTo array
         task.assignedTo = task.assignedTo.filter(contactId => contacts.some(contact => contact.id === contactId));
     });
 }
@@ -246,7 +244,9 @@ function removeHighlight() {
     });
 }
 
-// Event listener for the drag end event
+/**
+ * Event listener for the drag end event
+ */
 document.addEventListener('dragend', function (event) {
     const card = document.getElementById(`taskCard${draggedItemId}`);
     if (card) {

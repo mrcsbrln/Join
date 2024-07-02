@@ -124,13 +124,13 @@ function renderCardBigHeader(i) {
  */
 function renderCardBigSubTo(i) {
     const assignedToArray = Array.isArray(tasks[i]?.assignedTo) ? tasks[i].assignedTo : [];
-    actAssignedTo = []; // Clear actAssignedTo array
+    actAssignedTo = [];
     const badgeContainer = document.getElementById('badgeContainer');
-    badgeContainer.innerHTML = ''; // Clear badgeContainer HTML
+    badgeContainer.innerHTML = '';
 
     assignedToArray.forEach(id => {
-        const contact = contacts.find(contact => contact.id === id); // Find contact by its ID
-        if (contact) { // Check if contact with this id exists in contacts
+        const contact = contacts.find(contact => contact.id === id);
+        if (contact) { 
             actAssignedTo.push({
                 color: contact.color,
                 initials: contact.initials,
