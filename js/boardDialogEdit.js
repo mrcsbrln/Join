@@ -436,8 +436,6 @@ function closeContactListEditOnOutsideClick() {
     document.addEventListener('click', function (event) {
         const selectBtnContainer = document.getElementById('dropDownContact');
         const listItemsContainer = document.getElementById('listContacts');
-
-        // Check if selectBtnContainer or listItemsContainer is null before using .contains()
         if (selectBtnContainer && listItemsContainer &&
             !selectBtnContainer.contains(event.target) && !listItemsContainer.contains(event.target)) {
             closeContactListEdit();
