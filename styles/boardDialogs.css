@@ -402,6 +402,18 @@
     justify-content: space-between;
 }
 
+@media (max-width: 1440px) {
+    .dropdownBtnContainer {
+        display: block;
+        background-color: #fff;
+
+    }
+
+    .dropdown-btn {
+        display: flex;
+        cursor: pointer;
+    }
+}
 
 @media (max-width: 1140px) {
     .prioBtn {

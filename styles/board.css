@@ -437,12 +437,35 @@ input[type="search"]::-webkit-search-cancel-button {
     white-space:pre-wrap; 
 }
 
+
+@media screen and (max-width: 1440px){
+
+      .statuses {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .cardContainer {
+        flex-direction: row;
+        gap: 16px;
+        overflow-x: auto;
+        min-height: 340px;
+    }
+
+    .statusItem {
+        width: 100%;
+    }
+
+    .statusHeader {
+        width: 100%;
+    }
+
+}
+
 @media (max-width: 1024px) {
     .statuses {
         margin-bottom: 120px;
     }
-
-
     .board {
         padding-left: 0;
     }
