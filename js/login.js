@@ -213,13 +213,10 @@ async function checkLoginValues(email, password) {
         const datas = await loadData("/users");
         const matchingContact = datas.find(data => data.email === email);
         if (!matchingContact) {
-            console.warn("Kein Benutzer mit dieser E-Mail gefunden");
             wrongMail();
         } else if (matchingContact.password !== password) {
-            console.warn("Falsches Passwort");
             wrongPassword();
         } else {
-            console.log("Login successful");
             return matchingContact;
         }
     } catch (error) {
@@ -313,7 +310,6 @@ async function login() {
         await addUserToContacts();
     } else {
         localStorage.removeItem('currentUser');
-        console.warn("Fehler bei der Anmeldung!");
     }
 }
 
@@ -340,7 +336,7 @@ function saveCurrentUserToSessionStorage(currentUser) {
     if (currentUser) {
         sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
     } else {
-        console.warn("currentUser NA - save to local Storage not possible");
+        /* console.warn("currentUser NA - save to local Storage not possible");*/
         return;
     }
 }
@@ -476,7 +472,6 @@ function logInIsCorrected() {
 function checkForCurrentUserLogin() {
     const userString = sessionStorage.getItem('currentUser');
     if (!userString) {
-        console.warn('No current user existing - please log in or sign up');
         return false;
     }
     try {
