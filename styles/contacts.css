@@ -1,6 +1,3 @@
-
-
-
 .contacts-container {
     background-color: white;
     position: fixed;
@@ -198,7 +195,7 @@
     height: 56px;
     border-radius: 56px;
     background-color: rgba(42, 54, 71, 1);
-    
+
 }
 
 .add-contact-btn:hover,
@@ -240,7 +237,7 @@
     display: flex;
     flex-direction: column;
     gap: 21px;
-    height: 364px;
+
     overflow-x: hidden;
 }
 
@@ -359,10 +356,10 @@ body {
 }
 
 .toast-msg {
+    z-index: 3;
     display: flex;
-    position: relative;
-    top: 100px;
-    left: 0;
+    position: absolute;
+    bottom: 100px;
     transition: transform 125ms ease-in-out;
     width: 326px;
     height: 74px;
@@ -404,6 +401,3 @@ body {
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     transition: transform 125ms ease-in-out;
 }
-
-
-
