@@ -60,6 +60,5 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Status:', actStatus);
     } else {
         actStatus = 'toDo'; 
-        console.log('Status parameter is missing. Default value:', actStatus);
     }
 });
