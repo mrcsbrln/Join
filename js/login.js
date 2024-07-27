@@ -24,7 +24,7 @@ const BASE_URL = "https://join-230-default-rtdb.europe-west1.firebasedatabase.ap
  * - logInIsCorrected: Handles corrections and validations during login process.
  * 
  */
-async function initLogin() {
+function initLogin() {
     checkForCurrentUserLogin();
     changeOfDisplayNoneAfterAnimation();
     checkLocalStorageForUserData();
@@ -475,7 +475,7 @@ function checkForCurrentUserLogin() {
         return false;
     }
     try {
-        const userJSON = JSON.parse(userString);
+        JSON.parse(userString);
         return true;
     } catch (error) {
         console.error('Error parsing JSON from Session Storage', error);
